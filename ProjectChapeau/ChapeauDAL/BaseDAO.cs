@@ -17,6 +17,7 @@ namespace ChapeauDAL
 
         protected SqlConnection OpenConnection()
         {
+            //open the connection
             try
             {
                 if (conn.State == ConnectionState.Closed || conn.State == ConnectionState.Broken)
