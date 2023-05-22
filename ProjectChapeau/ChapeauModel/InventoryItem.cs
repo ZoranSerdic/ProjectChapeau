@@ -16,15 +16,12 @@ namespace ChapeauModel
 
         public int InStock { get; set; }
 
-        // public List<MenuItem> Items { get; set; } - should InventoryItem class/object have a list of menu items which have this inventoryItem as an ingredient?
-
         public InventoryItem(int inventoryItemId, string name, double price, int inStock)
         {
             InventoryItemId = inventoryItemId;
             Name = name;
             Price = price;
             InStock = inStock;
-            //Items = new List<MenuItem>();
         }
     }
 }
