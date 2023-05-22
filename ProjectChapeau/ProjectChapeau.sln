@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChapeauUI", "ChapeauUI\ChapeauUI.csproj", "{53F99CCF-AD4A-466C-B58C-A74972301E4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChapeauUI", "ChapeauUI\ChapeauUI.csproj", "{53F99CCF-AD4A-466C-B58C-A74972301E4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChapeauService", "ChapeauService\ChapeauService.csproj", "{C9533E4F-30F6-4ABB-86CB-2F02476BB47F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChapeauService", "ChapeauService\ChapeauService.csproj", "{C9533E4F-30F6-4ABB-86CB-2F02476BB47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChapeauModel", "ChapeauModel\ChapeauModel.csproj", "{A0EAB553-89EF-4A8D-9844-25AE8D213AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChapeauModel", "ChapeauModel\ChapeauModel.csproj", "{A0EAB553-89EF-4A8D-9844-25AE8D213AA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChapeauDAL", "ChapeauDAL\ChapeauDAL.csproj", "{EDBFDE4C-081D-48C4-9109-13FF3E4A891E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChapeauDAL", "ChapeauDAL\ChapeauDAL.csproj", "{EDBFDE4C-081D-48C4-9109-13FF3E4A891E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
