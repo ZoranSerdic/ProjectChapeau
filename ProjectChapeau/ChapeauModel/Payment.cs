@@ -10,11 +10,11 @@ namespace ChapeauModel
     {
         public int PaymentId { get; set; }
         public int BillId { get; set; }
-        public string PaymentMethod { get; set; }
+        public paymentMethod PaymentMethod { get; set; }
         public decimal Amount { get; set; }
         public decimal Tip { get; set; }
 
-        public Payment(int paymentId, int billId, string paymentMethod, decimal amount, decimal tip)
+        public Payment(int paymentId, int billId, paymentMethod paymentMethod, decimal amount, decimal tip)
         {
             PaymentId = paymentId;
             BillId = billId;
@@ -22,5 +22,7 @@ namespace ChapeauModel
             Amount = amount;
             Tip = tip;
         }
+
+        public enum paymentMethod { Cash, Debit, Credit }
     }
 }
