@@ -13,5 +13,14 @@ namespace ChapeauModel
         public string PaymentMethod { get; set; }
         public decimal Amount { get; set; }
         public decimal Tip { get; set; }
+
+        public Payment(int paymentId, int billId, string paymentMethod, decimal amount, decimal tip)
+        {
+            PaymentId = paymentId;
+            BillId = billId;
+            PaymentMethod = paymentMethod;
+            Amount = amount;
+            Tip = tip;
+        }
     }
 }

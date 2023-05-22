@@ -16,7 +16,7 @@ namespace ChapeauModel
 
         public int Amount { get; set; }
 
-        public OrderedItemStatus Status { get; set; }
+        public orderedItemStatus Status { get; set; }
 
         public OrderItem(int orderItemId, MenuItem menuItem, int amount)
         {
@@ -24,6 +24,6 @@ namespace ChapeauModel
             MenuItem = menuItem;
             Amount = amount;
         }
-        public enum OrderedItemStatus { Sent, Preparing, Ready } //?sent? which statuses do we havedo we need "served"??
+        public enum orderedItemStatus { Sent, Preparing, Ready } //?sent? which statuses do we havedo we need "served"??
     }
 }

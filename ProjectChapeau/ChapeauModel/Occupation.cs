@@ -10,8 +10,8 @@ namespace ChapeauModel
     {
         public int OccupationId { get; set; }   
 
-        public OccupationName Name { get; set; }
+        public occupationName Name { get; set; }
 
-        public enum OccupationName { Waiter, Chef, Bartender, Manager }
+        public enum occupationName { Waiter, Chef, Bartender, Manager }
     }
 }

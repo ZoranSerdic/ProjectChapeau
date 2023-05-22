@@ -13,6 +13,18 @@ namespace ChapeauModel
         public decimal TotalAmount { get; set; }
         public decimal TotalTip { get; set; }
         public bool IsPaid { get; set; }
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
+        public string? Comment { get; set; }
+
+        public Bill(int billId, Table table, decimal totalAmount, decimal totalTip, bool isPaid, DateTime date, string? comment)
+        {
+            BillId = billId;
+            Table = table;
+            TotalAmount = totalAmount;
+            TotalTip = totalTip;
+            IsPaid = isPaid;
+            Date = date;
+            Comment = comment;
+        }
     }
 }
