@@ -16,7 +16,7 @@ namespace ChapeauModel
 
         public Vat Vat { get; set; }
 
-        public List<MenuItem> Ingredients { get; set; } //? should the name for this property be "Ingredients"?
+        public List<InventoryItem> Ingredients { get; set; }
 
         public MenuItem(int menuItemId, string name, double price, Vat vat)
         {
@@ -24,7 +24,7 @@ namespace ChapeauModel
             Name = name;
             Price = price;
             Vat = vat;
-            Ingredients = new List<MenuItem>();
+            Ingredients = new List<InventoryItem>();
         }
     }
 }
