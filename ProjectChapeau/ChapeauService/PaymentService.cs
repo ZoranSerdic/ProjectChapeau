@@ -20,5 +20,10 @@ namespace ChapeauService
         {
             paymentDAO.CreateBill(tableId, totalAmount);
         }
+
+        public int GetCurrentBillId()
+        {
+            return paymentDAO.GetCurrentBillId();
+        }
     }
 }

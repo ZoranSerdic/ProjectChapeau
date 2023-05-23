@@ -9,18 +9,19 @@ namespace ChapeauModel
     public class Employee
     {
         public int EmployeeId { get; set; }
-        public string Hash { get; set; }
+        public string Pincode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Occupation Occupation { get; set; }
+        public Role Occupation { get; set; }
 
-        public Employee(int employeeId, string hash, string firstName, string lastName, Occupation occupation)
+        public Employee(int employeeId, string pincode, string firstName, string lastName, Role occupation)
         {
             EmployeeId = employeeId;
-            Hash = hash;
+            Pincode = pincode;
             FirstName = firstName;
             LastName = lastName;
             Occupation = occupation;
         }
+
     }
 }

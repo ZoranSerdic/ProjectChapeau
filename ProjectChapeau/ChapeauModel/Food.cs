@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace ChapeauModel
 {
-    public class Food
+    public class Food : MenuItem
     {
-        public foodType Type { get; set; }
 
-        public menuTime MenuTime { get; set; }
+        public MenuType MenuTime { get; set; }
 
-        //public Food(int menuItemId, string name, double price, Vat vat, menuTime menuTime, foodType type) : base(menuItemId, name, price, vat)
-        //{
-        //    MenuTime = menuTime;
-        //    Type = type;
-        //}
+        public Food(int menuItemId, string name, double price, float vat, MenuType MenuTime) : base(menuItemId, name, price, vat)
+        {
+            this.MenuTime = MenuTime;
+        }
 
-        public enum menuTime { Lunch, Dinner }
-        public enum foodType { Starter, MainCourse, Dessert }
+        
     }
 }
 

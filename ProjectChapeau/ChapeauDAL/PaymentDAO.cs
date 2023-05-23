@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,15 @@ namespace ChapeauDAL
             };
 
             ExecuteEditQuery(query, sqlParameters); 
+        }
+
+        public int GetCurrentBillId()
+        {
+            string query = "SELECT MAX(@billId) AS id FROM Bill";
+            string bill = "billId";
+            DataRow datarow = ExecuteSelectQuery(query, new SqlParameter("@billId", bill)).Rows[0];
+
+            return (int)datarow["id"];
         }
     }
 }

@@ -16,7 +16,7 @@ namespace ChapeauModel
 
         public string? Comment { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsPaid { get; set; }
 
         public Employee Employee { get; set; }
 
@@ -28,7 +28,7 @@ namespace ChapeauModel
             Table = table; Time = time;
             Employee = employee;
 
-            IsActive = true;
+            IsPaid = true;
             OrderedItems = new List<OrderItem>();
         }
     }

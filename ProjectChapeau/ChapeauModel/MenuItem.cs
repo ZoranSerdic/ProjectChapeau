@@ -14,11 +14,12 @@ namespace ChapeauModel
 
         public double Price { get; set; }
 
-        public Vat Vat { get; set; }
+        public float Vat { get; set; } 
+        public FoodType CourseType { get; set; }
 
         public List<InventoryItem> Ingredients { get; set; }
 
-        public MenuItem(int menuItemId, string name, double price, Vat vat)
+        public MenuItem(int menuItemId, string name, double price, float vat)
         {
             MenuItemId = menuItemId;
             Name = name;

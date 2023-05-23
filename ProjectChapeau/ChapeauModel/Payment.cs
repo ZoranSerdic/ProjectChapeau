@@ -10,19 +10,18 @@ namespace ChapeauModel
     {
         public int PaymentId { get; set; }
         public int BillId { get; set; }
-        public paymentMethod PaymentMethod { get; set; }
+        public PaymentMethod Method { get; set; }
         public decimal Amount { get; set; }
         public decimal Tip { get; set; }
 
-        public Payment(int paymentId, int billId, paymentMethod paymentMethod, decimal amount, decimal tip)
+        public Payment(int paymentId, int billId, PaymentMethod method, decimal amount, decimal tip)
         {
             PaymentId = paymentId;
             BillId = billId;
-            PaymentMethod = paymentMethod;
+            Method = method;
             Amount = amount;
             Tip = tip;
         }
 
-        public enum paymentMethod { Cash, Debit, Credit }
     }
 }
