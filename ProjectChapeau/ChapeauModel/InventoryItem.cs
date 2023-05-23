@@ -12,15 +12,12 @@ namespace ChapeauModel
 
         public string Name { get; set; }
 
-        public double Price { get; set; }
-
         public int InStock { get; set; }
 
         public InventoryItem(int inventoryItemId, string name, double price, int inStock)
         {
             InventoryItemId = inventoryItemId;
             Name = name;
-            Price = price;
             InStock = inStock;
         }
     }
