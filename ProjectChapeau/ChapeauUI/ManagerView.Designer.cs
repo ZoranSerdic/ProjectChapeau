@@ -34,9 +34,8 @@
             btnEmployees = new Button();
             btnTableOverview = new Button();
             btnLogOut = new Button();
-            lblHomeTitle = new Label();
+            lblHeading = new Label();
             pictureBox1 = new PictureBox();
-            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -98,15 +97,15 @@
             btnLogOut.Text = "Log out";
             btnLogOut.UseVisualStyleBackColor = false;
             // 
-            // lblHomeTitle
+            // lblHeading
             // 
-            lblHomeTitle.AutoSize = true;
-            lblHomeTitle.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Point);
-            lblHomeTitle.Location = new Point(338, 36);
-            lblHomeTitle.Name = "lblHomeTitle";
-            lblHomeTitle.Size = new Size(173, 67);
-            lblHomeTitle.TabIndex = 5;
-            lblHomeTitle.Text = "HOME";
+            lblHeading.AutoSize = true;
+            lblHeading.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Point);
+            lblHeading.Location = new Point(338, 36);
+            lblHeading.Name = "lblHeading";
+            lblHeading.Size = new Size(173, 67);
+            lblHeading.TabIndex = 5;
+            lblHeading.Text = "HOME";
             // 
             // pictureBox1
             // 
@@ -117,23 +116,14 @@
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.IndianRed;
-            panel1.Location = new Point(-7, 117);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(814, 39);
-            panel1.TabIndex = 7;
-            // 
             // ManagerView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(836, 1055);
-            Controls.Add(panel1);
             Controls.Add(pictureBox1);
-            Controls.Add(lblHomeTitle);
+            Controls.Add(lblHeading);
             Controls.Add(btnLogOut);
             Controls.Add(btnTableOverview);
             Controls.Add(btnEmployees);
@@ -154,8 +144,7 @@
         private Button btnEmployees;
         private Button btnTableOverview;
         private Button btnLogOut;
-        private Label lblHomeTitle;
+        private Label lblHeading;
         private PictureBox pictureBox1;
-        private Panel panel1;
     }
 }
