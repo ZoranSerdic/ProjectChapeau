@@ -16,5 +16,25 @@ namespace ChapeauUI
         {
             InitializeComponent();
         }
+
+        private void btmMainDishes_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnNewMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnViewAllItems_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+        }
     }
 }
