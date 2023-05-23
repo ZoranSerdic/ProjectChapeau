@@ -16,5 +16,27 @@ namespace ChapeauUI
         {
             InitializeComponent();
         }
+
+        private void ManagerView_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStock_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnTableOverview_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnEmployees_Click(object sender, EventArgs e)
+        {
+        }
     }
 }

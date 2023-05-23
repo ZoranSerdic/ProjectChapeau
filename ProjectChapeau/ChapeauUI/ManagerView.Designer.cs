@@ -28,12 +28,134 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ManagerView";
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManagerView));
+            btnStock = new Button();
+            btnMenu = new Button();
+            btnEmployees = new Button();
+            btnTableOverview = new Button();
+            btnLogOut = new Button();
+            lblHomeTitle = new Label();
+            pictureBox1 = new PictureBox();
+            panel1 = new Panel();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
+            // 
+            // btnStock
+            // 
+            btnStock.BackColor = SystemColors.ActiveCaption;
+            btnStock.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            btnStock.Location = new Point(189, 254);
+            btnStock.Name = "btnStock";
+            btnStock.Size = new Size(448, 133);
+            btnStock.TabIndex = 0;
+            btnStock.Text = "Stock";
+            btnStock.UseVisualStyleBackColor = false;
+            btnStock.Click += btnStock_Click;
+            // 
+            // btnMenu
+            // 
+            btnMenu.BackColor = SystemColors.ActiveCaption;
+            btnMenu.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            btnMenu.Location = new Point(189, 410);
+            btnMenu.Name = "btnMenu";
+            btnMenu.Size = new Size(448, 133);
+            btnMenu.TabIndex = 1;
+            btnMenu.Text = "Menu";
+            btnMenu.UseVisualStyleBackColor = false;
+            btnMenu.Click += btnMenu_Click;
+            // 
+            // btnEmployees
+            // 
+            btnEmployees.BackColor = SystemColors.ActiveCaption;
+            btnEmployees.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            btnEmployees.Location = new Point(189, 568);
+            btnEmployees.Name = "btnEmployees";
+            btnEmployees.Size = new Size(448, 133);
+            btnEmployees.TabIndex = 2;
+            btnEmployees.Text = "Employees";
+            btnEmployees.UseVisualStyleBackColor = false;
+            btnEmployees.Click += btnEmployees_Click;
+            // 
+            // btnTableOverview
+            // 
+            btnTableOverview.BackColor = SystemColors.ActiveCaption;
+            btnTableOverview.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            btnTableOverview.Location = new Point(189, 731);
+            btnTableOverview.Name = "btnTableOverview";
+            btnTableOverview.Size = new Size(448, 133);
+            btnTableOverview.TabIndex = 3;
+            btnTableOverview.Text = "Table Overview";
+            btnTableOverview.UseVisualStyleBackColor = false;
+            btnTableOverview.Click += btnTableOverview_Click;
+            // 
+            // btnLogOut
+            // 
+            btnLogOut.BackColor = Color.LightCoral;
+            btnLogOut.Location = new Point(688, 53);
+            btnLogOut.Name = "btnLogOut";
+            btnLogOut.Size = new Size(94, 29);
+            btnLogOut.TabIndex = 4;
+            btnLogOut.Text = "Log out";
+            btnLogOut.UseVisualStyleBackColor = false;
+            // 
+            // lblHomeTitle
+            // 
+            lblHomeTitle.AutoSize = true;
+            lblHomeTitle.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Point);
+            lblHomeTitle.Location = new Point(338, 36);
+            lblHomeTitle.Name = "lblHomeTitle";
+            lblHomeTitle.Size = new Size(173, 67);
+            lblHomeTitle.TabIndex = 5;
+            lblHomeTitle.Text = "HOME";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(12, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(181, 105);
+            pictureBox1.TabIndex = 6;
+            pictureBox1.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.IndianRed;
+            panel1.Location = new Point(-7, 117);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(814, 39);
+            panel1.TabIndex = 7;
+            // 
+            // ManagerView
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ButtonHighlight;
+            ClientSize = new Size(836, 1055);
+            Controls.Add(panel1);
+            Controls.Add(pictureBox1);
+            Controls.Add(lblHomeTitle);
+            Controls.Add(btnLogOut);
+            Controls.Add(btnTableOverview);
+            Controls.Add(btnEmployees);
+            Controls.Add(btnMenu);
+            Controls.Add(btnStock);
+            Name = "ManagerView";
+            Text = "ManagerView";
+            Load += ManagerView_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Button btnStock;
+        private Button btnMenu;
+        private Button btnEmployees;
+        private Button btnTableOverview;
+        private Button btnLogOut;
+        private Label lblHomeTitle;
+        private PictureBox pictureBox1;
+        private Panel panel1;
     }
 }
