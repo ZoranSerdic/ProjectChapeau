@@ -12,11 +12,11 @@ namespace ChapeauModel
 
         public menuTime MenuTime { get; set; }
 
-        public Food(int menuItemId, string name, double price, Vat vat, menuTime menuTime, foodType type) : base(menuItemId, name, price, vat)
-        {
-            MenuTime = menuTime;
-            Type = type;
-        }
+        //public Food(int menuItemId, string name, double price, Vat vat, menuTime menuTime, foodType type) : base(menuItemId, name, price, vat)
+        //{
+        //    MenuTime = menuTime;
+        //    Type = type;
+        //}
 
         public enum menuTime { Lunch, Dinner }
         public enum foodType { Starter, MainCourse, Dessert }
