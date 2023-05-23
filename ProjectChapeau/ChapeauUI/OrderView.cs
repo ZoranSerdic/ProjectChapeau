@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ChapeauUI
 {
-    public partial class ChapeauMobileUI : Form
+    public partial class OrderView : Form
     {
-        public ChapeauMobileUI()
+        public OrderView()
         {
             InitializeComponent();
         }

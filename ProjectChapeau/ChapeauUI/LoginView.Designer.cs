@@ -1,6 +1,6 @@
 ﻿namespace ChapeauUI
 {
-    partial class ChapeauMobileUI
+    partial class LoginView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btnLogin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // ChapeauMobileUI
+            // btnLogin
+            // 
+            this.btnLogin.Location = new System.Drawing.Point(325, 313);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(94, 29);
+            this.btnLogin.TabIndex = 0;
+            this.btnLogin.Text = "Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // LoginView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "ChapeauMobileUI";
-            this.Text = "Chapeau Mobile Application";
+            this.Controls.Add(this.btnLogin);
+            this.Name = "LoginView";
+            this.Text = "LoginView";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private Button btnLogin;
     }
 }
