@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
-            // ChapeauUI
+            // ChapeauDesktopUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "ChapeauUI";
-            this.Text = "Chapeau Desktop Application";
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1418, 968);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "ChapeauDesktopUI";
+            Text = "Chapeau Desktop Application";
+            ResumeLayout(false);
         }
 
         #endregion
