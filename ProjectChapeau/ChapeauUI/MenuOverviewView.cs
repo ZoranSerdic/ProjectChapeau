@@ -16,5 +16,23 @@ namespace ChapeauUI
         {
             InitializeComponent();
         }
+
+        private void btnNewMenuItem_Click(object sender, EventArgs e)
+        {
+            //hides this panel, and opens the NewMenuItem form, and closes this form 
+            this.Hide();
+            NewMenuItem newMenuItem = new NewMenuItem();
+            newMenuItem.ShowDialog();
+            this.Close();
+        }
+
+        private void btmMainDishes_Click(object sender, EventArgs e)
+        {
+            //hides this panel, and opens the MenuItemSelection form, and closes this form 
+            this.Hide();
+            MenuItemSelectionView itemSelection = new MenuItemSelectionView();
+            itemSelection.ShowDialog();
+            this.Close();
+        }
     }
 }

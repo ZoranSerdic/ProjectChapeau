@@ -78,6 +78,7 @@
             btmMainDishes.TabIndex = 10;
             btmMainDishes.Text = "Remove menu item";
             btmMainDishes.UseVisualStyleBackColor = false;
+            btmMainDishes.Click += btmMainDishes_Click;
             // 
             // btnNewMenuItem
             // 
@@ -89,6 +90,7 @@
             btnNewMenuItem.TabIndex = 9;
             btnNewMenuItem.Text = "Add menu item";
             btnNewMenuItem.UseVisualStyleBackColor = false;
+            btnNewMenuItem.Click += btnNewMenuItem_Click;
             // 
             // btnViewAllItems
             // 
