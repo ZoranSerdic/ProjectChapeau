@@ -48,6 +48,7 @@
             btnReturn.TabIndex = 13;
             btnReturn.Text = "Return";
             btnReturn.UseVisualStyleBackColor = false;
+            btnReturn.Click += btnReturn_Click;
             // 
             // pictureBox1
             // 
