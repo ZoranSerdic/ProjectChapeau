@@ -29,6 +29,10 @@ namespace ChapeauUI
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
+            this.Hide();    
+            MenuOverviewView menuOverviewView = new MenuOverviewView(); 
+            menuOverviewView.ShowDialog();
+            this.Close();
         }
 
         private void btnTableOverview_Click(object sender, EventArgs e)

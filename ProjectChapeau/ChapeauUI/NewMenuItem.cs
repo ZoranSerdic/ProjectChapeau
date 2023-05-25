@@ -46,5 +46,16 @@ namespace ChapeauUI
             radBtnDinnerTime.Checked = false;
             radBtnAllDay.Checked = false;
         }
+
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            //Opens a message box for additional confirmation 
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?","Confirmation needed", MessageBoxButtons.OKCancel);
+
+            if (dialogResult == DialogResult.OK)
+            {
+                //code for if the second confirmation occurs 
+            }
+        }
     }
 }

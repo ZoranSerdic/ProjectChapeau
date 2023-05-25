@@ -136,6 +136,7 @@
             btnConfirm.TabIndex = 21;
             btnConfirm.Text = "Confirm";
             btnConfirm.UseVisualStyleBackColor = true;
+            btnConfirm.Click += btnConfirm_Click;
             // 
             // radBtnDrink
             // 

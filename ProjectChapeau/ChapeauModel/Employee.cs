@@ -14,6 +14,10 @@ namespace ChapeauModel
         public string LastName { get; set; }
         public Role Occupation { get; set; }
 
+        public Employee()
+        {
+            // constructor without any parameters 
+        }
         public Employee(int employeeId, string pincode, string firstName, string lastName, Role occupation)
         {
             EmployeeId = employeeId;
