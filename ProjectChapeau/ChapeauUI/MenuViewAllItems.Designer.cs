@@ -33,6 +33,7 @@
             lblHeading = new Label();
             btnReturn = new Button();
             listViewMenuItems = new ListView();
+            btnEditMenuItem = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -75,11 +76,21 @@
             listViewMenuItems.UseCompatibleStateImageBehavior = false;
             listViewMenuItems.View = View.Details;
             // 
+            // btnEditMenuItem
+            // 
+            btnEditMenuItem.Location = new Point(462, 824);
+            btnEditMenuItem.Name = "btnEditMenuItem";
+            btnEditMenuItem.Size = new Size(240, 97);
+            btnEditMenuItem.TabIndex = 17;
+            btnEditMenuItem.Text = "Edit selected menu item";
+            btnEditMenuItem.UseVisualStyleBackColor = true;
+            // 
             // MenuViewAllItems
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(btnEditMenuItem);
             Controls.Add(listViewMenuItems);
             Controls.Add(btnReturn);
             Controls.Add(pictureBox1);
@@ -97,5 +108,6 @@
         private Label lblHeading;
         private Button btnReturn;
         private ListView listViewMenuItems;
+        private Button btnEditMenuItem;
     }
 }
