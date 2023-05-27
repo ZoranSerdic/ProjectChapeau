@@ -29,19 +29,34 @@ namespace ChapeauUI
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            this.Hide();    
-            MenuOverviewView menuOverviewView = new MenuOverviewView(); 
+            this.Hide();
+            MenuOverviewView menuOverviewView = new MenuOverviewView();
             menuOverviewView.ShowDialog();
             this.Close();
         }
 
         private void btnTableOverview_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            TableView tableView = new TableView();  
+            tableView.ShowDialog();
+            this.Close();
         }
 
         private void btnEmployees_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview();
+            employeeOverview.ShowDialog();
+            this.Close();   
         }
 
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            LoginView loginView = new LoginView();  
+            loginView.ShowDialog();
+            this.Close();   
+        }
     }
 }
