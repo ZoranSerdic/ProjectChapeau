@@ -12,14 +12,18 @@ namespace ChapeauModel
 
         public string Name { get; set; }
 
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         public float Vat { get; set; } 
-        public FoodType CourseType { get; set; }
+        public FoodType? CourseType { get; set; }
+
 
         public List<InventoryItem> Ingredients { get; set; }
-
-        public MenuItem(int menuItemId, string name, double price, float vat)
+        public MenuItem()
+        {
+            // a constructor without any parameters 
+        }
+        public MenuItem(int menuItemId, string name, decimal price, float vat)
         {
             MenuItemId = menuItemId;
             Name = name;

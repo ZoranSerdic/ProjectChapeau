@@ -10,7 +10,7 @@ namespace ChapeauModel
     {
         public bool IsAlcoholic { get; set; }
 
-        public Drink(int menuItemId, string name, double price, float vat, bool isAlcoholic) : base(menuItemId, name, price, vat)
+        public Drink(int menuItemId, string name, decimal price, float vat, bool isAlcoholic) : base(menuItemId, name, price, vat)
         {
             IsAlcoholic = isAlcoholic;
         }

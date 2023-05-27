@@ -39,9 +39,17 @@ namespace ChapeauUI
         {
             //hides then closes this form, and returns to the Manager view
             this.Hide();
-            ManagerView managerView = new ManagerView();    
+            ManagerView managerView = new ManagerView();
             managerView.ShowDialog();
             this.Close();
+        }
+
+        private void btnViewAllItems_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            MenuViewAllItems menuViews = new MenuViewAllItems();
+            menuViews.ShowDialog();
+            this.Close();   
         }
     }
 }

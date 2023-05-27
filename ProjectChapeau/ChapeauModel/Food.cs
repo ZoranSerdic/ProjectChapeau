@@ -11,7 +11,7 @@ namespace ChapeauModel
 
         public MenuType MenuTime { get; set; }
 
-        public Food(int menuItemId, string name, double price, float vat, MenuType MenuTime) : base(menuItemId, name, price, vat)
+        public Food(int menuItemId, string name, decimal price, float vat, MenuType MenuTime) : base(menuItemId, name, price, vat)
         {
             this.MenuTime = MenuTime;
         }

@@ -103,6 +103,7 @@
             btnViewAllItems.TabIndex = 8;
             btnViewAllItems.Text = "View all items";
             btnViewAllItems.UseVisualStyleBackColor = false;
+            btnViewAllItems.Click += btnViewAllItems_Click;
             // 
             // MenuOverviewView
             // 
