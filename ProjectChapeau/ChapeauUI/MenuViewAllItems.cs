@@ -42,7 +42,7 @@ namespace ChapeauUI
             {
                 ListViewItem li = new ListViewItem(item.MenuItemId.ToString());
                 li.SubItems.Add(item.Name);
-                li.SubItems.Add(item.Price.ToString());
+                li.SubItems.Add(item.Price.ToString("0.00"));
                 li.SubItems.Add(item.Vat.ToString());
                 li.SubItems.Add(item.CourseType.ToString());
                 li.Tag = item;
