@@ -87,7 +87,7 @@ namespace ChapeauUI
         private bool CheckNameAndPrice()
         {
             //returns true if name and price are not empty 
-            if (lblPrice.Text != "" && lblName.Text != "")
+            if (txtBoxName.Text != "" && numPrice != null)
             {
                 return true;
             }
