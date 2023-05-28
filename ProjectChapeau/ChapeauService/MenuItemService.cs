@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ChapeauDAL;
 using ChapeauModel;
 
@@ -20,6 +21,35 @@ namespace ChapeauService
         public List<MenuItem> GetAllMenuItems()
         {
             return menuItemDAO.GetAllMenuItems();
+        }
+        //passes on all the drinks 
+        public List<MenuItem> GetAllDrinks()
+        {
+            return menuItemDAO.GetAllDrinks();
+        }
+        //passes on all the starters 
+        public List<MenuItem> GetAllStarters()
+        {
+            return menuItemDAO.GetAllStarters();
+        }
+        //passes on all the main courses 
+        public List<MenuItem> GetAllMains()
+        {
+            return menuItemDAO.GetAllMainDishes();
+        }
+        //passes on all the desserts 
+        public List<MenuItem> GetAllDesserts()
+        {
+            return menuItemDAO.GetAllDesserts();
+        }
+
+        public void RemoveItem(MenuItem item)
+        {
+            menuItemDAO.RemoveItem(item);
+        }
+        public void AddItem(MenuItem item)
+        {
+            menuItemDAO.AddItem(item);
         }
     }
 }

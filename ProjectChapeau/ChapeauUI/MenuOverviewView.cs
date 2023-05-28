@@ -49,7 +49,7 @@ namespace ChapeauUI
             this.Hide();
             MenuViewAllItems menuViews = new MenuViewAllItems();
             menuViews.ShowDialog();
-            this.Close();   
+            this.Close();
         }
     }
 }

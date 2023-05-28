@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChapeauModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,14 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ChapeauService;
 
 namespace ChapeauUI
 {
     public partial class NewMenuItem : Form
     {
+        MenuItemService menuItemService;
         public NewMenuItem()
         {
             InitializeComponent();
+            menuItemService = new MenuItemService();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -34,6 +38,7 @@ namespace ChapeauUI
         {
             //clears the information that the user has added
             txtBoxName.Text = string.Empty;
+
             radBtnDrink.Checked = false;
             radBtnStarter.Checked = false;
             radBtnMainDish.Checked = false;
@@ -49,12 +54,93 @@ namespace ChapeauUI
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            //Opens a message box for additional confirmation 
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?","Confirmation needed", MessageBoxButtons.OKCancel);
+            //CHECK FIRST IF ALL THE BTNS ARE CORRECTLY CHECKED 
 
-            if (dialogResult == DialogResult.OK)
+            if (FieldsCorrect())
             {
-                //code for if the second confirmation occurs 
+                //Opens a message box for additional confirmation 
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    //code for if the second confirmation occurs 
+                    MenuItem newItem = new MenuItem();
+                    CreateNewMenuItem(newItem);
+                    menuItemService.AddItem(newItem);
+                }
+            }
+            else
+            {
+                //shows message that the fields are inccorect 
+                DialogResult dialogResult = MessageBox.Show("Fields not filled in correctly", "Error");
+            }
+            
+        }
+        private bool FieldsCorrect()
+        {
+            if (CheckNameAndPrice() && CheckMenuType() && CheckVat())
+            {
+                return true;
+            }
+            return false; 
+        }
+        private bool CheckNameAndPrice()
+        {
+            //returns true if name and price are not empty 
+            if (lblPrice.Text != "" && lblName.Text != "")
+            {
+                return true;
+            }
+            return false; 
+        }
+        private bool CheckMenuType()
+        {
+            //returns true if at least one radBtn is selected 
+            if (radBtnDrink.Checked || radBtnStarter.Checked || radBtnMainDish.Checked || radBtnDessert.Checked)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool CheckVat()
+        {
+            //returns true if at least one radBtn is selected 
+            if (radBtnAlcoholic.Checked || radBtnNonAlcoholic.Checked)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void CreateNewMenuItem(MenuItem newItem)
+        {
+            newItem.Name = txtBoxName.Text;
+            newItem.Price = numPrice.Value;
+
+            if (radBtnDrink.Checked)
+            {
+                newItem.CourseType = FoodType.Drink;
+            }
+            else if (radBtnStarter.Checked)
+            {
+                newItem.CourseType= FoodType.Starter;
+            }
+            else if (radBtnMainDish.Checked)
+            {
+                newItem.CourseType = FoodType.MainCourse;
+            }
+            else 
+            {
+                newItem.CourseType = FoodType.Dessert;
+            }
+
+            if (radBtnAlcoholic.Checked)
+            {
+                newItem.Vat = (float)0.21;
+            }
+            else 
+            {
+                newItem.Vat = (float)0.09;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChapeauService;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,21 +13,40 @@ namespace ChapeauUI
 {
     public partial class MenuItemSelectionView : Form
     {
+        MenuItemService menuItemService;
         public MenuItemSelectionView()
         {
             InitializeComponent();
+            menuItemService = new MenuItemService();    
         }
 
-        private void btmMainDishes_Click(object sender, EventArgs e)
+        private void btnDrinks_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            RemoveMenuItem removeMenuItem = new RemoveMenuItem(menuItemService.GetAllDrinks());
+            removeMenuItem.ShowDialog();
+            this.Close();
         }
-
-        private void btnNewMenuItem_Click(object sender, EventArgs e)
+        private void btnStarters_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            RemoveMenuItem removeMenuItem = new RemoveMenuItem(menuItemService.GetAllStarters());
+            removeMenuItem.ShowDialog();
+            this.Close();
         }
-
-        private void btnViewAllItems_Click(object sender, EventArgs e)
+        private void btnMainDishes_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            RemoveMenuItem removeMenuItem = new RemoveMenuItem(menuItemService.GetAllMains());
+            removeMenuItem.ShowDialog();
+            this.Close();
+        }
+        private void btnDesserts_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            RemoveMenuItem removeMenuItem = new RemoveMenuItem(menuItemService.GetAllDesserts());
+            removeMenuItem.ShowDialog();
+            this.Close();
         }
 
         private void btnReturn_Click(object sender, EventArgs e)

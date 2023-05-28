@@ -1,6 +1,4 @@
-﻿using ChapeauModel;
-using ChapeauService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,33 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ChapeauModel;
 
 namespace ChapeauUI
 {
-    public partial class MenuViewAllItems : Form
+    public partial class RemoveMenuItem : Form
     {
-        public MenuViewAllItems()
+        public RemoveMenuItem(List<MenuItem> menuItems)
         {
             InitializeComponent();
-            List<MenuItem> items = new List<MenuItem>();
-            MenuItemService menuItemsService = new MenuItemService();
-            items.AddRange(menuItemsService.GetAllMenuItems());
-
-            DisplayMenuItems(items);
+            DisplayMenuItems(menuItems);
         }
-
-        //fills the listview with all the items 
         public void DisplayMenuItems(List<MenuItem> items)
         {
             //clear the listview before filling it
-            listViewMenuItems.Clear();
+            listViewItemsList.Clear();
 
             //adding the columns
-            listViewMenuItems.Columns.Add("Menu Item ID", 110);
-            listViewMenuItems.Columns.Add("Name", 430);
-            listViewMenuItems.Columns.Add("Price", 60);
-            listViewMenuItems.Columns.Add("Vat", 60);
-            listViewMenuItems.Columns.Add("Type", 100);
+            listViewItemsList.Columns.Add("Menu Item ID", 110);
+            listViewItemsList.Columns.Add("Name", 430);
+            listViewItemsList.Columns.Add("Price", 60);
+            listViewItemsList.Columns.Add("Vat", 60);
+            listViewItemsList.Columns.Add("Type", 100); // could be removed 
 
             //adding the rows to the listview
             foreach (MenuItem item in items)
@@ -46,14 +39,15 @@ namespace ChapeauUI
                 li.SubItems.Add(item.Vat.ToString());
                 li.SubItems.Add(item.CourseType.ToString());
                 li.Tag = item;
-                listViewMenuItems.Items.Add(li);
+                listViewItemsList.Items.Add(li);
             }
         }
+
         private void btnReturn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MenuOverviewView menuOverviewView = new MenuOverviewView();
-            menuOverviewView.ShowDialog();
+            MenuItemSelectionView itemSelection = new MenuItemSelectionView();
+            itemSelection.ShowDialog();
             this.Close();
         }
     }

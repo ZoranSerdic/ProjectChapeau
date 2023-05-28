@@ -49,7 +49,7 @@
             btnDrinks.TabIndex = 0;
             btnDrinks.Text = "Drinks";
             btnDrinks.UseVisualStyleBackColor = false;
-            btnDrinks.Click += btnViewAllItems_Click;
+            btnDrinks.Click += btnDrinks_Click;
             // 
             // lblHeading
             // 
@@ -92,6 +92,7 @@
             btnMainDishes.TabIndex = 8;
             btnMainDishes.Text = "Main Dishes";
             btnMainDishes.UseVisualStyleBackColor = false;
+            btnMainDishes.Click += btnMainDishes_Click;
             // 
             // btnStarters
             // 
@@ -103,6 +104,7 @@
             btnStarters.TabIndex = 9;
             btnStarters.Text = "Starters";
             btnStarters.UseVisualStyleBackColor = false;
+            btnStarters.Click += btnStarters_Click;
             // 
             // btnDesserts
             // 
@@ -114,6 +116,7 @@
             btnDesserts.TabIndex = 10;
             btnDesserts.Text = "Desserts";
             btnDesserts.UseVisualStyleBackColor = false;
+            btnDesserts.Click += btnDesserts_Click;
             // 
             // MenuItemSelectionView
             // 

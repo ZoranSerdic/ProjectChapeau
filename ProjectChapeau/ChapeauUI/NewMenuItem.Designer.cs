@@ -50,10 +50,13 @@
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
+            numPrice = new NumericUpDown();
+            lblPrice = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numPrice).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -267,11 +270,29 @@
             panel3.Size = new Size(688, 70);
             panel3.TabIndex = 33;
             // 
+            // numPrice
+            // 
+            numPrice.Location = new Point(462, 236);
+            numPrice.Name = "numPrice";
+            numPrice.Size = new Size(150, 27);
+            numPrice.TabIndex = 34;
+            // 
+            // lblPrice
+            // 
+            lblPrice.AutoSize = true;
+            lblPrice.Location = new Point(461, 206);
+            lblPrice.Name = "lblPrice";
+            lblPrice.Size = new Size(44, 20);
+            lblPrice.TabIndex = 35;
+            lblPrice.Text = "Price:";
+            // 
             // NewMenuItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(lblPrice);
+            Controls.Add(numPrice);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -293,6 +314,7 @@
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numPrice).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -320,5 +342,7 @@
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
+        private NumericUpDown numPrice;
+        private Label lblPrice;
     }
 }
