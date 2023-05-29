@@ -24,7 +24,7 @@ namespace ChapeauService
         {
             employeeDao.RemoveEmployee(employee);
         }
-        public void AddItem(Employee employee)
+        public void AddEmployee(Employee employee)
         {
             employeeDao.AddEmployee(employee);
         }

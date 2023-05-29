@@ -108,6 +108,7 @@
             BtnRemoveEmployee.TabIndex = 19;
             BtnRemoveEmployee.Text = "Remove selected employee";
             BtnRemoveEmployee.UseVisualStyleBackColor = false;
+            BtnRemoveEmployee.Click += BtnRemoveEmployee_Click;
             // 
             // listViewEmployees
             // 

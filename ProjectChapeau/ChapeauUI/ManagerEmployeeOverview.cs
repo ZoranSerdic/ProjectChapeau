@@ -14,12 +14,16 @@ namespace ChapeauUI
 {
     public partial class ManagerEmployeeOverview : Form
     {
+        private Employee selectedEmployee;
+        private EmployeeService service;
+        private List<Employee> employees;  
+        
         public ManagerEmployeeOverview()
         {
             InitializeComponent();
-            List<Employee> employees = new List<Employee>();
-            EmployeeService employeeService = new EmployeeService();
-            employees.AddRange(employeeService.GetAllEmployees());
+            service = new EmployeeService();
+            employees = new List<Employee>();
+            employees.AddRange(service.GetAllEmployees());
 
             DisplayEmployees(employees);
         }
@@ -47,17 +51,24 @@ namespace ChapeauUI
                 listViewEmployees.Items.Add(li);
             }
         }
+        private void UpdateListView()
+        {
+            listViewEmployees.Clear();
+            employees.Clear();  
+            employees.AddRange(service.GetAllEmployees());
+            DisplayEmployees(employees);
+        }
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            ReturnToManagerView();  
+            ReturnToManagerView();
         }
 
         private void btnAddNewEmployee_Click(object sender, EventArgs e)
         {
             this.Hide();
             NewEmployee newEmployee = new NewEmployee();
-            newEmployee.ShowDialog();   
+            newEmployee.ShowDialog();
             this.Close();
         }
         private void ReturnToManagerView()
@@ -66,6 +77,31 @@ namespace ChapeauUI
             ManagerView managerView = new ManagerView();
             managerView.ShowDialog();
             this.Close();
+        }
+
+        private void BtnRemoveEmployee_Click(object sender, EventArgs e)
+        {
+            //checks first if there is a selected row 
+            if (listViewEmployees.SelectedItems.Count > 0)
+            {
+                selectedEmployee = new Employee();
+                ListViewItem selectedListViewItemRow = listViewEmployees.SelectedItems[0];
+
+                //adds the menuID from the row to the menu Item 
+                selectedEmployee.EmployeeId = int.Parse(selectedListViewItemRow.SubItems[0].Text);
+
+                //double checks action 
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+                if (dialogResult == DialogResult.OK)
+                {
+                    service.RemoveEmployee(selectedEmployee);
+                    UpdateListView();
+                }
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
+            }
         }
     }
 }

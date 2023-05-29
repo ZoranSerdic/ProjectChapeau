@@ -41,13 +41,11 @@
             radBtnWaiter = new RadioButton();
             radBtnChef = new RadioButton();
             radBtnBartender = new RadioButton();
-            numPin1 = new NumericUpDown();
-            numPin2 = new NumericUpDown();
             btnCancel = new Button();
             btnConfirm = new Button();
+            txtBoxPin1 = new TextBox();
+            txtBoxPin2 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numPin1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numPin2).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -113,16 +111,16 @@
             // lblPinCode
             // 
             lblPinCode.AutoSize = true;
-            lblPinCode.Location = new Point(76, 549);
+            lblPinCode.Location = new Point(76, 560);
             lblPinCode.Name = "lblPinCode";
-            lblPinCode.Size = new Size(71, 20);
+            lblPinCode.Size = new Size(139, 20);
             lblPinCode.TabIndex = 22;
-            lblPinCode.Text = "Pin Code:";
+            lblPinCode.Text = "Four digit Pin Code:";
             // 
             // lblConfirmPinCode
             // 
             lblConfirmPinCode.AutoSize = true;
-            lblConfirmPinCode.Location = new Point(339, 549);
+            lblConfirmPinCode.Location = new Point(339, 560);
             lblConfirmPinCode.Name = "lblConfirmPinCode";
             lblConfirmPinCode.Size = new Size(126, 20);
             lblConfirmPinCode.TabIndex = 23;
@@ -161,22 +159,6 @@
             radBtnBartender.Text = "Bartender";
             radBtnBartender.UseVisualStyleBackColor = true;
             // 
-            // numPin1
-            // 
-            numPin1.Location = new Point(76, 600);
-            numPin1.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
-            numPin1.Name = "numPin1";
-            numPin1.Size = new Size(150, 27);
-            numPin1.TabIndex = 27;
-            // 
-            // numPin2
-            // 
-            numPin2.Location = new Point(339, 600);
-            numPin2.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
-            numPin2.Name = "numPin2";
-            numPin2.Size = new Size(150, 27);
-            numPin2.TabIndex = 28;
-            // 
             // btnCancel
             // 
             btnCancel.Location = new Point(132, 728);
@@ -197,15 +179,33 @@
             btnConfirm.UseVisualStyleBackColor = true;
             btnConfirm.Click += btnConfirm_Click;
             // 
+            // txtBoxPin1
+            // 
+            txtBoxPin1.Location = new Point(76, 600);
+            txtBoxPin1.Name = "txtBoxPin1";
+            txtBoxPin1.Size = new Size(125, 27);
+            txtBoxPin1.TabIndex = 31;
+            txtBoxPin1.UseSystemPasswordChar = true;
+            txtBoxPin1.TextChanged += txtBoxPin1_TextChanged;
+            // 
+            // txtBoxPin2
+            // 
+            txtBoxPin2.Location = new Point(340, 600);
+            txtBoxPin2.Name = "txtBoxPin2";
+            txtBoxPin2.Size = new Size(125, 27);
+            txtBoxPin2.TabIndex = 32;
+            txtBoxPin2.UseSystemPasswordChar = true;
+            txtBoxPin2.TextChanged += txtBoxPin2_TextChanged;
+            // 
             // NewEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(txtBoxPin2);
+            Controls.Add(txtBoxPin1);
             Controls.Add(btnConfirm);
             Controls.Add(btnCancel);
-            Controls.Add(numPin2);
-            Controls.Add(numPin1);
             Controls.Add(radBtnBartender);
             Controls.Add(radBtnChef);
             Controls.Add(radBtnWaiter);
@@ -221,8 +221,6 @@
             Name = "NewEmployee";
             Text = "NewEmployee";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numPin1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numPin2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -241,9 +239,9 @@
         private RadioButton radBtnWaiter;
         private RadioButton radBtnChef;
         private RadioButton radBtnBartender;
-        private NumericUpDown numPin1;
-        private NumericUpDown numPin2;
         private Button btnCancel;
         private Button btnConfirm;
+        private TextBox txtBoxPin1;
+        private TextBox txtBoxPin2;
     }
 }
