@@ -10,15 +10,11 @@ using System.Windows.Forms;
 
 namespace ChapeauUI
 {
-    public partial class ManagerConfirmation : Form
+    public partial class EditEmployee : Form
     {
-        public ManagerConfirmation()
+        public EditEmployee()
         {
             InitializeComponent();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
         }
     }
 }

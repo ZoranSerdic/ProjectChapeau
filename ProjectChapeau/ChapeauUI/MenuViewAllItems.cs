@@ -14,6 +14,7 @@ namespace ChapeauUI
 {
     public partial class MenuViewAllItems : Form
     {
+        private MenuItem selectedItem; 
         public MenuViewAllItems()
         {
             InitializeComponent();
@@ -54,6 +55,38 @@ namespace ChapeauUI
             this.Hide();
             MenuOverviewView menuOverviewView = new MenuOverviewView();
             menuOverviewView.ShowDialog();
+            this.Close();
+        }
+
+        private void btnEditMenuItem_Click(object sender, EventArgs e)
+        {
+            //checks first if there is a selected row 
+            if (listViewMenuItems.SelectedItems.Count > 0)
+            {
+                selectedItem = new MenuItem();
+                ListViewItem selectedMenuItemRow = listViewMenuItems.SelectedItems[0];
+
+                //adds the menuID from the row to the menu Item 
+                selectedItem.MenuItemId = int.Parse(selectedMenuItemRow.SubItems[0].Text);
+                selectedItem.Name = selectedMenuItemRow.SubItems[1].Text;
+                selectedItem.Price = decimal.Parse(selectedMenuItemRow.SubItems[2].Text);
+                selectedItem.Vat = float.Parse(selectedMenuItemRow.SubItems[3].Text);
+                //to get the correct enum, first get it as a string, then convert and assign
+                string type = selectedMenuItemRow.SubItems[4].Text;
+                selectedItem.CourseType = (FoodType)Enum.Parse(typeof(FoodType), type);
+                ChangeToEditEmployee();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("No Menu Item was selected", "Error");
+            }
+        }
+
+        private void ChangeToEditEmployee()
+        {
+            this.Hide();
+            EditMenuItem editMenuItem = new EditMenuItem(this.selectedItem);
+            editMenuItem.ShowDialog();
             this.Close();
         }
     }

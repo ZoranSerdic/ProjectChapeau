@@ -18,7 +18,7 @@ namespace ChapeauModel
         public FoodType? CourseType { get; set; }
 
 
-        public List<InventoryItem> Ingredients { get; set; }
+        public List<InventoryItem>? Ingredients { get; set; }
         public MenuItem()
         {
             // a constructor without any parameters 

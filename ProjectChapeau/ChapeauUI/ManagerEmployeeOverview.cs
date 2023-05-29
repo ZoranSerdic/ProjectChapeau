@@ -16,8 +16,8 @@ namespace ChapeauUI
     {
         private Employee selectedEmployee;
         private EmployeeService service;
-        private List<Employee> employees;  
-        
+        private List<Employee> employees;
+
         public ManagerEmployeeOverview()
         {
             InitializeComponent();
@@ -54,7 +54,7 @@ namespace ChapeauUI
         private void UpdateListView()
         {
             listViewEmployees.Clear();
-            employees.Clear();  
+            employees.Clear();
             employees.AddRange(service.GetAllEmployees());
             DisplayEmployees(employees);
         }

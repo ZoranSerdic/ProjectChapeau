@@ -84,6 +84,7 @@
             btnEditMenuItem.TabIndex = 17;
             btnEditMenuItem.Text = "Edit selected menu item";
             btnEditMenuItem.UseVisualStyleBackColor = true;
+            btnEditMenuItem.Click += btnEditMenuItem_Click;
             // 
             // MenuViewAllItems
             // 

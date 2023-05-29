@@ -92,5 +92,17 @@ namespace ChapeauDAL
             sqlParameters[3] = new SqlParameter("@courseType", item.CourseType.ToString());
             ExecuteEditQuery(query, sqlParameters);
         }
+        public void UpdateItem(MenuItem item)
+        {
+            //this method updates existing items 
+            string query = "UPDATE MenuItem SET courseType = @newcourseType, vatId = @newvat, [name] = @newname, [price] = @newprice WHERE menuItemid = @itemId;";
+            SqlParameter[] sqlParameters = new SqlParameter[5];
+            sqlParameters[0] = new SqlParameter("@newvat", item.Vat);
+            sqlParameters[1] = new SqlParameter("@newprice", item.Price);
+            sqlParameters[2] = new SqlParameter("@newname", item.Name);
+            sqlParameters[3] = new SqlParameter("@newcourseType", item.CourseType.ToString());
+            sqlParameters[4] = new SqlParameter("@itemId", item.MenuItemId);
+            ExecuteEditQuery(query, sqlParameters);
+        }
     }
 }

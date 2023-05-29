@@ -51,5 +51,9 @@ namespace ChapeauService
         {
             menuItemDAO.AddItem(item);
         }
+        public void UpdateItem (MenuItem item)
+        {
+            menuItemDAO.UpdateItem(item);
+        }
     }
 }

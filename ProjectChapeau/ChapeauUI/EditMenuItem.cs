@@ -1,4 +1,5 @@
 ﻿using ChapeauModel;
+using ChapeauService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,41 +9,85 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ChapeauService;
 
 namespace ChapeauUI
 {
-    public partial class NewMenuItem : Form
+    public partial class EditMenuItem : Form
     {
-        MenuItemService menuItemService;
-        public NewMenuItem()
+        private MenuItem menuItem;
+        private MenuItem updatedItem;
+        private MenuItemService menuItemService;
+        public EditMenuItem(MenuItem menuItem)
         {
+            this.menuItem = menuItem;
+            menuItemService = new MenuItemService();    
             InitializeComponent();
-            menuItemService = new MenuItemService();
+            FillForm();
+        }
+        private void FillForm()
+        {
+            txtBoxName.Text = menuItem.Name;
+            numPrice.Value = menuItem.Price;
+            FillRadButtons();
+        }
+        private void FillRadButtons()
+        {
+            //preselects the correct radiobuttons for the user 
+            if (menuItem.CourseType == FoodType.MainCourse)
+            {
+                radBtnMainDish.Checked = true;
+            }
+            else if (menuItem.CourseType == FoodType.Drink)
+            {
+                radBtnDrink.Checked = true;
+            }
+            else if (menuItem.CourseType == FoodType.Starter)
+            {
+                radBtnStarter.Checked = true;
+            }
+            else
+            {
+                radBtnDessert.Checked = true;
+            }
+
+            if (menuItem.Vat == (float)0.09)
+            {
+                radBtnNonAlcoholic.Checked = true;
+            }
+            else 
+                radBtnAlcoholic.Checked = true;
+            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            ReturnToMenu();
+            ReturnToItemView();
+        }
+        private void ReturnToItemView()
+        {
+            this.Hide();
+            MenuViewAllItems menuViewAllItems = new MenuViewAllItems();
+            menuViewAllItems.ShowDialog();
+            this.Close();
         }
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             //CHECKS FIRST IF ALL THE BTNS ARE CORRECTLY CHECKED 
-
             if (FieldsCorrect())
             {
                 //Opens a message box for additional confirmation 
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
 
+                
                 if (dialogResult == DialogResult.OK)
                 {
                     //code for if the second confirmation occurs 
-                    MenuItem newItem = new MenuItem();
-                    CreateNewMenuItem(newItem);
-                    menuItemService.AddItem(newItem);
+                    updatedItem = new MenuItem();
+                    CreateNewMenuItem();
+                    menuItemService.UpdateItem(updatedItem); 
                     dialogResult = MessageBox.Show("Menu item was successfully added to the database", "Success!");
-                    ReturnToMenu();
+                    ReturnToItemView();
                 }
             }
             else
@@ -50,7 +95,6 @@ namespace ChapeauUI
                 //shows message that the fields are inccorect 
                 DialogResult dialogResult = MessageBox.Show("Fields not filled in correctly", "Error");
             }
-
         }
         private bool FieldsCorrect()
         {
@@ -87,49 +131,36 @@ namespace ChapeauUI
             }
             return false;
         }
-        private void ReturnToMenu()
+        private void CreateNewMenuItem()
         {
-            //clears and hides the form 
-            //ClearPanel();
-            this.Hide();
-
-            //returns to the menu overview 
-            MenuOverviewView menuOverviewView = new MenuOverviewView();
-            menuOverviewView.ShowDialog();
-
-            //closes the form 
-            this.Close();
-        }
-
-        private void CreateNewMenuItem(MenuItem newItem)
-        {
-            newItem.Name = txtBoxName.Text;
-            newItem.Price = numPrice.Value;
+            updatedItem.MenuItemId = menuItem.MenuItemId;
+            updatedItem.Name = txtBoxName.Text;
+            updatedItem.Price = numPrice.Value;
 
             if (radBtnDrink.Checked)
             {
-                newItem.CourseType = FoodType.Drink;
+                updatedItem.CourseType = FoodType.Drink;
             }
             else if (radBtnStarter.Checked)
             {
-                newItem.CourseType = FoodType.Starter;
+                updatedItem.CourseType = FoodType.Starter;
             }
             else if (radBtnMainDish.Checked)
             {
-                newItem.CourseType = FoodType.MainCourse;
+                updatedItem.CourseType = FoodType.MainCourse;
             }
             else
             {
-                newItem.CourseType = FoodType.Dessert;
+                updatedItem.CourseType = FoodType.Dessert;
             }
 
             if (radBtnAlcoholic.Checked)
             {
-                newItem.Vat = 2;
+                updatedItem.Vat = 2;
             }
             else
             {
-                newItem.Vat = 1;
+                updatedItem.Vat = 1;
             }
         }
     }

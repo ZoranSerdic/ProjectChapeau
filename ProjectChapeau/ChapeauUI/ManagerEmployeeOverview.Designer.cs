@@ -34,7 +34,6 @@
             btnReturn = new Button();
             btnAddNewEmployee = new Button();
             BtnEditEmployee = new Button();
-            button4 = new Button();
             BtnRemoveEmployee = new Button();
             listViewEmployees = new ListView();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -83,21 +82,12 @@
             // 
             // BtnEditEmployee
             // 
-            BtnEditEmployee.Location = new Point(267, 683);
+            BtnEditEmployee.Location = new Point(353, 683);
             BtnEditEmployee.Name = "BtnEditEmployee";
             BtnEditEmployee.Size = new Size(136, 84);
             BtnEditEmployee.TabIndex = 17;
             BtnEditEmployee.Text = "Edit selected employee";
             BtnEditEmployee.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(459, 683);
-            button4.Name = "button4";
-            button4.Size = new Size(128, 84);
-            button4.TabIndex = 18;
-            button4.Text = "button4";
-            button4.UseVisualStyleBackColor = true;
             // 
             // BtnRemoveEmployee
             // 
@@ -127,7 +117,6 @@
             ClientSize = new Size(836, 1055);
             Controls.Add(listViewEmployees);
             Controls.Add(BtnRemoveEmployee);
-            Controls.Add(button4);
             Controls.Add(BtnEditEmployee);
             Controls.Add(btnAddNewEmployee);
             Controls.Add(btnReturn);
@@ -147,7 +136,6 @@
         private Button btnReturn;
         private Button btnAddNewEmployee;
         private Button BtnEditEmployee;
-        private Button button4;
         private Button BtnRemoveEmployee;
         private ListView listViewEmployees;
     }
