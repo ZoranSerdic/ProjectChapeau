@@ -45,5 +45,23 @@ namespace ChapeauDAL
             //finally all employees are returned in a list 
             return employees;
         }
+        public void RemoveEmployee(Employee employee)
+        {
+            string query = "DELETE FROM Employee WHERE employeeId = @employeeID;";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@employeeID", employee.EmployeeId);
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        public void AddEmployee(Employee employee)
+        {
+            //this method adds the item into the menu Item table 
+            string query = "INSERT INTO Employee([hash], firstname, lastname, occupation) VALUES(@hash,@FirstName,@LastName,@Occupation);";
+            SqlParameter[] sqlParameters = new SqlParameter[4];
+            sqlParameters[0] = new SqlParameter("@Occupation", employee.Occupation);
+            sqlParameters[1] = new SqlParameter("@FirstName", employee.FirstName);
+            sqlParameters[2] = new SqlParameter("@LastName", employee.LastName);
+            sqlParameters[3] = new SqlParameter("@hash", employee.Pincode);
+            ExecuteEditQuery(query, sqlParameters);
+        }
     }
 }

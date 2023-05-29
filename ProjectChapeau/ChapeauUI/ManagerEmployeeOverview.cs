@@ -50,6 +50,18 @@ namespace ChapeauUI
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
+            ReturnToManagerView();  
+        }
+
+        private void btnAddNewEmployee_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            NewEmployee newEmployee = new NewEmployee();
+            newEmployee.ShowDialog();   
+            this.Close();
+        }
+        private void ReturnToManagerView()
+        {
             this.Hide();
             ManagerView managerView = new ManagerView();
             managerView.ShowDialog();

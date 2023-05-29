@@ -272,6 +272,7 @@
             // 
             // numPrice
             // 
+            numPrice.DecimalPlaces = 2;
             numPrice.Location = new Point(462, 236);
             numPrice.Name = "numPrice";
             numPrice.Size = new Size(150, 27);

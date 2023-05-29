@@ -15,12 +15,18 @@ namespace ChapeauService
         {
             employeeDao = new EmployeeDAO();
         }
-
-
         //passes on all the employees 
         public List<Employee> GetAllEmployees()
         {
             return employeeDao.GetAllEmployees();  
+        }
+        public void RemoveEmployee(Employee employee)
+        {
+            employeeDao.RemoveEmployee(employee);
+        }
+        public void AddItem(Employee employee)
+        {
+            employeeDao.AddEmployee(employee);
         }
     }
 }

@@ -79,6 +79,7 @@
             btnAddNewEmployee.TabIndex = 16;
             btnAddNewEmployee.Text = "Add new staff member";
             btnAddNewEmployee.UseVisualStyleBackColor = false;
+            btnAddNewEmployee.Click += btnAddNewEmployee_Click;
             // 
             // BtnEditEmployee
             // 

@@ -78,18 +78,18 @@ namespace ChapeauDAL
         {
             string query = "DELETE FROM MenuItem WHERE MenuItemID = @ItemID;";
             SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[1] = new SqlParameter("@ItemID", item.MenuItemId);
+            sqlParameters[0] = new SqlParameter("@ItemID", item.MenuItemId);
             ExecuteEditQuery(query, sqlParameters);
         }
         public void AddItem(MenuItem item)
         {
             //this method adds the item into the menu Item table 
-            string query = "INSERT INTO MenuItem(vatId, price, [name], CourseType) VALUES (@vat, @price, '@name','@courseType');";
+            string query = "INSERT INTO MenuItem(vatId, price, [name], CourseType) VALUES (@vat, @price, @name, @courseType);";
             SqlParameter[] sqlParameters = new SqlParameter[4];
             sqlParameters[0] = new SqlParameter("@vat", item.Vat);
             sqlParameters[1] = new SqlParameter("@price", item.Price);
-            sqlParameters[2] = new SqlParameter("@name", item.Name);
-            sqlParameters[3] = new SqlParameter("@courseType", item.CourseType);
+            sqlParameters[2] = new SqlParameter("@name", item.Name.ToString());
+            sqlParameters[3] = new SqlParameter("@courseType", item.CourseType.ToString());
             ExecuteEditQuery(query, sqlParameters);
         }
     }

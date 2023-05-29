@@ -23,18 +23,9 @@ namespace ChapeauUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            //clears and hides the form 
-            ClearPanel();
-            this.Hide();
-
-            //returns to the menu overview 
-            MenuOverviewView menuOverviewView = new MenuOverviewView();
-            menuOverviewView.ShowDialog();
-
-            //closes the form 
-            this.Close();
+            ReturnToMenu();
         }
-        private void ClearPanel()
+        /*private void ClearPanel()       this COULD BE removed 
         {
             //clears the information that the user has added
             txtBoxName.Text = string.Empty;
@@ -50,11 +41,11 @@ namespace ChapeauUI
             radBtnLunchTime.Checked = false;
             radBtnDinnerTime.Checked = false;
             radBtnAllDay.Checked = false;
-        }
+        }*/
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            //CHECK FIRST IF ALL THE BTNS ARE CORRECTLY CHECKED 
+            //CHECKS FIRST IF ALL THE BTNS ARE CORRECTLY CHECKED 
 
             if (FieldsCorrect())
             {
@@ -67,6 +58,8 @@ namespace ChapeauUI
                     MenuItem newItem = new MenuItem();
                     CreateNewMenuItem(newItem);
                     menuItemService.AddItem(newItem);
+                    dialogResult = MessageBox.Show("Menu item was successfully added to the database", "Success!");
+                    ReturnToMenu();
                 }
             }
             else
@@ -74,7 +67,7 @@ namespace ChapeauUI
                 //shows message that the fields are inccorect 
                 DialogResult dialogResult = MessageBox.Show("Fields not filled in correctly", "Error");
             }
-            
+
         }
         private bool FieldsCorrect()
         {
@@ -82,7 +75,7 @@ namespace ChapeauUI
             {
                 return true;
             }
-            return false; 
+            return false;
         }
         private bool CheckNameAndPrice()
         {
@@ -91,7 +84,7 @@ namespace ChapeauUI
             {
                 return true;
             }
-            return false; 
+            return false;
         }
         private bool CheckMenuType()
         {
@@ -111,6 +104,19 @@ namespace ChapeauUI
             }
             return false;
         }
+        private void ReturnToMenu()
+        {
+            //clears and hides the form 
+            //ClearPanel();
+            this.Hide();
+
+            //returns to the menu overview 
+            MenuOverviewView menuOverviewView = new MenuOverviewView();
+            menuOverviewView.ShowDialog();
+
+            //closes the form 
+            this.Close();
+        }
 
         private void CreateNewMenuItem(MenuItem newItem)
         {
@@ -123,24 +129,24 @@ namespace ChapeauUI
             }
             else if (radBtnStarter.Checked)
             {
-                newItem.CourseType= FoodType.Starter;
+                newItem.CourseType = FoodType.Starter;
             }
             else if (radBtnMainDish.Checked)
             {
                 newItem.CourseType = FoodType.MainCourse;
             }
-            else 
+            else
             {
                 newItem.CourseType = FoodType.Dessert;
             }
 
             if (radBtnAlcoholic.Checked)
             {
-                newItem.Vat = (float)0.21;
+                newItem.Vat = 2;
             }
-            else 
+            else
             {
-                newItem.Vat = (float)0.09;
+                newItem.Vat = 1;
             }
         }
     }

@@ -94,6 +94,7 @@
             btnRemove.TabIndex = 22;
             btnRemove.Text = "Remove selected Item";
             btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
             // 
             // RemoveMenuItem
             // 

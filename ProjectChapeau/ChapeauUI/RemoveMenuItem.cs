@@ -8,14 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChapeauModel;
+using ChapeauService;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChapeauUI
 {
     public partial class RemoveMenuItem : Form
     {
+        MenuItemService menuItemService;
         public RemoveMenuItem(List<MenuItem> menuItems)
         {
             InitializeComponent();
+            menuItemService = new MenuItemService(); 
             DisplayMenuItems(menuItems);
         }
         public void DisplayMenuItems(List<MenuItem> items)
@@ -44,6 +48,35 @@ namespace ChapeauUI
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
+        {
+            ReturnToItemSelection();
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            //checks first if there is a selected row 
+            if (listViewItemsList.SelectedItems.Count > 0)
+            {
+                MenuItem item = new MenuItem(); 
+                ListViewItem selectedListViewItemRow = listViewItemsList.SelectedItems[0];
+
+                //adds the menuID from the row to the menu Item 
+                item.MenuItemId = int.Parse(selectedListViewItemRow.SubItems[0].Text);
+
+                //double checks action 
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+                if (dialogResult == DialogResult.OK)
+                {
+                    menuItemService.RemoveItem(item);
+                    ReturnToItemSelection();
+                }
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("No Menu Item was selected", "Error");
+            }
+        }
+        private void ReturnToItemSelection()
         {
             this.Hide();
             MenuItemSelectionView itemSelection = new MenuItemSelectionView();
