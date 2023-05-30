@@ -17,8 +17,7 @@ namespace ChapeauModel
         public float Vat { get; set; } 
         public FoodType? CourseType { get; set; }
 
-        // we can get rid of the ingredients list, it is out of scope
-        public List<InventoryItem>? Ingredients { get; set; }
+        
         public MenuItem()
         {
             // a constructor without any parameters 
@@ -29,7 +28,6 @@ namespace ChapeauModel
             Name = name;
             Price = price;
             Vat = vat;
-            Ingredients = new List<InventoryItem>();
         }
     }
 }
