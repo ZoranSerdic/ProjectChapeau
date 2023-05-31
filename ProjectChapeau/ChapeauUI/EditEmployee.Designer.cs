@@ -55,6 +55,7 @@
             txtBoxPin2.Size = new Size(125, 27);
             txtBoxPin2.TabIndex = 48;
             txtBoxPin2.UseSystemPasswordChar = true;
+            txtBoxPin2.TextChanged += txtBoxPin2_TextChanged;
             // 
             // txtBoxPin1
             // 
@@ -63,6 +64,7 @@
             txtBoxPin1.Size = new Size(125, 27);
             txtBoxPin1.TabIndex = 47;
             txtBoxPin1.UseSystemPasswordChar = true;
+            txtBoxPin1.TextChanged += txtBoxPin1_TextChanged;
             // 
             // btnConfirm
             // 
@@ -72,6 +74,7 @@
             btnConfirm.TabIndex = 46;
             btnConfirm.Text = "confirm";
             btnConfirm.UseVisualStyleBackColor = true;
+            btnConfirm.Click += btnConfirm_Click;
             // 
             // btnCancel
             // 
@@ -81,6 +84,7 @@
             btnCancel.TabIndex = 45;
             btnCancel.Text = "cancel";
             btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // radBtnBartender
             // 

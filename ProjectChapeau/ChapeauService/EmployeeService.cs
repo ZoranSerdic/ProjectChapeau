@@ -28,5 +28,9 @@ namespace ChapeauService
         {
             employeeDao.AddEmployee(employee);
         }
+        public void UpdateEmployee(Employee employee)
+        {
+            employeeDao.UpdateEmployee(employee);
+        }
     }
 }

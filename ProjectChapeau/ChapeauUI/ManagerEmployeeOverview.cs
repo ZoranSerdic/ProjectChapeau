@@ -103,5 +103,37 @@ namespace ChapeauUI
                 DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
             }
         }
+
+        private void BtnEditEmployee_Click(object sender, EventArgs e)
+        {
+
+            //checks first if there is a selected row 
+            if (listViewEmployees.SelectedItems.Count > 0)
+            {
+                this.selectedEmployee = new Employee();
+                
+                ListViewItem selectedEmployee = listViewEmployees.SelectedItems[0];
+
+                //adds the menuID from the row to the menu Item 
+                this.selectedEmployee.EmployeeId = int.Parse(selectedEmployee.SubItems[0].Text);
+                this.selectedEmployee.FirstName = selectedEmployee.SubItems[1].Text;
+                this.selectedEmployee.LastName = selectedEmployee.SubItems[2].Text;
+                //to get the correct enum, first get it as a string, then convert and assign
+                string occupation = selectedEmployee.SubItems[3].Text;
+                this.selectedEmployee.Occupation = (Role)Enum.Parse(typeof(Role), occupation);
+                ChangeToEditEmployee(this.selectedEmployee); 
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
+            }
+        }
+        private void ChangeToEditEmployee(Employee selectedEmployee)
+        {
+            this.Hide();
+            EditEmployee editEmployee = new EditEmployee(selectedEmployee);
+            editEmployee.ShowDialog();
+            this.Close();
+        }
     }
 }

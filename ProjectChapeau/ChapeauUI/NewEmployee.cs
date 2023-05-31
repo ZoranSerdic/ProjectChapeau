@@ -23,11 +23,11 @@ namespace ChapeauUI
             service = new EmployeeService();
         }
 
-        protected virtual void btnCancel_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             ReturnToEmployeeOverview();
         }
-        protected virtual void ReturnToEmployeeOverview()
+        private void ReturnToEmployeeOverview()
         {
             this.Hide();
             ManagerEmployeeOverview overview = new ManagerEmployeeOverview();
@@ -35,7 +35,7 @@ namespace ChapeauUI
             this.Close();
         }
 
-        protected virtual void btnConfirm_Click(object sender, EventArgs e)
+        private void btnConfirm_Click(object sender, EventArgs e)
         {
             if (CheckForm())
             {
@@ -49,7 +49,7 @@ namespace ChapeauUI
                 }
             }
         }
-        protected void CreateNewEmployee()
+        private void CreateNewEmployee()
         {
             newEmployee = new Employee();
             newEmployee.FirstName = txtBoxFirstName.Text;
@@ -69,11 +69,11 @@ namespace ChapeauUI
                 newEmployee.Occupation = Role.Waiter;
             }
         }
-        protected void DisplayMessageBox(string message)
+        private void DisplayMessageBox(string message)
         {
             DialogResult dialogResult = MessageBox.Show(message, "Error");
         }
-        protected bool CheckForm()
+        private bool CheckForm()
         {
             if (CheckNames() && CheckRadButons() && CheckPins())
             {
@@ -81,7 +81,7 @@ namespace ChapeauUI
             }
             return false;
         }
-        protected bool CheckPins()
+        private bool CheckPins()
         {
             if ((txtBoxPin1.Text == txtBoxPin2.Text) && CheckPinLength())
             {
@@ -92,7 +92,7 @@ namespace ChapeauUI
             txtBoxPin2.Text = string.Empty;
             return false;
         }
-        protected bool CheckPinLength()
+        private bool CheckPinLength()
         {
             if (txtBoxPin1.Text.Length == 4 && txtBoxPin2.Text.Length == 4)
             {
@@ -101,7 +101,7 @@ namespace ChapeauUI
             DisplayMessageBox("pins have to be four digits");
             return false;
         }
-        protected bool CheckNames()
+        private bool CheckNames()
         {
             if (txtBoxFirstName.Text != "" && txtBoxLastName.Text != "")
             {
@@ -113,7 +113,7 @@ namespace ChapeauUI
                 return false;
             }
         }
-        protected bool CheckRadButons()
+        private bool CheckRadButons()
         {
             if (radBtnBartender.Checked || radBtnChef.Checked || radBtnWaiter.Checked)
             {
@@ -125,7 +125,7 @@ namespace ChapeauUI
                 return false;
             }
         }
-        protected void txtBoxPin1_TextChanged(object sender, EventArgs e)
+        private void txtBoxPin1_TextChanged(object sender, EventArgs e)
         {
             //try to parse the input, if it is unsuccessful, the inside textbox is cleared
             if (!int.TryParse(txtBoxPin1.Text, out int result))
@@ -133,7 +133,7 @@ namespace ChapeauUI
                 txtBoxPin1.Text = string.Empty;
             }
         }
-        protected void txtBoxPin2_TextChanged(object sender, EventArgs e)
+        private void txtBoxPin2_TextChanged(object sender, EventArgs e)
         {
             //try to parse the input, if it is unsuccessful, the inside textbox is cleared 
             if (!int.TryParse(txtBoxPin1.Text, out int result))

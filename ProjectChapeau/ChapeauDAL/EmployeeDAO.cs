@@ -45,6 +45,18 @@ namespace ChapeauDAL
             //finally all employees are returned in a list 
             return employees;
         }
+        public void UpdateEmployee(Employee employee)
+        {
+            //this method updates existing employees 
+            string query = "UPDATE Employee SET firstname = @firstName, lastName = @lastname, [occupation] = @occupation, [hash] = @hash WHERE employeeId = @EmployeeId;";
+            SqlParameter[] sqlParameters = new SqlParameter[5];
+            sqlParameters[0] = new SqlParameter("@firstname", employee.FirstName);
+            sqlParameters[1] = new SqlParameter("@lastname", employee.LastName);
+            sqlParameters[2] = new SqlParameter("@hash", employee.Pincode);
+            sqlParameters[3] = new SqlParameter("@EmployeeId", employee.EmployeeId);
+            sqlParameters[4] = new SqlParameter("@occupation", employee.Occupation);
+            ExecuteEditQuery(query, sqlParameters);
+        }
         public void RemoveEmployee(Employee employee)
         {
             string query = "DELETE FROM Employee WHERE employeeId = @employeeID;";
