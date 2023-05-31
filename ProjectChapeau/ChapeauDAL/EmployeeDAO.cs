@@ -59,6 +59,7 @@ namespace ChapeauDAL
         }
         public void RemoveEmployee(Employee employee)
         {
+            //removes the employee 
             string query = "DELETE FROM Employee WHERE employeeId = @employeeID;";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@employeeID", employee.EmployeeId);
