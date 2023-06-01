@@ -5,7 +5,7 @@ using System.Data;
 
 namespace ChapeauDAL
 {
-    public class BaseDAO // should this not be a abstract class?? 
+    public abstract class BaseDAO 
     {
         private SqlDataAdapter adapter;
         private SqlConnection conn;

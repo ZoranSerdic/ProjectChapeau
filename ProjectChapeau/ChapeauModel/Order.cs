@@ -14,8 +14,6 @@ namespace ChapeauModel
 
         public DateTime Time { get; set; }
 
-        public string? Comment { get; set; }
-
         public bool IsPaid { get; set; }
 
         public Employee Employee { get; set; }
@@ -28,7 +26,7 @@ namespace ChapeauModel
             Table = table; Time = time;
             Employee = employee;
 
-            IsPaid = true;
+            IsPaid = false;
             OrderedItems = new List<OrderItem>();
         }
     }
