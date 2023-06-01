@@ -24,6 +24,5 @@ namespace ChapeauModel
             MenuItem = menuItem;
             Amount = amount;
         }
-
     }
 }
