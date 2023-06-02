@@ -20,6 +20,10 @@ namespace ChapeauModel
 
         public List<OrderItem> OrderedItems { get; set; }
 
+        public Order()
+        {
+            
+        }
         public Order(int orderId, Table table, DateTime time, Employee employee)
         {
             OrderId = orderId;

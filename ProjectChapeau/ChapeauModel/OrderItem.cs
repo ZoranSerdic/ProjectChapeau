@@ -18,6 +18,10 @@ namespace ChapeauModel
 
         public OrderedItemStatus Status { get; set; }
 
+        public OrderItem()
+        {
+            
+        }
         public OrderItem(int orderItemId, MenuItem menuItem, int amount)
         {
             OrderItemId = orderItemId;

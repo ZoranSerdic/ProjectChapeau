@@ -10,7 +10,8 @@ namespace ChapeauModel
     {
         public int TableId { get; set; }
         public TableStatus Status { get; set; }
-        public int Number { get; set; }
+
+        //public int Number { get; set; } // do we need a table number if we already have a tableId?
 
     }
 }

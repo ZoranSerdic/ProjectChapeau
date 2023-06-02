@@ -103,5 +103,36 @@ namespace ChapeauDAL
             sqlParameters[4] = new SqlParameter("@itemId", item.MenuItemId);
             ExecuteEditQuery(query, sqlParameters);
         }
+
+        public MenuItem GetMenuItemById(int menuItemId)
+        {
+            string query = @"SELECT M.menuItemId, M.[name], M.[price], V.vat, M.courseType 
+                                FROM menuItem AS M JOIN Vat AS V on M.vatId = V.vatId
+                                WHERE menuItemId = @MenuItemId"; 
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@MenuItemid", menuItemId);
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+            if (dataTable.Rows.Count > 0)
+            {
+                DataRow dataRow = dataTable.Rows[0];
+                MenuItem menuItem = ReadMenuItem(dataRow);
+                return menuItem;
+            }
+            return null; // Item not found
+        }
+
+        private MenuItem ReadMenuItem(DataRow dataRow)
+        {
+            MenuItem menuItem = new MenuItem()
+            {
+                MenuItemId = (int)dataRow["menuItemId"],
+                Name = (string)dataRow["name"],
+                Price = (decimal)dataRow["price"],
+                Vat = (float)(double)(dataRow)["vat"],
+                CourseType = (FoodType)Enum.Parse(typeof(FoodType), dataRow["courseType"].ToString(), ignoreCase: true)
+            };
+            return menuItem;
+        }
     }
 }

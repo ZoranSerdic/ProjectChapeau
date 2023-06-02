@@ -1,20 +1,15 @@
 ﻿using ChapeauModel;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChapeauDAL
 {
-    public class EmployeeDAO: BaseDAO
+    public class EmployeeDAO : BaseDAO
     {
         public List<Employee> GetAllEmployees()
         {
             //gathering all employees from the table
-            string query = "SELECT employeeId, [hash], firstname, lastname, occupation FROM Employee;";  
+            string query = "SELECT employeeId, [hash], firstname, lastname, occupation FROM Employee;";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -59,7 +54,6 @@ namespace ChapeauDAL
         }
         public void RemoveEmployee(Employee employee)
         {
-            //removes the employee 
             string query = "DELETE FROM Employee WHERE employeeId = @employeeID;";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@employeeID", employee.EmployeeId);
@@ -76,5 +70,35 @@ namespace ChapeauDAL
             sqlParameters[3] = new SqlParameter("@hash", employee.Pincode);
             ExecuteEditQuery(query, sqlParameters);
         }
+
+        public Employee GetEmployeeById(int employeeId)
+        {
+            string query = @"SELECT employeeId, [hash], firstname, lastname, occupation FROM Employee
+                           WHERE EmployeeId = @EmployeeId";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@EmployeeId", employeeId);
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+            if (dataTable.Rows.Count > 0)
+            {
+                DataRow dataRow = dataTable.Rows[0];
+                Employee employee = ReadEmployee(dataRow);
+                return employee;
+            }
+            return null; // Employee not found
+        }
+
+        private Employee ReadEmployee(DataRow dataRow)
+        {
+            Employee employee = new Employee
+            {
+                EmployeeId = (int)dataRow["employeeId"],
+                Pincode = (string)dataRow["hash"],
+                FirstName = (string)dataRow["firstName"],
+                LastName = (string)dataRow["lastName"],
+                Occupation = (Role)Enum.Parse(typeof(Role), dataRow["occupation"].ToString(), ignoreCase: true)
+            };
+            return employee;
+        } 
     }
 }

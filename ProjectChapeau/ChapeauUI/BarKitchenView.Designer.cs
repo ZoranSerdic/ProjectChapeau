@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ListViewGroup listViewGroup1 = new ListViewGroup("gggggg", HorizontalAlignment.Center);
+            ListViewGroup listViewGroup2 = new ListViewGroup("mmmmmm", HorizontalAlignment.Center);
+            ListViewGroup listViewGroup3 = new ListViewGroup("fffff", HorizontalAlignment.Center);
+            ListViewItem listViewItem1 = new ListViewItem("one");
+            ListViewItem listViewItem2 = new ListViewItem(new string[] { "two", "frfr" }, -1);
+            ListViewItem listViewItem3 = new ListViewItem("three");
             buttonHistory = new Button();
             button2 = new Button();
             labelOrders = new Label();
@@ -37,6 +43,7 @@
             Item = new ColumnHeader();
             Received = new ColumnHeader();
             Waiting = new ColumnHeader();
+            Status = new ColumnHeader();
             SuspendLayout();
             // 
             // buttonHistory
@@ -53,7 +60,7 @@
             // 
             // button2
             // 
-            button2.BackColor = Color.Cyan;
+            button2.BackColor = Color.FromArgb(255, 128, 128);
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
             button2.ImageAlign = ContentAlignment.MiddleRight;
@@ -67,7 +74,9 @@
             // labelOrders
             // 
             labelOrders.AutoSize = true;
+            labelOrders.FlatStyle = FlatStyle.System;
             labelOrders.Font = new Font("Segoe UI", 23F, FontStyle.Bold, GraphicsUnit.Point);
+            labelOrders.ForeColor = SystemColors.ActiveCaptionText;
             labelOrders.Location = new Point(610, 27);
             labelOrders.Name = "labelOrders";
             labelOrders.Size = new Size(206, 62);
@@ -77,10 +86,24 @@
             // 
             // listViewOrders
             // 
-            listViewOrders.BackColor = SystemColors.MenuBar;
-            listViewOrders.Columns.AddRange(new ColumnHeader[] { Table, Quantity, Item, Received, Waiting });
+            listViewOrders.BackColor = SystemColors.ControlLight;
+            listViewOrders.Columns.AddRange(new ColumnHeader[] { Table, Quantity, Item, Received, Waiting, Status });
             listViewOrders.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
             listViewOrders.FullRowSelect = true;
+            listViewGroup1.Header = "gggggg";
+            listViewGroup1.HeaderAlignment = HorizontalAlignment.Center;
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "mmmmmm";
+            listViewGroup2.HeaderAlignment = HorizontalAlignment.Center;
+            listViewGroup2.Name = "listViewGroup2";
+            listViewGroup3.Header = "fffff";
+            listViewGroup3.HeaderAlignment = HorizontalAlignment.Center;
+            listViewGroup3.Name = "listViewGroup3";
+            listViewOrders.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
+            listViewItem1.Group = listViewGroup1;
+            listViewItem2.Group = listViewGroup2;
+            listViewItem3.Group = listViewGroup3;
+            listViewOrders.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3 });
             listViewOrders.Location = new Point(42, 128);
             listViewOrders.Name = "listViewOrders";
             listViewOrders.Size = new Size(1331, 793);
@@ -118,11 +141,17 @@
             Waiting.TextAlign = HorizontalAlignment.Center;
             Waiting.Width = 150;
             // 
+            // Status
+            // 
+            Status.Text = "Status";
+            Status.TextAlign = HorizontalAlignment.Center;
+            Status.Width = 180;
+            // 
             // BarKitchenView
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.GradientInactiveCaption;
+            BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1418, 968);
             Controls.Add(listViewOrders);
             Controls.Add(labelOrders);
@@ -144,5 +173,6 @@
         private ColumnHeader Item;
         private ColumnHeader Received;
         private ColumnHeader Waiting;
+        private ColumnHeader Status;
     }
 }
