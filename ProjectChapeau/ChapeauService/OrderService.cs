@@ -16,9 +16,43 @@ namespace ChapeauService
             orderDAO = new OrderDAO();
         }
 
-        public List<Order> GetDrinks()
+        public List<Order> GetUnpreparedDrinks()
         {
             return orderDAO.GetUnpreparedDrinks();    
         }
+
+        public List<Order> GetUnpreparedStarters()
+        {
+            return orderDAO.GetUnpreparedStarters();
+        }
+
+        public List<Order> GetUnpreparedMains()
+        {
+            return orderDAO.GetUnpreparedMains();
+        }
+        public List<Order> GetUnpreparedDesserts()
+        {
+            return orderDAO.GetUnpreparedDesserts();
+        }
+
+        public List<Order> GetReadyDrinks()
+        {
+            return orderDAO.GetReadyDrinks();
+        }
+
+        public List<Order> GetReadyStarters()
+        {
+            return orderDAO.GetReadyStarters();
+        }
+
+        public List<Order> GetReadyMains()
+        {
+            return orderDAO.GetReadyMains();
+        }
+        public List<Order> GetReadyDesserts()
+        {
+            return orderDAO.GetReadyDesserts();
+        }
+
     }
 }

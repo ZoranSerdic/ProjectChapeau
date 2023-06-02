@@ -15,17 +15,23 @@ namespace ChapeauUI
     public partial class BarKitchenView : Form
     {
         private OrderService orderService;
-        public BarKitchenView()
+        private Employee loggedInEmployee;
+        public BarKitchenView() // Employee loggedInEmployee
         {
             InitializeComponent();
             orderService = new OrderService();
-            DisplayDrinks();
-            // get logged in employee
-            //if logged -in employee == bar then get-drinks else get - food)
+            loggedInEmployee = new Employee();
+            loggedInEmployee.Occupation = Role.Barman;
+            //this.loggedInEmployee = loggedInEmployee;
+
+            if(loggedInEmployee.Occupation == Role.Barman)
+                DisplayUnpreparedDrinks();
+            else if(loggedInEmployee.Occupation == Role.Chef)
+                DisplayUnpreparedFood();
         }
-        private void DisplayDrinks()
+        private void DisplayUnpreparedDrinks()
         {
-            List<Order> orders = orderService.GetDrinks();
+            List<Order> orders = orderService.GetUnpreparedDrinks();
 
             listViewOrders.Items.Clear();
 
@@ -53,14 +59,20 @@ namespace ChapeauUI
             }
         }
 
-        private void DisplayFood()
+        private void DisplayUnpreparedFood()
         {
             
         }
 
+        private void DisplayReadyDrinks()
+        {
 
+        }
 
+        private void DisplayReadyFood()
+        {
 
+        }
 
         private void listViewOrders_SelectedIndexChanged(object sender, EventArgs e)
         {

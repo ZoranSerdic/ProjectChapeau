@@ -12,9 +12,16 @@ namespace ChapeauDAL
 {
     public class OrderDAO : BaseDAO
     {
-        private EmployeeDAO employeeDAO = new EmployeeDAO();
-        private TableDAO tableDAO = new TableDAO();
-        private OrderItemDAO orderItemDAO = new OrderItemDAO();
+        private EmployeeDAO employeeDAO;
+        private TableDAO tableDAO;
+        private OrderItemDAO orderItemDAO;
+
+        public OrderDAO()
+        {
+            employeeDAO = new EmployeeDAO();
+            tableDAO = new TableDAO();
+            orderItemDAO = new OrderItemDAO();
+        }
 
         public List<Order> GetUnpreparedDrinks()
         {
@@ -128,7 +135,7 @@ namespace ChapeauDAL
             return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
         }
 
-        public List<Order> GetReadynMains()
+        public List<Order> GetReadyMains()
         {
             List<Order> drinkOrders = new List<Order>();
 

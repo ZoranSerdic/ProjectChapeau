@@ -11,7 +11,12 @@ namespace ChapeauDAL
 {
     public class OrderItemDAO : BaseDAO
     {
-        private MenuItemDAO menuItemDAO = new MenuItemDAO();
+        private MenuItemDAO menuItemDAO;
+
+        public OrderItemDAO()
+        {
+            menuItemDAO = new MenuItemDAO();
+        }
         public OrderItem GetOrderItemById(int orderItemId)
         {
             string query = @"SELECT consistsOfId, menuItemId, comment, amount, status
