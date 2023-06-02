@@ -11,7 +11,6 @@ namespace ChapeauDAL
 {
     public class MenuItemDAO : BaseDAO
     {
-        
         public List<MenuItem> GetAllMenuItems()
         {
             //gathering all menu items from the table

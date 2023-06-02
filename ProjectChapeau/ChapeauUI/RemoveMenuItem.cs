@@ -46,12 +46,6 @@ namespace ChapeauUI
                 listViewItemsList.Items.Add(li);
             }
         }
-
-        private void btnReturn_Click(object sender, EventArgs e)
-        {
-            ReturnToItemSelection();
-        }
-
         private void btnRemove_Click(object sender, EventArgs e)
         {
             //checks first if there is a selected row 
@@ -68,7 +62,7 @@ namespace ChapeauUI
                 if (dialogResult == DialogResult.OK)
                 {
                     menuItemService.RemoveItem(item);
-                    ReturnToItemSelection();
+                    Return(); 
                 }
             }
             else
@@ -76,7 +70,11 @@ namespace ChapeauUI
                 DialogResult dialogResult = MessageBox.Show("No Menu Item was selected", "Error");
             }
         }
-        private void ReturnToItemSelection()
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            Return(); 
+        }
+        private void Return()
         {
             this.Hide();
             MenuItemSelectionView itemSelection = new MenuItemSelectionView();

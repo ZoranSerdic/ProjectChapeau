@@ -24,7 +24,10 @@ namespace ChapeauUI
 
         private void btnStock_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            InventoryOverview inventoryOverview = new InventoryOverview();  
+            inventoryOverview.ShowDialog();
+            this.Close();
         }
 
         private void btnMenu_Click(object sender, EventArgs e)

@@ -16,16 +16,12 @@ namespace ChapeauUI
     {
         private Employee selectedEmployee;
         private EmployeeService service;
-        private List<Employee> employees;
 
         public ManagerEmployeeOverview()
         {
             InitializeComponent();
             service = new EmployeeService();
-            employees = new List<Employee>();
-            employees.AddRange(service.GetAllEmployees());
-
-            DisplayEmployees(employees);
+            DisplayEmployees(service.GetAllEmployees());
         }
 
         //fills the listview with all the employees 
@@ -54,9 +50,7 @@ namespace ChapeauUI
         private void UpdateListView()
         {
             listViewEmployees.Clear();
-            employees.Clear();
-            employees.AddRange(service.GetAllEmployees());
-            DisplayEmployees(employees);
+            DisplayEmployees(service.GetAllEmployees());
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
