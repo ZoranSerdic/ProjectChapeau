@@ -28,14 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ListViewGroup listViewGroup1 = new ListViewGroup("gggggg", HorizontalAlignment.Center);
-            ListViewGroup listViewGroup2 = new ListViewGroup("mmmmmm", HorizontalAlignment.Center);
-            ListViewGroup listViewGroup3 = new ListViewGroup("fffff", HorizontalAlignment.Center);
-            ListViewItem listViewItem1 = new ListViewItem("one");
-            ListViewItem listViewItem2 = new ListViewItem(new string[] { "two", "frfr" }, -1);
-            ListViewItem listViewItem3 = new ListViewItem("three");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BarKitchenView));
             buttonHistory = new Button();
-            button2 = new Button();
+            buttonLogOut = new Button();
             labelOrders = new Label();
             listViewOrders = new ListView();
             Table = new ColumnHeader();
@@ -44,6 +39,18 @@
             Received = new ColumnHeader();
             Waiting = new ColumnHeader();
             Status = new ColumnHeader();
+            buttonStart = new Button();
+            buttonReady = new Button();
+            listViewHistory = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
+            columnHeader6 = new ColumnHeader();
+            buttonOrders = new Button();
+            buttonRefresh = new Button();
+            labelHistory = new Label();
             SuspendLayout();
             // 
             // buttonHistory
@@ -51,25 +58,27 @@
             buttonHistory.BackColor = Color.Lime;
             buttonHistory.FlatStyle = FlatStyle.Flat;
             buttonHistory.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonHistory.Location = new Point(261, 36);
+            buttonHistory.Location = new Point(287, 36);
             buttonHistory.Name = "buttonHistory";
             buttonHistory.Size = new Size(190, 53);
             buttonHistory.TabIndex = 8;
             buttonHistory.Text = "HISTORY";
             buttonHistory.UseVisualStyleBackColor = false;
+            buttonHistory.Click += buttonHistory_Click;
             // 
-            // button2
+            // buttonLogOut
             // 
-            button2.BackColor = Color.FromArgb(255, 128, 128);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.ImageAlign = ContentAlignment.MiddleRight;
-            button2.Location = new Point(991, 36);
-            button2.Name = "button2";
-            button2.Size = new Size(190, 53);
-            button2.TabIndex = 9;
-            button2.Text = "LOG OUT";
-            button2.UseVisualStyleBackColor = false;
+            buttonLogOut.BackColor = Color.FromArgb(255, 128, 128);
+            buttonLogOut.FlatStyle = FlatStyle.Flat;
+            buttonLogOut.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonLogOut.ImageAlign = ContentAlignment.MiddleRight;
+            buttonLogOut.Location = new Point(927, 35);
+            buttonLogOut.Name = "buttonLogOut";
+            buttonLogOut.Size = new Size(190, 53);
+            buttonLogOut.TabIndex = 9;
+            buttonLogOut.Text = "LOG OUT";
+            buttonLogOut.UseVisualStyleBackColor = false;
+            buttonLogOut.Click += buttonLogOut_Click;
             // 
             // labelOrders
             // 
@@ -77,7 +86,7 @@
             labelOrders.FlatStyle = FlatStyle.System;
             labelOrders.Font = new Font("Segoe UI", 23F, FontStyle.Bold, GraphicsUnit.Point);
             labelOrders.ForeColor = SystemColors.ActiveCaptionText;
-            labelOrders.Location = new Point(610, 27);
+            labelOrders.Location = new Point(593, 26);
             labelOrders.Name = "labelOrders";
             labelOrders.Size = new Size(206, 62);
             labelOrders.TabIndex = 10;
@@ -90,23 +99,10 @@
             listViewOrders.Columns.AddRange(new ColumnHeader[] { Table, Quantity, Item, Received, Waiting, Status });
             listViewOrders.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
             listViewOrders.FullRowSelect = true;
-            listViewGroup1.Header = "gggggg";
-            listViewGroup1.HeaderAlignment = HorizontalAlignment.Center;
-            listViewGroup1.Name = "listViewGroup1";
-            listViewGroup2.Header = "mmmmmm";
-            listViewGroup2.HeaderAlignment = HorizontalAlignment.Center;
-            listViewGroup2.Name = "listViewGroup2";
-            listViewGroup3.Header = "fffff";
-            listViewGroup3.HeaderAlignment = HorizontalAlignment.Center;
-            listViewGroup3.Name = "listViewGroup3";
-            listViewOrders.Groups.AddRange(new ListViewGroup[] { listViewGroup1, listViewGroup2, listViewGroup3 });
-            listViewItem1.Group = listViewGroup1;
-            listViewItem2.Group = listViewGroup2;
-            listViewItem3.Group = listViewGroup3;
-            listViewOrders.Items.AddRange(new ListViewItem[] { listViewItem1, listViewItem2, listViewItem3 });
-            listViewOrders.Location = new Point(42, 128);
+            listViewOrders.Location = new Point(46, 128);
+            listViewOrders.MultiSelect = false;
             listViewOrders.Name = "listViewOrders";
-            listViewOrders.Size = new Size(1331, 793);
+            listViewOrders.Size = new Size(1322, 710);
             listViewOrders.TabIndex = 11;
             listViewOrders.UseCompatibleStateImageBehavior = false;
             listViewOrders.View = View.Details;
@@ -145,7 +141,122 @@
             // 
             Status.Text = "Status";
             Status.TextAlign = HorizontalAlignment.Center;
-            Status.Width = 180;
+            Status.Width = 150;
+            // 
+            // buttonStart
+            // 
+            buttonStart.BackColor = Color.Cyan;
+            buttonStart.FlatStyle = FlatStyle.Flat;
+            buttonStart.Font = new Font("Bahnschrift SemiBold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonStart.Location = new Point(626, 879);
+            buttonStart.Name = "buttonStart";
+            buttonStart.Size = new Size(190, 53);
+            buttonStart.TabIndex = 12;
+            buttonStart.Text = "START";
+            buttonStart.UseVisualStyleBackColor = false;
+            buttonStart.Click += buttonStart_Click;
+            // 
+            // buttonReady
+            // 
+            buttonReady.BackColor = Color.Violet;
+            buttonReady.FlatStyle = FlatStyle.Flat;
+            buttonReady.Font = new Font("Bahnschrift SemiBold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonReady.Location = new Point(626, 879);
+            buttonReady.Name = "buttonReady";
+            buttonReady.Size = new Size(190, 53);
+            buttonReady.TabIndex = 13;
+            buttonReady.Text = "READY";
+            buttonReady.UseVisualStyleBackColor = false;
+            buttonReady.Click += buttonReady_Click;
+            // 
+            // listViewHistory
+            // 
+            listViewHistory.BackColor = SystemColors.ControlLight;
+            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader6 });
+            listViewHistory.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            listViewHistory.FullRowSelect = true;
+            listViewHistory.Location = new Point(46, 128);
+            listViewHistory.MultiSelect = false;
+            listViewHistory.Name = "listViewHistory";
+            listViewHistory.Size = new Size(1322, 710);
+            listViewHistory.TabIndex = 14;
+            listViewHistory.UseCompatibleStateImageBehavior = false;
+            listViewHistory.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "     Table";
+            columnHeader1.Width = 120;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Quantity";
+            columnHeader2.TextAlign = HorizontalAlignment.Center;
+            columnHeader2.Width = 150;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Item";
+            columnHeader3.TextAlign = HorizontalAlignment.Center;
+            columnHeader3.Width = 570;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Received";
+            columnHeader4.TextAlign = HorizontalAlignment.Center;
+            columnHeader4.Width = 150;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Waiting";
+            columnHeader5.TextAlign = HorizontalAlignment.Center;
+            columnHeader5.Width = 150;
+            // 
+            // columnHeader6
+            // 
+            columnHeader6.Text = "Prepared";
+            columnHeader6.TextAlign = HorizontalAlignment.Center;
+            columnHeader6.Width = 170;
+            // 
+            // buttonOrders
+            // 
+            buttonOrders.BackColor = Color.RoyalBlue;
+            buttonOrders.FlatStyle = FlatStyle.Flat;
+            buttonOrders.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonOrders.Location = new Point(287, 35);
+            buttonOrders.Name = "buttonOrders";
+            buttonOrders.Size = new Size(190, 53);
+            buttonOrders.TabIndex = 15;
+            buttonOrders.Text = "ORDERS";
+            buttonOrders.UseVisualStyleBackColor = false;
+            buttonOrders.Click += buttonOrders_Click;
+            // 
+            // buttonRefresh
+            // 
+            buttonRefresh.BackColor = Color.Transparent;
+            buttonRefresh.BackgroundImageLayout = ImageLayout.None;
+            buttonRefresh.FlatStyle = FlatStyle.Flat;
+            buttonRefresh.Font = new Font("Franklin Gothic Medium Cond", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonRefresh.Image = (Image)resources.GetObject("buttonRefresh.Image");
+            buttonRefresh.Location = new Point(1283, 26);
+            buttonRefresh.Name = "buttonRefresh";
+            buttonRefresh.Size = new Size(85, 80);
+            buttonRefresh.TabIndex = 16;
+            buttonRefresh.UseVisualStyleBackColor = false;
+            buttonRefresh.Click += buttonRefresh_Click;
+            // 
+            // labelHistory
+            // 
+            labelHistory.AutoSize = true;
+            labelHistory.FlatStyle = FlatStyle.System;
+            labelHistory.Font = new Font("Segoe UI", 23F, FontStyle.Bold, GraphicsUnit.Point);
+            labelHistory.ForeColor = SystemColors.ActiveCaptionText;
+            labelHistory.Location = new Point(593, 27);
+            labelHistory.Name = "labelHistory";
+            labelHistory.Size = new Size(221, 62);
+            labelHistory.TabIndex = 17;
+            labelHistory.Text = "HISTORY";
+            labelHistory.TextAlign = ContentAlignment.TopCenter;
             // 
             // BarKitchenView
             // 
@@ -153,9 +264,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1418, 968);
+            Controls.Add(labelHistory);
+            Controls.Add(buttonRefresh);
+            Controls.Add(buttonOrders);
+            Controls.Add(listViewHistory);
+            Controls.Add(buttonReady);
+            Controls.Add(buttonStart);
             Controls.Add(listViewOrders);
             Controls.Add(labelOrders);
-            Controls.Add(button2);
+            Controls.Add(buttonLogOut);
             Controls.Add(buttonHistory);
             Name = "BarKitchenView";
             Text = "BarKitchenView";
@@ -165,7 +282,7 @@
 
         #endregion
         private Button buttonHistory;
-        private Button button2;
+        private Button buttonLogOut;
         private Label labelOrders;
         private ListView listViewOrders;
         private ColumnHeader Table;
@@ -174,5 +291,17 @@
         private ColumnHeader Received;
         private ColumnHeader Waiting;
         private ColumnHeader Status;
+        private Button buttonStart;
+        private Button buttonReady;
+        private ListView listViewHistory;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
+        private ColumnHeader columnHeader6;
+        private Button buttonOrders;
+        private Button buttonRefresh;
+        private Label labelHistory;
     }
 }

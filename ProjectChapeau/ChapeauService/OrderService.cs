@@ -16,23 +16,9 @@ namespace ChapeauService
             orderDAO = new OrderDAO();
         }
 
-        public List<Order> GetUnpreparedDrinks()
+        public List<Order> GetUnpreparedOrdersByFoodType(FoodType foodType)
         {
-            return orderDAO.GetUnpreparedDrinks();    
-        }
-
-        public List<Order> GetUnpreparedStarters()
-        {
-            return orderDAO.GetUnpreparedStarters();
-        }
-
-        public List<Order> GetUnpreparedMains()
-        {
-            return orderDAO.GetUnpreparedMains();
-        }
-        public List<Order> GetUnpreparedDesserts()
-        {
-            return orderDAO.GetUnpreparedDesserts();
+            return orderDAO.GetUnpreparedOrdersByFoodType(foodType);
         }
 
         public List<Order> GetReadyDrinks()
@@ -40,19 +26,9 @@ namespace ChapeauService
             return orderDAO.GetReadyDrinks();
         }
 
-        public List<Order> GetReadyStarters()
+        public List<Order> GetReadyFood()
         {
-            return orderDAO.GetReadyStarters();
+            return orderDAO.GetReadyFood();
         }
-
-        public List<Order> GetReadyMains()
-        {
-            return orderDAO.GetReadyMains();
-        }
-        public List<Order> GetReadyDesserts()
-        {
-            return orderDAO.GetReadyDesserts();
-        }
-
     }
 }

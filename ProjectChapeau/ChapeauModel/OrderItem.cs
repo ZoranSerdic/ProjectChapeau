@@ -18,6 +18,8 @@ namespace ChapeauModel
 
         public OrderedItemStatus Status { get; set; }
 
+        public DateTime? PreparedAt { get; set; }    
+
         public OrderItem()
         {
             

@@ -23,7 +23,7 @@ namespace ChapeauDAL
             orderItemDAO = new OrderItemDAO();
         }
 
-        public List<Order> GetUnpreparedDrinks()
+        public List<Order> GetUnpreparedOrdersByFoodType(FoodType foodType)
         {
             List<Order> drinkOrders = new List<Order>();
 
@@ -33,68 +33,9 @@ namespace ChapeauDAL
                             INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
                             WHERE mi.courseType = @courseType
                             AND(oi.status = @statusOne OR oi.status = @statusTwo)";
-            // should we maybe rename the table as "OrderItem"?
 
             SqlParameter[] sqlParameters = new SqlParameter[3];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.Drink.ToString());
-            sqlParameters[1] = new SqlParameter("@statusOne", OrderedItemStatus.Sent.ToString());
-            sqlParameters[2] = new SqlParameter("@statusTwo", OrderedItemStatus.Preparing.ToString());
-
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        public List<Order> GetUnpreparedStarters()
-        {
-            List<Order> drinkOrders = new List<Order>();
-
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
-                            FROM [Order] AS o
-                            INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
-                            INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType
-                            AND(oi.status = @statusOne OR oi.status = @statusTwo)";
-            // should we maybe rename the table as "OrderItem"?
-
-            SqlParameter[] sqlParameters = new SqlParameter[3];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.Starter.ToString());
-            sqlParameters[1] = new SqlParameter("@statusOne", OrderedItemStatus.Sent.ToString());
-            sqlParameters[2] = new SqlParameter("@statusTwo", OrderedItemStatus.Preparing.ToString());
-
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        public List<Order> GetUnpreparedMains()
-        {
-            List<Order> drinkOrders = new List<Order>();
-
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
-                            FROM [Order] AS o
-                            INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
-                            INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType
-                            AND(oi.status = @statusOne OR oi.status = @statusTwo)";
-          
-            SqlParameter[] sqlParameters = new SqlParameter[3];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.MainCourse.ToString());
-            sqlParameters[1] = new SqlParameter("@statusOne", OrderedItemStatus.Sent.ToString());
-            sqlParameters[2] = new SqlParameter("@statusTwo", OrderedItemStatus.Preparing.ToString());
-
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        public List<Order> GetUnpreparedDesserts()
-        {
-            List<Order> drinkOrders = new List<Order>();
-
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
-                            FROM [Order] AS o
-                            INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
-                            INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType
-                            AND(oi.status = @statusOne OR oi.status = @statusTwo)";
-          
-            SqlParameter[] sqlParameters = new SqlParameter[3];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.Dessert.ToString());
+            sqlParameters[0] = new SqlParameter("@courseType", foodType.ToString());
             sqlParameters[1] = new SqlParameter("@statusOne", OrderedItemStatus.Sent.ToString());
             sqlParameters[2] = new SqlParameter("@statusTwo", OrderedItemStatus.Preparing.ToString());
 
@@ -105,12 +46,14 @@ namespace ChapeauDAL
         {
             List<Order> drinkOrders = new List<Order>();
 
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
+            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, oi.preparedAt, mi.courseType
                             FROM [Order] AS o
                             INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
                             INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType AND(oi.status = @status)";
-            
+                            WHERE mi.courseType = @courseType  
+                            AND oi.status = @status
+                            AND CONVERT(date, o.time) = CONVERT(date, GETDATE())
+                            ORDER BY oi.preparedAt DESC";
             SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@courseType", FoodType.Drink.ToString());
             sqlParameters[1] = new SqlParameter("@status", OrderedItemStatus.Ready.ToString());
@@ -118,55 +61,28 @@ namespace ChapeauDAL
             return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
         }
 
-        public List<Order> GetReadyStarters()
+        public List<Order> GetReadyFood()
         {
-            List<Order> drinkOrders = new List<Order>();
+            List<Order> readyFood = new List<Order>();
 
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
-                            FROM [Order] AS o
-                            INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
-                            INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType AND(oi.status = @status)";
+            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, oi.preparedAt, mi.courseType
+                    FROM [Order] AS o
+                    INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
+                    INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
+                    WHERE mi.courseType IN (@courseTypeStarters, @courseTypeMains, @courseTypeDesserts)
+                    AND oi.status = @status
+                    AND CONVERT(date, o.time) = CONVERT(date, GETDATE())
+                    ORDER BY oi.preparedAt DESC";
+            SqlParameter[] sqlParameters = new SqlParameter[4];
+            sqlParameters[0] = new SqlParameter("@courseTypeStarters", FoodType.Starter.ToString());
+            sqlParameters[1] = new SqlParameter("@courseTypeMains", FoodType.MainCourse.ToString());
+            sqlParameters[2] = new SqlParameter("@courseTypeDesserts", FoodType.Dessert.ToString());
+            sqlParameters[3] = new SqlParameter("@status", OrderedItemStatus.Ready.ToString());
 
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.Starter.ToString());
-            sqlParameters[1] = new SqlParameter("@status", OrderedItemStatus.Ready.ToString());
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+            readyFood = ReadOrders(dataTable);
 
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        public List<Order> GetReadyMains()
-        {
-            List<Order> drinkOrders = new List<Order>();
-
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
-                            FROM [Order] AS o
-                            INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
-                            INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType AND(oi.status = @status)";
-
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.MainCourse.ToString());
-            sqlParameters[1] = new SqlParameter("@status", OrderedItemStatus.Ready.ToString());
-
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        public List<Order> GetReadyDesserts()
-        {
-            List<Order> drinkOrders = new List<Order>();
-
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, mi.courseType
-                            FROM [Order] AS o
-                            INNER JOIN ConsistsOf AS oi ON o.orderId = oi.orderId
-                            INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
-                            WHERE mi.courseType = @courseType AND(oi.status = @status)";
-
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter("@courseType", FoodType.Dessert.ToString());
-            sqlParameters[1] = new SqlParameter("@status", OrderedItemStatus.Ready.ToString());
-
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters));
+            return readyFood;
         }
 
         private List<Order> ReadOrders(DataTable dataTable)
