@@ -1,5 +1,6 @@
 ﻿using ChapeauModel;
 using ChapeauService;
+using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -49,12 +51,21 @@ namespace ChapeauUI
                 }
             }
         }
+        string Hash(string password)
+        {
+            var sha = SHA256.Create();
+            
+            var asByteArray = Encoding.Default.GetBytes(password);
+            var hashedPassword = sha.ComputeHash(asByteArray);
+
+            return Convert.ToBase64String(hashedPassword); 
+        }
         private void CreateNewEmployee()
         {
             newEmployee = new Employee();
             newEmployee.FirstName = txtBoxFirstName.Text;
             newEmployee.LastName = txtBoxLastName.Text;
-            newEmployee.Pincode = txtBoxPin2.Text;
+            newEmployee.Pincode = Hash(txtBoxPin2.Text);
 
             if (radBtnBartender.Checked)
             {

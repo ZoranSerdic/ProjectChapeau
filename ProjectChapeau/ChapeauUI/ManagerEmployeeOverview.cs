@@ -86,11 +86,20 @@ namespace ChapeauUI
 
                 //double checks action 
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
-                if (dialogResult == DialogResult.OK)
+                try
                 {
-                    service.RemoveEmployee(selectedEmployee);
-                    UpdateListView();
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        service.RemoveEmployee(selectedEmployee);
+                        UpdateListView();
+                    }
                 }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             }
             else
             {
