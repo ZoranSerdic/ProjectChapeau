@@ -1,15 +1,15 @@
 ﻿using ChapeauModel;
 using ChapeauService;
+using System.Windows.Forms;
 //using System.Timers;
 //using System.Windows.Forms;
 
 namespace ChapeauUI
 {
-    // show comments completely
-    // change colors?
-    // change design in figma
+    //4.  error handeling
 
-    // error handeling
+    // стерти дані з таблички
+    // передивитися код ще раз 
     public partial class BarKitchenView : Form
     {
         private OrderService orderService;
@@ -26,6 +26,8 @@ namespace ChapeauUI
             listViewOrders.Show();
             labelOrders.Show();
 
+            buttonRefresh.Hide();
+
             buttonReady.Hide();
             buttonStart.Hide();
             buttonOrders.Hide();
@@ -39,6 +41,7 @@ namespace ChapeauUI
             loggedInEmployee.Occupation = Role.Chef; // потім це видалити
             //this.loggedInEmployee = loggedInEmployee;
             DisplayUnpreparedOrders();
+            timerRefreshDisplay.Start();
         }
 
         private void DisplayUnpreparedOrders()
@@ -54,20 +57,20 @@ namespace ChapeauUI
             ListViewItem item = new ListViewItem(order.Table.TableId.ToString());
             item.SubItems.Add(orderItem.Amount.ToString());
 
-            /*if (string.IsNullOrEmpty(orderedItem.Comment))
-               item.SubItems.Add(orderedItem.MenuItem.Name);
-              else
-                 item.SubItems.Add(orderedItem.MenuItem.Name + orderedItem.Comment);*/
             item.SubItems.Add(string.IsNullOrEmpty(orderItem.Comment)
-            ? orderItem.MenuItem.Name
-            : orderItem.MenuItem.Name + ": " + orderItem.Comment.ToLower()); // rewrite the formatting?
+                   ? orderItem.MenuItem.Name
+                   : $"{orderItem.MenuItem.Name}: {orderItem.Comment.ToLower()}");
 
             item.SubItems.Add(order.Time.ToString("HH:mm"));
-            item.SubItems.Add((DateTime.Now - order.Time).ToString(@"hh\:mm"));
+            item.SubItems.Add((DateTime.Now - order.Time).ToString(@"hh\:mm")); // timer
             item.SubItems.Add(orderItem.Status.ToString());
 
             item.Tag = orderItem;
             listViewOrders.Items.Add(item);
+
+            // Create a new ToolTip for the itemName
+            ToolTip tooltip = new ToolTip();
+            tooltip.SetToolTip(listViewOrders, item.SubItems[2].Text);
 
             return item;
         }
@@ -113,7 +116,6 @@ namespace ChapeauUI
             headers.Add(dessertsGroup);
 
             return headers;
-
         }
 
         private void DisplayUnpreparedFood()
@@ -231,23 +233,22 @@ namespace ChapeauUI
 
         private ListViewItem DisplayPreparedItem(Order order, OrderItem orderItem)
         {
-
             ListViewItem item = new ListViewItem(order.Table.TableId.ToString());
             item.SubItems.Add(orderItem.Amount.ToString());
-            /*if (string.IsNullOrEmpty(orderedItem.Comment))
-               item.SubItems.Add(orderedItem.MenuItem.Name);
-              else
-                 item.SubItems.Add(orderedItem.MenuItem.Name + orderedItem.Comment);*/
+
             item.SubItems.Add(string.IsNullOrEmpty(orderItem.Comment)
-            ? orderItem.MenuItem.Name
-            : orderItem.MenuItem.Name + ": " + orderItem.Comment.ToLower()); // rewrite the formatting
+                   ? orderItem.MenuItem.Name
+                   : $"{orderItem.MenuItem.Name}: {orderItem.Comment.ToLower()}");
 
             item.SubItems.Add(order.Time.ToString("HH:mm"));
-            item.SubItems.Add((orderItem.PreparedAt - order.Time)?.ToString(@"hh\:mm") ?? ""); // ? checks is it's null, if so it converts an empty string
-            item.SubItems.Add(orderItem.PreparedAt?.ToString("HH:mm") ?? "");
+            item.SubItems.Add(orderItem.PreparedAt?.ToString("HH:mm") ?? "");  // '?' checks is it's null, if so it converts an empty string
 
             item.Tag = orderItem;
             listViewHistory.Items.Add(item);
+
+            // Create a new ToolTip for the itemName
+            ToolTip tooltip = new ToolTip();
+            tooltip.SetToolTip(listViewHistory, item.SubItems[2].Text);
 
             return item;
         }
@@ -305,7 +306,6 @@ namespace ChapeauUI
                 DisplayUnpreparedOrders();
         }
 
-        //later
         private void buttonLogOut_Click(object sender, EventArgs e)
         {
             LogOut();
@@ -313,7 +313,23 @@ namespace ChapeauUI
 
         private void LogOut()
         {
-            // later
+            // add code for logging out the user
+            LoginView loginView = new LoginView();
+            Hide();
+            loginView.ShowDialog();
+            Close();
+        }
+
+        private void timerRefreshDisplay_Tick(object sender, EventArgs e)
+        {
+            buttonStart.Hide();
+            buttonReady.Hide();
+            if (listViewHistory.Visible)
+            {
+                DisplayPreparedOrders();
+            }
+            else if (listViewOrders.Visible)
+                DisplayUnpreparedOrders();
         }
     }
 }

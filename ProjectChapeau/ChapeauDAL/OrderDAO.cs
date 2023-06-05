@@ -63,6 +63,7 @@ namespace ChapeauDAL
 
         public List<Order> GetReadyFood()
         {
+            // повернути фільтр!
             List<Order> readyFood = new List<Order>();
 
             string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oi.consistsOfId, oi.preparedAt, mi.courseType
@@ -71,8 +72,9 @@ namespace ChapeauDAL
                     INNER JOIN MenuItem AS mi ON oi.menuItemId = mi.menuItemId
                     WHERE mi.courseType IN (@courseTypeStarters, @courseTypeMains, @courseTypeDesserts)
                     AND oi.status = @status
-                    AND CONVERT(date, o.time) = CONVERT(date, GETDATE())
+                    
                     ORDER BY oi.preparedAt DESC";
+            //AND CONVERT(date, o.time) = CONVERT(date, GETDATE())
             SqlParameter[] sqlParameters = new SqlParameter[4];
             sqlParameters[0] = new SqlParameter("@courseTypeStarters", FoodType.Starter.ToString());
             sqlParameters[1] = new SqlParameter("@courseTypeMains", FoodType.MainCourse.ToString());
