@@ -34,7 +34,12 @@
             btnReturn = new Button();
             listViewMenuItems = new ListView();
             btnEditMenuItem = new Button();
+            panel1 = new Panel();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel5 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -58,7 +63,7 @@
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(79, 813);
+            btnReturn.Location = new Point(25, 736);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(205, 118);
             btnReturn.TabIndex = 15;
@@ -78,7 +83,7 @@
             // 
             // btnEditMenuItem
             // 
-            btnEditMenuItem.Location = new Point(462, 824);
+            btnEditMenuItem.Location = new Point(545, 747);
             btnEditMenuItem.Name = "btnEditMenuItem";
             btnEditMenuItem.Size = new Size(240, 97);
             btnEditMenuItem.TabIndex = 17;
@@ -86,19 +91,56 @@
             btnEditMenuItem.UseVisualStyleBackColor = true;
             btnEditMenuItem.Click += btnEditMenuItem_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Green;
+            panel1.Location = new Point(2, 118);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(839, 10);
+            panel1.TabIndex = 54;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Green;
+            panel4.Location = new Point(2, 1018);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(839, 38);
+            panel4.TabIndex = 56;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.IndianRed;
+            panel3.Controls.Add(panel5);
+            panel3.Location = new Point(2, 118);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(839, 46);
+            panel3.TabIndex = 55;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Green;
+            panel5.Location = new Point(0, 34);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(839, 10);
+            panel5.TabIndex = 50;
+            // 
             // MenuViewAllItems
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(panel1);
+            Controls.Add(panel4);
+            Controls.Add(panel3);
             Controls.Add(btnEditMenuItem);
-            Controls.Add(listViewMenuItems);
             Controls.Add(btnReturn);
+            Controls.Add(listViewMenuItems);
             Controls.Add(pictureBox1);
             Controls.Add(lblHeading);
             Name = "MenuViewAllItems";
             Text = "MenuViewAllItems";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -110,5 +152,9 @@
         private Button btnReturn;
         private ListView listViewMenuItems;
         private Button btnEditMenuItem;
+        private Panel panel1;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel5;
     }
 }

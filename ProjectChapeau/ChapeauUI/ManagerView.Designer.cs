@@ -36,7 +36,12 @@
             btnLogOut = new Button();
             lblHeading = new Label();
             pictureBox1 = new PictureBox();
+            panel1 = new Panel();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel5 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // btnStock
@@ -117,12 +122,48 @@
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Green;
+            panel1.Location = new Point(0, 119);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(839, 10);
+            panel1.TabIndex = 54;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Green;
+            panel4.Location = new Point(0, 1019);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(839, 38);
+            panel4.TabIndex = 56;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.IndianRed;
+            panel3.Controls.Add(panel5);
+            panel3.Location = new Point(0, 119);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(839, 46);
+            panel3.TabIndex = 55;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Green;
+            panel5.Location = new Point(0, 34);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(839, 10);
+            panel5.TabIndex = 50;
+            // 
             // ManagerView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(836, 1055);
+            Controls.Add(panel1);
+            Controls.Add(panel4);
+            Controls.Add(panel3);
             Controls.Add(pictureBox1);
             Controls.Add(lblHeading);
             Controls.Add(btnLogOut);
@@ -134,6 +175,7 @@
             Text = "ManagerView";
             Load += ManagerView_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -147,5 +189,9 @@
         private Button btnLogOut;
         private Label lblHeading;
         private PictureBox pictureBox1;
+        private Panel panel1;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel5;
     }
 }

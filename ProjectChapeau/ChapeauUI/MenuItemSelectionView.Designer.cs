@@ -36,7 +36,12 @@
             btnMainDishes = new Button();
             btnStarters = new Button();
             btnDesserts = new Button();
+            panel1 = new Panel();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel5 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // btnDrinks
@@ -118,12 +123,48 @@
             btnDesserts.UseVisualStyleBackColor = false;
             btnDesserts.Click += btnDesserts_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Green;
+            panel1.Location = new Point(0, 119);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(839, 10);
+            panel1.TabIndex = 54;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Green;
+            panel4.Location = new Point(0, 1019);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(839, 38);
+            panel4.TabIndex = 56;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.IndianRed;
+            panel3.Controls.Add(panel5);
+            panel3.Location = new Point(0, 119);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(839, 46);
+            panel3.TabIndex = 55;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Green;
+            panel5.Location = new Point(0, 34);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(839, 10);
+            panel5.TabIndex = 50;
+            // 
             // MenuItemSelectionView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             ClientSize = new Size(836, 1055);
+            Controls.Add(panel1);
+            Controls.Add(panel4);
+            Controls.Add(panel3);
             Controls.Add(btnDesserts);
             Controls.Add(btnStarters);
             Controls.Add(btnMainDishes);
@@ -134,6 +175,7 @@
             Name = "MenuItemSelectionView";
             Text = "MenuItemSelectionView";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -147,5 +189,9 @@
         private Button btnMainDishes;
         private Button btnStarters;
         private Button btnDesserts;
+        private Panel panel1;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel5;
     }
 }

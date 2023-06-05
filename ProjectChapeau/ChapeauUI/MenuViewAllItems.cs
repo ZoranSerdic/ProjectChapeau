@@ -14,7 +14,7 @@ namespace ChapeauUI
 {
     public partial class MenuViewAllItems : Form
     {
-        private MenuItem selectedItem; 
+        private MenuItem selectedItem;
         public MenuViewAllItems()
         {
             InitializeComponent();

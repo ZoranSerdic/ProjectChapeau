@@ -20,7 +20,7 @@ namespace ChapeauUI
         public EditMenuItem(MenuItem menuItem)
         {
             this.menuItem = menuItem;
-            menuItemService = new MenuItemService();    
+            menuItemService = new MenuItemService();
             InitializeComponent();
             FillForm();
         }
@@ -54,9 +54,9 @@ namespace ChapeauUI
             {
                 radBtnNonAlcoholic.Checked = true;
             }
-            else 
+            else
                 radBtnAlcoholic.Checked = true;
-            
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -79,13 +79,13 @@ namespace ChapeauUI
                 //Opens a message box for additional confirmation 
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
 
-                
+
                 if (dialogResult == DialogResult.OK)
                 {
                     //code for if the second confirmation occurs 
                     updatedItem = new MenuItem();
                     CreateNewMenuItem();
-                    menuItemService.UpdateItem(updatedItem); 
+                    menuItemService.UpdateItem(updatedItem);
                     dialogResult = MessageBox.Show("Menu item was successfully added to the database", "Success!");
                     ReturnToItemView();
                 }

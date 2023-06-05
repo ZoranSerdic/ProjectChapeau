@@ -17,7 +17,7 @@ namespace ChapeauUI
         public MenuItemSelectionView()
         {
             InitializeComponent();
-            menuItemService = new MenuItemService();    
+            menuItemService = new MenuItemService();
         }
 
         private void btnDrinks_Click(object sender, EventArgs e)

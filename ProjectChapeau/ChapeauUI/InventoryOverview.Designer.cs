@@ -37,15 +37,20 @@
             btnEditItem = new Button();
             btnRemoveItem = new Button();
             panelAdd = new Panel();
+            lblPanelHeading = new Label();
             btnCancel = new Button();
             btnConfirm = new Button();
             txtBoxCount = new TextBox();
             txtBoxName = new TextBox();
             lblCount = new Label();
             lblName = new Label();
-            lblPanelHeading = new Label();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel5 = new Panel();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelAdd.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -63,9 +68,9 @@
             lblHeading.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Point);
             lblHeading.Location = new Point(267, 33);
             lblHeading.Name = "lblHeading";
-            lblHeading.Size = new Size(148, 67);
+            lblHeading.Size = new Size(365, 67);
             lblHeading.TabIndex = 38;
-            lblHeading.Text = "Stock";
+            lblHeading.Text = "Stock Overview";
             // 
             // listViewInventory
             // 
@@ -79,9 +84,9 @@
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(47, 964);
+            btnReturn.Location = new Point(47, 904);
             btnReturn.Name = "btnReturn";
-            btnReturn.Size = new Size(94, 29);
+            btnReturn.Size = new Size(170, 89);
             btnReturn.TabIndex = 41;
             btnReturn.Text = "Return";
             btnReturn.UseVisualStyleBackColor = true;
@@ -131,6 +136,15 @@
             panelAdd.Name = "panelAdd";
             panelAdd.Size = new Size(690, 228);
             panelAdd.TabIndex = 45;
+            // 
+            // lblPanelHeading
+            // 
+            lblPanelHeading.AutoSize = true;
+            lblPanelHeading.Location = new Point(44, 13);
+            lblPanelHeading.Name = "lblPanelHeading";
+            lblPanelHeading.Size = new Size(191, 20);
+            lblPanelHeading.TabIndex = 6;
+            lblPanelHeading.Text = "Please fill in the entire form";
             // 
             // btnCancel
             // 
@@ -185,20 +199,47 @@
             lblName.TabIndex = 0;
             lblName.Text = "Item Name:";
             // 
-            // lblPanelHeading
+            // panel4
             // 
-            lblPanelHeading.AutoSize = true;
-            lblPanelHeading.Location = new Point(44, 13);
-            lblPanelHeading.Name = "lblPanelHeading";
-            lblPanelHeading.Size = new Size(191, 20);
-            lblPanelHeading.TabIndex = 6;
-            lblPanelHeading.Text = "Please fill in the entire form";
+            panel4.BackColor = Color.Green;
+            panel4.Location = new Point(1, 1021);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(839, 38);
+            panel4.TabIndex = 53;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.IndianRed;
+            panel3.Controls.Add(panel5);
+            panel3.Location = new Point(1, 121);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(839, 46);
+            panel3.TabIndex = 52;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Green;
+            panel5.Location = new Point(0, 34);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(839, 10);
+            panel5.TabIndex = 50;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Green;
+            panel1.Location = new Point(1, 121);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(839, 10);
+            panel1.TabIndex = 51;
             // 
             // InventoryOverview
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(panel1);
+            Controls.Add(panel4);
+            Controls.Add(panel3);
             Controls.Add(panelAdd);
             Controls.Add(btnRemoveItem);
             Controls.Add(btnEditItem);
@@ -212,6 +253,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panelAdd.ResumeLayout(false);
             panelAdd.PerformLayout();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -233,5 +275,9 @@
         private Button btnCancel;
         private Button btnConfirm;
         private Label lblPanelHeading;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel5;
+        private Panel panel1;
     }
 }

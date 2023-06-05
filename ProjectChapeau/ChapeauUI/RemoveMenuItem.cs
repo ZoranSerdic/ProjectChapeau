@@ -19,7 +19,7 @@ namespace ChapeauUI
         public RemoveMenuItem(List<MenuItem> menuItems)
         {
             InitializeComponent();
-            menuItemService = new MenuItemService(); 
+            menuItemService = new MenuItemService();
             DisplayMenuItems(menuItems);
         }
         public void DisplayMenuItems(List<MenuItem> items)
@@ -51,7 +51,7 @@ namespace ChapeauUI
             //checks first if there is a selected row 
             if (listViewItemsList.SelectedItems.Count > 0)
             {
-                MenuItem item = new MenuItem(); 
+                MenuItem item = new MenuItem();
                 ListViewItem selectedListViewItemRow = listViewItemsList.SelectedItems[0];
 
                 //adds the menuID from the row to the menu Item 
@@ -62,7 +62,7 @@ namespace ChapeauUI
                 if (dialogResult == DialogResult.OK)
                 {
                     menuItemService.RemoveItem(item);
-                    Return(); 
+                    Return();
                 }
             }
             else
@@ -72,7 +72,7 @@ namespace ChapeauUI
         }
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            Return(); 
+            Return();
         }
         private void Return()
         {
