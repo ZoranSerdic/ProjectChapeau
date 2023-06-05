@@ -44,13 +44,20 @@ namespace ChapeauUI
         {
             if (CheckForm())
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
-                if (dialogResult == DialogResult.OK)
+                try
                 {
-                    CreateNewEmployee();
-                    employeeService.UpdateEmployee(updatedEmployee);
-                    dialogResult = MessageBox.Show("Action performed successfully", "success");
-                    ReturnToEmployeeOverview();
+                    DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        CreateNewEmployee();
+                        employeeService.UpdateEmployee(updatedEmployee);
+                        dialogResult = MessageBox.Show("Action performed successfully", "success");
+                        ReturnToEmployeeOverview();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
                 }
             }
             else

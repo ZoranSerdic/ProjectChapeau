@@ -79,15 +79,20 @@ namespace ChapeauUI
                 //Opens a message box for additional confirmation 
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
 
-
                 if (dialogResult == DialogResult.OK)
                 {
-                    //code for if the second confirmation occurs 
-                    updatedItem = new MenuItem();
-                    CreateNewMenuItem();
-                    menuItemService.UpdateItem(updatedItem);
-                    dialogResult = MessageBox.Show("Menu item was successfully added to the database", "Success!");
-                    ReturnToItemView();
+                    try
+                    {
+                        updatedItem = new MenuItem();
+                        CreateNewMenuItem();
+                        menuItemService.UpdateItem(updatedItem);
+                        dialogResult = MessageBox.Show("Menu item was successfully edited in the database", "Success!");
+                        ReturnToItemView();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
                 }
             }
             else
