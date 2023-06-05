@@ -46,7 +46,7 @@
             this.buttonCloseOrder = new System.Windows.Forms.Button();
             this.buttonFinaliseOrder = new System.Windows.Forms.Button();
             this.panelWhiteButtonBackground = new System.Windows.Forms.Panel();
-            this.listViewOrders = new System.Windows.Forms.ListView();
+            this.listViewMenuItems = new System.Windows.Forms.ListView();
             this.panelMenuBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChapeauLogo)).BeginInit();
             this.panelWhiteButtonBackground.SuspendLayout();
@@ -250,13 +250,13 @@
             this.panelWhiteButtonBackground.Size = new System.Drawing.Size(532, 158);
             this.panelWhiteButtonBackground.TabIndex = 4;
             // 
-            // listViewOrders
+            // listViewMenuItems
             // 
-            this.listViewOrders.Location = new System.Drawing.Point(12, 130);
-            this.listViewOrders.Name = "listViewOrders";
-            this.listViewOrders.Size = new System.Drawing.Size(508, 535);
-            this.listViewOrders.TabIndex = 24;
-            this.listViewOrders.UseCompatibleStateImageBehavior = false;
+            this.listViewMenuItems.Location = new System.Drawing.Point(12, 130);
+            this.listViewMenuItems.Name = "listViewMenuItems";
+            this.listViewMenuItems.Size = new System.Drawing.Size(508, 535);
+            this.listViewMenuItems.TabIndex = 24;
+            this.listViewMenuItems.UseCompatibleStateImageBehavior = false;
             // 
             // OrderView
             // 
@@ -271,7 +271,7 @@
             this.Controls.Add(this.panelGreenSeparatorThree);
             this.Controls.Add(this.panelGreenSeparatorTwo);
             this.Controls.Add(this.panelGreenSeparatorOne);
-            this.Controls.Add(this.listViewOrders);
+            this.Controls.Add(this.listViewMenuItems);
             this.Controls.Add(this.panelWhiteButtonBackground);
             this.Controls.Add(this.panelMenuBackground);
             this.Controls.Add(this.labelTableNumber);
@@ -305,6 +305,6 @@
         private Button buttonCloseOrder;
         private Button buttonFinaliseOrder;
         private Panel panelWhiteButtonBackground;
-        private ListView listViewOrders;
+        private ListView listViewMenuItems;
     }
 }
