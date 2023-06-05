@@ -58,6 +58,7 @@
             this.buttonConfirmOrder.TabIndex = 25;
             this.buttonConfirmOrder.Text = "Confirm Order";
             this.buttonConfirmOrder.UseVisualStyleBackColor = false;
+            this.buttonConfirmOrder.Click += new System.EventHandler(this.buttonConfirmOrder_Click);
             // 
             // buttonGoBack
             // 
@@ -71,6 +72,7 @@
             this.buttonGoBack.TabIndex = 34;
             this.buttonGoBack.Text = "Go Back";
             this.buttonGoBack.UseVisualStyleBackColor = false;
+            this.buttonGoBack.Click += new System.EventHandler(this.buttonGoBack_Click);
             // 
             // pictureBoxChapeauLogo
             // 

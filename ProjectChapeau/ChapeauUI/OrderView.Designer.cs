@@ -47,6 +47,7 @@
             this.buttonFinaliseOrder = new System.Windows.Forms.Button();
             this.panelWhiteButtonBackground = new System.Windows.Forms.Panel();
             this.listViewMenuItems = new System.Windows.Forms.ListView();
+            this.buttonGoBackDrinksMenu = new System.Windows.Forms.Button();
             this.panelMenuBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChapeauLogo)).BeginInit();
             this.panelWhiteButtonBackground.SuspendLayout();
@@ -265,12 +266,28 @@
             this.listViewMenuItems.TabIndex = 24;
             this.listViewMenuItems.UseCompatibleStateImageBehavior = false;
             // 
+            // buttonGoBackDrinksMenu
+            // 
+            this.buttonGoBackDrinksMenu.AutoSize = true;
+            this.buttonGoBackDrinksMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(67)))), ((int)(((byte)(183)))));
+            this.buttonGoBackDrinksMenu.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonGoBackDrinksMenu.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonGoBackDrinksMenu.Location = new System.Drawing.Point(57, 827);
+            this.buttonGoBackDrinksMenu.Name = "buttonGoBackDrinksMenu";
+            this.buttonGoBackDrinksMenu.Size = new System.Drawing.Size(407, 56);
+            this.buttonGoBackDrinksMenu.TabIndex = 25;
+            this.buttonGoBackDrinksMenu.Text = "Go Back To Drinks Menu";
+            this.buttonGoBackDrinksMenu.UseVisualStyleBackColor = false;
+            this.buttonGoBackDrinksMenu.Visible = false;
+            this.buttonGoBackDrinksMenu.Click += new System.EventHandler(this.buttonGoBackDrinksMenu_Click);
+            // 
             // OrderView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(234)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(532, 953);
+            this.Controls.Add(this.buttonGoBackDrinksMenu);
             this.Controls.Add(this.buttonFinaliseOrder);
             this.Controls.Add(this.buttonCloseOrder);
             this.Controls.Add(this.buttonSwitchMenu);
@@ -313,5 +330,6 @@
         private Button buttonFinaliseOrder;
         private Panel panelWhiteButtonBackground;
         private ListView listViewMenuItems;
+        private Button buttonGoBackDrinksMenu;
     }
 }

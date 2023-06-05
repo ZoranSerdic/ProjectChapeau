@@ -19,9 +19,15 @@ namespace ChapeauUI
         MenuType currentMenuType;
         MenuType otherMenuType;
 
+        bool HideDrinkMenu;
+
+        string currentMenuLabel;
+
         public OrderView()
         {
             InitializeComponent();
+
+            currentMenuLabel = "Starters";
 
             // Automatically determine Menu Type based on time
             #region AutomaticTime
@@ -39,8 +45,70 @@ namespace ChapeauUI
             {
                 SwitchMenuType();
             }
-
             #endregion
+        }
+
+        private void buttonCategoryStarters_Click(object sender, EventArgs e)
+        {
+            currentMenuLabel = "Starters";
+            HideDrinkMenu = true;
+
+            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
+        }
+
+        private void buttonCategoryMainDish_Click(object sender, EventArgs e)
+        {
+            currentMenuLabel = "Main Dish";
+            HideDrinkMenu = true;
+
+            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
+        }
+
+        private void buttonCategoryDesserts_Click(object sender, EventArgs e)
+        {
+            currentMenuLabel = "Desserts";
+            HideDrinkMenu = true;
+
+            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
+        }
+
+        private void buttonCategoryDrinks_Click(object sender, EventArgs e)
+        {
+            currentMenuLabel = "Drinks";
+
+            buttonSwitchMenu.Hide();
+            buttonGoBackDrinksMenu.Show();
+            HideDrinkMenu = false;
+
+            SwitchMenuLabel("Drinks", "Category");
+        }
+
+        private void buttonSwitchMenu_Click(object sender, EventArgs e)
+        {
+            SwitchMenuType();
+        }
+
+        private void buttonGoBackDrinksMenu_Click(object sender, EventArgs e)
+        {
+            currentMenuLabel = "Drinks";
+
+            SwitchMenuLabel("Drinks", "Category");
+        }
+
+        private void buttonCloseOrder_Click(object sender, EventArgs e)
+        {
+            TableView tableView = new TableView();
+            this.Hide();
+            tableView.ShowDialog();
+            this.Close();
+        }
+
+        private void buttonFinaliseOrder_Click(object sender, EventArgs e)
+        {
+            OrderFinalise orderFinalise = new OrderFinalise();
+            this.Hide();
+            orderFinalise.ShowDialog();
+            this.Show();
         }
 
         void SwitchMenuType()
@@ -57,42 +125,20 @@ namespace ChapeauUI
             }
 
             buttonSwitchMenu.Text = $"Switch To {otherMenuType.ToString()} Menu";
-            labelMenuTime.Text = currentMenuType.ToString();
+            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
-        private void buttonCategoryStarters_Click(object sender, EventArgs e)
+        void SwitchMenuLabel(string menuType, string menuTime)
         {
+            if (HideDrinkMenu == true)
+            {
+                buttonSwitchMenu.Show();
+                buttonGoBackDrinksMenu.Hide();
+                HideDrinkMenu = false;
+            }
 
-        }
-
-        private void buttonCategoryMainDish_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonCategoryDesserts_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonCategoryDrinks_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonSwitchMenu_Click(object sender, EventArgs e)
-        {
-            SwitchMenuType();
-        }
-
-        private void buttonCloseOrder_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonFinaliseOrder_Click(object sender, EventArgs e)
-        {
-
+            labelMenuType.Text = menuType;
+            labelMenuTime.Text = menuTime;
         }
     }
 }

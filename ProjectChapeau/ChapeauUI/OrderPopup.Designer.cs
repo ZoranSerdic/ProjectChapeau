@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.panelNameOneBackground = new System.Windows.Forms.Panel();
-            this.labelPopupNameOne = new System.Windows.Forms.Label();
+            this.labelPopupName = new System.Windows.Forms.Label();
             this.panelNameTwoBackground = new System.Windows.Forms.Panel();
-            this.labelPopupNameTwo = new System.Windows.Forms.Label();
+            this.labelPopupDescription = new System.Windows.Forms.Label();
             this.panelQuantityBackground = new System.Windows.Forms.Panel();
             this.labelQuantity = new System.Windows.Forms.Label();
             this.buttonQuantityMinus = new System.Windows.Forms.Button();
@@ -50,7 +50,7 @@
             // panelNameOneBackground
             // 
             this.panelNameOneBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
-            this.panelNameOneBackground.Controls.Add(this.labelPopupNameOne);
+            this.panelNameOneBackground.Controls.Add(this.labelPopupName);
             this.panelNameOneBackground.Location = new System.Drawing.Point(6, 6);
             this.panelNameOneBackground.Name = "panelNameOneBackground";
             this.panelNameOneBackground.Size = new System.Drawing.Size(420, 41);
@@ -58,21 +58,21 @@
             // 
             // labelPopupNameOne
             // 
-            this.labelPopupNameOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelPopupNameOne.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelPopupNameOne.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.labelPopupNameOne.Location = new System.Drawing.Point(0, 0);
-            this.labelPopupNameOne.Name = "labelPopupNameOne";
-            this.labelPopupNameOne.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelPopupNameOne.Size = new System.Drawing.Size(420, 40);
-            this.labelPopupNameOne.TabIndex = 2;
-            this.labelPopupNameOne.Text = "Menu Item Name";
-            this.labelPopupNameOne.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelPopupName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelPopupName.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.labelPopupName.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.labelPopupName.Location = new System.Drawing.Point(0, 0);
+            this.labelPopupName.Name = "labelPopupNameOne";
+            this.labelPopupName.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelPopupName.Size = new System.Drawing.Size(420, 40);
+            this.labelPopupName.TabIndex = 2;
+            this.labelPopupName.Text = "Menu Item Name";
+            this.labelPopupName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelNameTwoBackground
             // 
             this.panelNameTwoBackground.BackColor = System.Drawing.Color.White;
-            this.panelNameTwoBackground.Controls.Add(this.labelPopupNameTwo);
+            this.panelNameTwoBackground.Controls.Add(this.labelPopupDescription);
             this.panelNameTwoBackground.Location = new System.Drawing.Point(6, 53);
             this.panelNameTwoBackground.Name = "panelNameTwoBackground";
             this.panelNameTwoBackground.Size = new System.Drawing.Size(420, 67);
@@ -80,17 +80,17 @@
             // 
             // labelPopupNameTwo
             // 
-            this.labelPopupNameTwo.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.labelPopupNameTwo.AutoEllipsis = true;
-            this.labelPopupNameTwo.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelPopupNameTwo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelPopupNameTwo.Location = new System.Drawing.Point(0, 1);
-            this.labelPopupNameTwo.Name = "labelPopupNameTwo";
-            this.labelPopupNameTwo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelPopupNameTwo.Size = new System.Drawing.Size(420, 68);
-            this.labelPopupNameTwo.TabIndex = 2;
-            this.labelPopupNameTwo.Text = "With test and to see if it goes to a new line when reaching the end test\r\n";
-            this.labelPopupNameTwo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelPopupDescription.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.labelPopupDescription.AutoEllipsis = true;
+            this.labelPopupDescription.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelPopupDescription.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.labelPopupDescription.Location = new System.Drawing.Point(0, 1);
+            this.labelPopupDescription.Name = "labelPopupNameTwo";
+            this.labelPopupDescription.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelPopupDescription.Size = new System.Drawing.Size(420, 68);
+            this.labelPopupDescription.TabIndex = 2;
+            this.labelPopupDescription.Text = "With test and to see if it goes to a new line when reaching the end test\r\n";
+            this.labelPopupDescription.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelQuantityBackground
             // 
@@ -126,6 +126,7 @@
             this.buttonQuantityMinus.Text = "-";
             this.buttonQuantityMinus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonQuantityMinus.UseVisualStyleBackColor = false;
+            this.buttonQuantityMinus.Click += new System.EventHandler(this.buttonQuantityMinus_Click);
             // 
             // buttonQuantityPlus
             // 
@@ -139,6 +140,7 @@
             this.buttonQuantityPlus.Text = "+";
             this.buttonQuantityPlus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonQuantityPlus.UseVisualStyleBackColor = false;
+            this.buttonQuantityPlus.Click += new System.EventHandler(this.buttonQuantityPlus_Click);
             // 
             // panelQuantityAmountBackground
             // 
@@ -181,6 +183,7 @@
             this.buttonPopupAddOrder.Text = "Add Order";
             this.buttonPopupAddOrder.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonPopupAddOrder.UseVisualStyleBackColor = false;
+            this.buttonPopupAddOrder.Click += new System.EventHandler(this.buttonPopupAddOrder_Click);
             // 
             // buttonPopupCancel
             // 
@@ -194,6 +197,7 @@
             this.buttonPopupCancel.Text = "Cancel";
             this.buttonPopupCancel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.buttonPopupCancel.UseVisualStyleBackColor = false;
+            this.buttonPopupCancel.Click += new System.EventHandler(this.buttonPopupCancel_Click);
             // 
             // OrderPopup
             // 
@@ -224,9 +228,9 @@
         #endregion
 
         private Panel panelNameOneBackground;
-        private Label labelPopupNameOne;
+        private Label labelPopupName;
         private Panel panelNameTwoBackground;
-        private Label labelPopupNameTwo;
+        private Label labelPopupDescription;
         private Panel panelQuantityBackground;
         private Label labelQuantity;
         private Button buttonQuantityMinus;
