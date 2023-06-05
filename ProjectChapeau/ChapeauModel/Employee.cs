@@ -26,6 +26,5 @@ namespace ChapeauModel
             LastName = lastName;
             Occupation = occupation;
         }
-
     }
 }
