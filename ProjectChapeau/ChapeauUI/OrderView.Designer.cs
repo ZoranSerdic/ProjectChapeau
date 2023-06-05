@@ -96,7 +96,7 @@
             this.labelMenuTime.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelMenuTime.Size = new System.Drawing.Size(240, 40);
             this.labelMenuTime.TabIndex = 3;
-            this.labelMenuTime.Text = "Diner";
+            this.labelMenuTime.Text = "Lunch";
             this.labelMenuTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelMenuType
@@ -159,6 +159,7 @@
             this.buttonCategoryStarters.TabIndex = 18;
             this.buttonCategoryStarters.Text = "Starters";
             this.buttonCategoryStarters.UseVisualStyleBackColor = false;
+            this.buttonCategoryStarters.Click += new System.EventHandler(this.buttonCategoryStarters_Click);
             // 
             // buttonCategoryMainDish
             // 
@@ -172,6 +173,7 @@
             this.buttonCategoryMainDish.TabIndex = 19;
             this.buttonCategoryMainDish.Text = "Main Dish";
             this.buttonCategoryMainDish.UseVisualStyleBackColor = false;
+            this.buttonCategoryMainDish.Click += new System.EventHandler(this.buttonCategoryMainDish_Click);
             // 
             // buttonCategoryDesserts
             // 
@@ -185,6 +187,7 @@
             this.buttonCategoryDesserts.TabIndex = 20;
             this.buttonCategoryDesserts.Text = "Desserts";
             this.buttonCategoryDesserts.UseVisualStyleBackColor = false;
+            this.buttonCategoryDesserts.Click += new System.EventHandler(this.buttonCategoryDesserts_Click);
             // 
             // buttonCategoryDrinks
             // 
@@ -198,6 +201,7 @@
             this.buttonCategoryDrinks.TabIndex = 21;
             this.buttonCategoryDrinks.Text = "Drinks";
             this.buttonCategoryDrinks.UseVisualStyleBackColor = false;
+            this.buttonCategoryDrinks.Click += new System.EventHandler(this.buttonCategoryDrinks_Click);
             // 
             // buttonSwitchMenu
             // 
@@ -207,10 +211,11 @@
             this.buttonSwitchMenu.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.buttonSwitchMenu.Location = new System.Drawing.Point(64, 827);
             this.buttonSwitchMenu.Name = "buttonSwitchMenu";
-            this.buttonSwitchMenu.Size = new System.Drawing.Size(388, 56);
+            this.buttonSwitchMenu.Size = new System.Drawing.Size(390, 56);
             this.buttonSwitchMenu.TabIndex = 22;
-            this.buttonSwitchMenu.Text = "Switch To Lunch Menu";
+            this.buttonSwitchMenu.Text = "Switch To Dinner Menu";
             this.buttonSwitchMenu.UseVisualStyleBackColor = false;
+            this.buttonSwitchMenu.Click += new System.EventHandler(this.buttonSwitchMenu_Click);
             // 
             // buttonCloseOrder
             // 
@@ -224,6 +229,7 @@
             this.buttonCloseOrder.TabIndex = 23;
             this.buttonCloseOrder.Text = "Close Order";
             this.buttonCloseOrder.UseVisualStyleBackColor = false;
+            this.buttonCloseOrder.Click += new System.EventHandler(this.buttonCloseOrder_Click);
             // 
             // buttonFinaliseOrder
             // 
@@ -237,6 +243,7 @@
             this.buttonFinaliseOrder.TabIndex = 0;
             this.buttonFinaliseOrder.Text = "Finalise Order";
             this.buttonFinaliseOrder.UseVisualStyleBackColor = false;
+            this.buttonFinaliseOrder.Click += new System.EventHandler(this.buttonFinaliseOrder_Click);
             // 
             // panelWhiteButtonBackground
             // 
