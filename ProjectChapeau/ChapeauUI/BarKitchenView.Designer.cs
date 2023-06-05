@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BarKitchenView));
             buttonHistory = new Button();
             buttonLogOut = new Button();
@@ -47,18 +48,20 @@
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
-            columnHeader6 = new ColumnHeader();
             buttonOrders = new Button();
             buttonRefresh = new Button();
             labelHistory = new Label();
+            timerRefreshDisplay = new System.Windows.Forms.Timer(components);
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // buttonHistory
             // 
-            buttonHistory.BackColor = Color.Lime;
+            buttonHistory.BackColor = Color.FromArgb(135, 227, 78);
             buttonHistory.FlatStyle = FlatStyle.Flat;
             buttonHistory.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonHistory.Location = new Point(287, 36);
+            buttonHistory.Location = new Point(307, 35);
             buttonHistory.Name = "buttonHistory";
             buttonHistory.Size = new Size(190, 53);
             buttonHistory.TabIndex = 8;
@@ -68,11 +71,12 @@
             // 
             // buttonLogOut
             // 
-            buttonLogOut.BackColor = Color.FromArgb(255, 128, 128);
-            buttonLogOut.FlatStyle = FlatStyle.Flat;
+            buttonLogOut.BackColor = Color.Blue;
+            buttonLogOut.FlatStyle = FlatStyle.Popup;
             buttonLogOut.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonLogOut.ForeColor = SystemColors.ButtonHighlight;
             buttonLogOut.ImageAlign = ContentAlignment.MiddleRight;
-            buttonLogOut.Location = new Point(927, 35);
+            buttonLogOut.Location = new Point(932, 36);
             buttonLogOut.Name = "buttonLogOut";
             buttonLogOut.Size = new Size(190, 53);
             buttonLogOut.TabIndex = 9;
@@ -102,6 +106,7 @@
             listViewOrders.Location = new Point(46, 128);
             listViewOrders.MultiSelect = false;
             listViewOrders.Name = "listViewOrders";
+            listViewOrders.ShowItemToolTips = true;
             listViewOrders.Size = new Size(1322, 710);
             listViewOrders.TabIndex = 11;
             listViewOrders.UseCompatibleStateImageBehavior = false;
@@ -110,45 +115,45 @@
             // 
             // Table
             // 
-            Table.Text = "     Table";
-            Table.Width = 120;
+            Table.Text = "Table";
+            Table.Width = 70;
             // 
             // Quantity
             // 
             Quantity.Text = "Quantity";
             Quantity.TextAlign = HorizontalAlignment.Center;
-            Quantity.Width = 150;
+            Quantity.Width = 100;
             // 
             // Item
             // 
             Item.Text = "Item";
             Item.TextAlign = HorizontalAlignment.Center;
-            Item.Width = 570;
+            Item.Width = 780;
             // 
             // Received
             // 
             Received.Text = "Received";
             Received.TextAlign = HorizontalAlignment.Center;
-            Received.Width = 150;
+            Received.Width = 120;
             // 
             // Waiting
             // 
             Waiting.Text = "Waiting";
             Waiting.TextAlign = HorizontalAlignment.Center;
-            Waiting.Width = 150;
+            Waiting.Width = 120;
             // 
             // Status
             // 
             Status.Text = "Status";
             Status.TextAlign = HorizontalAlignment.Center;
-            Status.Width = 150;
+            Status.Width = 120;
             // 
             // buttonStart
             // 
             buttonStart.BackColor = Color.Cyan;
             buttonStart.FlatStyle = FlatStyle.Flat;
             buttonStart.Font = new Font("Bahnschrift SemiBold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonStart.Location = new Point(626, 879);
+            buttonStart.Location = new Point(593, 879);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(190, 53);
             buttonStart.TabIndex = 12;
@@ -158,10 +163,11 @@
             // 
             // buttonReady
             // 
-            buttonReady.BackColor = Color.Violet;
-            buttonReady.FlatStyle = FlatStyle.Flat;
+            buttonReady.BackColor = Color.Yellow;
+            buttonReady.FlatStyle = FlatStyle.Popup;
             buttonReady.Font = new Font("Bahnschrift SemiBold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonReady.Location = new Point(626, 879);
+            buttonReady.ForeColor = SystemColors.ControlText;
+            buttonReady.Location = new Point(593, 879);
             buttonReady.Name = "buttonReady";
             buttonReady.Size = new Size(190, 53);
             buttonReady.TabIndex = 13;
@@ -172,12 +178,13 @@
             // listViewHistory
             // 
             listViewHistory.BackColor = SystemColors.ControlLight;
-            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader6 });
+            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
             listViewHistory.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
             listViewHistory.FullRowSelect = true;
             listViewHistory.Location = new Point(46, 128);
             listViewHistory.MultiSelect = false;
             listViewHistory.Name = "listViewHistory";
+            listViewHistory.ShowItemToolTips = true;
             listViewHistory.Size = new Size(1322, 710);
             listViewHistory.TabIndex = 14;
             listViewHistory.UseCompatibleStateImageBehavior = false;
@@ -198,7 +205,7 @@
             // 
             columnHeader3.Text = "Item";
             columnHeader3.TextAlign = HorizontalAlignment.Center;
-            columnHeader3.Width = 570;
+            columnHeader3.Width = 730;
             // 
             // columnHeader4
             // 
@@ -208,22 +215,16 @@
             // 
             // columnHeader5
             // 
-            columnHeader5.Text = "Waiting";
+            columnHeader5.Text = "Prepared";
             columnHeader5.TextAlign = HorizontalAlignment.Center;
             columnHeader5.Width = 150;
             // 
-            // columnHeader6
-            // 
-            columnHeader6.Text = "Prepared";
-            columnHeader6.TextAlign = HorizontalAlignment.Center;
-            columnHeader6.Width = 170;
-            // 
             // buttonOrders
             // 
-            buttonOrders.BackColor = Color.RoyalBlue;
+            buttonOrders.BackColor = Color.FromArgb(237, 122, 122);
             buttonOrders.FlatStyle = FlatStyle.Flat;
             buttonOrders.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonOrders.Location = new Point(287, 35);
+            buttonOrders.Location = new Point(307, 35);
             buttonOrders.Name = "buttonOrders";
             buttonOrders.Size = new Size(190, 53);
             buttonOrders.TabIndex = 15;
@@ -258,12 +259,29 @@
             labelHistory.Text = "HISTORY";
             labelHistory.TextAlign = ContentAlignment.TopCenter;
             // 
+            // timerRefreshDisplay
+            // 
+            timerRefreshDisplay.Interval = 30000;
+            timerRefreshDisplay.Tick += timerRefreshDisplay_Tick;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(46, 13);
+            pictureBox1.Margin = new Padding(4);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(176, 108);
+            pictureBox1.TabIndex = 18;
+            pictureBox1.TabStop = false;
+            // 
             // BarKitchenView
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1418, 968);
+            Controls.Add(pictureBox1);
             Controls.Add(labelHistory);
             Controls.Add(buttonRefresh);
             Controls.Add(buttonOrders);
@@ -276,6 +294,7 @@
             Controls.Add(buttonHistory);
             Name = "BarKitchenView";
             Text = "BarKitchenView";
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -303,5 +322,7 @@
         private Button buttonOrders;
         private Button buttonRefresh;
         private Label labelHistory;
+        private System.Windows.Forms.Timer timerRefreshDisplay;
+        private PictureBox pictureBox1;
     }
 }
