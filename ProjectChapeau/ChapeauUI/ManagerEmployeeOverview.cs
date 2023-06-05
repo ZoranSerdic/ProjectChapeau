@@ -75,35 +75,35 @@ namespace ChapeauUI
 
         private void BtnRemoveEmployee_Click(object sender, EventArgs e)
         {
-            //checks first if there is a selected row 
-            if (listViewEmployees.SelectedItems.Count > 0)
+            try
             {
-                selectedEmployee = new Employee();
-                ListViewItem selectedListViewItemRow = listViewEmployees.SelectedItems[0];
-
-                //adds the menuID from the row to the menu Item 
-                selectedEmployee.EmployeeId = int.Parse(selectedListViewItemRow.SubItems[0].Text);
-
-                //double checks action 
-                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
-                try
+                //checks first if there is a selected row 
+                if (listViewEmployees.SelectedItems.Count > 0)
                 {
+                    selectedEmployee = new Employee();
+                    ListViewItem selectedListViewItemRow = listViewEmployees.SelectedItems[0];
+
+                    //adds the menuID from the row to the menu Item 
+                    selectedEmployee.EmployeeId = int.Parse(selectedListViewItemRow.SubItems[0].Text);
+
+                    //double checks action 
+                    DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+
                     if (dialogResult == DialogResult.OK)
                     {
                         service.RemoveEmployee(selectedEmployee);
                         UpdateListView();
                     }
                 }
-                catch (Exception)
+                else
                 {
-
-                    throw;
+                    DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
                 }
-                
             }
-            else
+            catch (Exception)
             {
-                DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
+
+                throw;
             }
         }
 
@@ -114,7 +114,7 @@ namespace ChapeauUI
             if (listViewEmployees.SelectedItems.Count > 0)
             {
                 this.selectedEmployee = new Employee();
-                
+
                 ListViewItem selectedEmployee = listViewEmployees.SelectedItems[0];
 
                 //adds the menuID from the row to the menu Item 
@@ -124,7 +124,7 @@ namespace ChapeauUI
                 //to get the correct enum, first get it as a string, then convert and assign
                 string occupation = selectedEmployee.SubItems[3].Text;
                 this.selectedEmployee.Occupation = (Role)Enum.Parse(typeof(Role), occupation);
-                ChangeToEditEmployee(this.selectedEmployee); 
+                ChangeToEditEmployee(this.selectedEmployee);
             }
             else
             {

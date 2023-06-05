@@ -45,7 +45,13 @@
             lblFirstName = new Label();
             pictureBox1 = new PictureBox();
             lblHeading = new Label();
+            panel4 = new Panel();
+            panel3 = new Panel();
+            panel5 = new Panel();
+            panel1 = new Panel();
+            lblSubHeading = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // txtBoxPin2
@@ -68,9 +74,9 @@
             // 
             // btnConfirm
             // 
-            btnConfirm.Location = new Point(543, 728);
+            btnConfirm.Location = new Point(521, 709);
             btnConfirm.Name = "btnConfirm";
-            btnConfirm.Size = new Size(94, 29);
+            btnConfirm.Size = new Size(198, 98);
             btnConfirm.TabIndex = 46;
             btnConfirm.Text = "confirm";
             btnConfirm.UseVisualStyleBackColor = true;
@@ -78,9 +84,9 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(132, 728);
+            btnCancel.Location = new Point(76, 709);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(94, 29);
+            btnCancel.Size = new Size(185, 98);
             btnCancel.TabIndex = 45;
             btnCancel.Text = "cancel";
             btnCancel.UseVisualStyleBackColor = true;
@@ -89,7 +95,7 @@
             // radBtnBartender
             // 
             radBtnBartender.AutoSize = true;
-            radBtnBartender.Location = new Point(567, 433);
+            radBtnBartender.Location = new Point(440, 463);
             radBtnBartender.Name = "radBtnBartender";
             radBtnBartender.Size = new Size(95, 24);
             radBtnBartender.TabIndex = 44;
@@ -100,7 +106,7 @@
             // radBtnChef
             // 
             radBtnChef.AutoSize = true;
-            radBtnChef.Location = new Point(339, 433);
+            radBtnChef.Location = new Point(268, 463);
             radBtnChef.Name = "radBtnChef";
             radBtnChef.Size = new Size(60, 24);
             radBtnChef.TabIndex = 43;
@@ -111,7 +117,7 @@
             // radBtnWaiter
             // 
             radBtnWaiter.AutoSize = true;
-            radBtnWaiter.Location = new Point(76, 433);
+            radBtnWaiter.Location = new Point(76, 463);
             radBtnWaiter.Name = "radBtnWaiter";
             radBtnWaiter.Size = new Size(73, 24);
             radBtnWaiter.TabIndex = 42;
@@ -140,7 +146,7 @@
             // lblOccupation
             // 
             lblOccupation.AutoSize = true;
-            lblOccupation.Location = new Point(76, 372);
+            lblOccupation.Location = new Point(76, 402);
             lblOccupation.Name = "lblOccupation";
             lblOccupation.Size = new Size(88, 20);
             lblOccupation.TabIndex = 39;
@@ -148,14 +154,14 @@
             // 
             // txtBoxLastName
             // 
-            txtBoxLastName.Location = new Point(339, 254);
+            txtBoxLastName.Location = new Point(339, 308);
             txtBoxLastName.Name = "txtBoxLastName";
             txtBoxLastName.Size = new Size(125, 27);
             txtBoxLastName.TabIndex = 38;
             // 
             // txtBoxFirstName
             // 
-            txtBoxFirstName.Location = new Point(76, 254);
+            txtBoxFirstName.Location = new Point(76, 308);
             txtBoxFirstName.Name = "txtBoxFirstName";
             txtBoxFirstName.Size = new Size(125, 27);
             txtBoxFirstName.TabIndex = 37;
@@ -163,16 +169,16 @@
             // lblLastName
             // 
             lblLastName.AutoSize = true;
-            lblLastName.Location = new Point(339, 199);
+            lblLastName.Location = new Point(339, 269);
             lblLastName.Name = "lblLastName";
-            lblLastName.Size = new Size(79, 20);
+            lblLastName.Size = new Size(82, 20);
             lblLastName.TabIndex = 36;
-            lblLastName.Text = "Last Name";
+            lblLastName.Text = "Last Name:";
             // 
             // lblFirstName
             // 
             lblFirstName.AutoSize = true;
-            lblFirstName.Location = new Point(76, 199);
+            lblFirstName.Location = new Point(76, 269);
             lblFirstName.Name = "lblFirstName";
             lblFirstName.Size = new Size(83, 20);
             lblFirstName.TabIndex = 35;
@@ -197,11 +203,58 @@
             lblHeading.TabIndex = 33;
             lblHeading.Text = "Edit employee";
             // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Green;
+            panel4.Location = new Point(1, 1019);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(839, 38);
+            panel4.TabIndex = 51;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.IndianRed;
+            panel3.Controls.Add(panel5);
+            panel3.Location = new Point(1, 121);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(839, 44);
+            panel3.TabIndex = 50;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Green;
+            panel5.Location = new Point(0, 34);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(839, 10);
+            panel5.TabIndex = 50;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Green;
+            panel1.Location = new Point(1, 121);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(839, 10);
+            panel1.TabIndex = 51;
+            // 
+            // lblSubHeading
+            // 
+            lblSubHeading.AutoSize = true;
+            lblSubHeading.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSubHeading.Location = new Point(76, 168);
+            lblSubHeading.Name = "lblSubHeading";
+            lblSubHeading.Size = new Size(659, 46);
+            lblSubHeading.TabIndex = 55;
+            lblSubHeading.Text = "Please fill in this form to edit the employee";
+            // 
             // EditEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(lblSubHeading);
+            Controls.Add(panel1);
+            Controls.Add(panel4);
+            Controls.Add(panel3);
             Controls.Add(txtBoxPin2);
             Controls.Add(txtBoxPin1);
             Controls.Add(btnConfirm);
@@ -221,6 +274,7 @@
             Name = "EditEmployee";
             Text = "EditEmployee";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -243,5 +297,10 @@
         private Label lblFirstName;
         private PictureBox pictureBox1;
         private Label lblHeading;
+        private Panel panel4;
+        private Panel panel3;
+        private Panel panel5;
+        private Panel panel1;
+        private Label lblSubHeading;
     }
 }

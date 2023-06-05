@@ -25,7 +25,7 @@ namespace ChapeauUI
         private void btnStock_Click(object sender, EventArgs e)
         {
             this.Hide();
-            InventoryOverview inventoryOverview = new InventoryOverview();  
+            InventoryOverview inventoryOverview = new InventoryOverview();
             inventoryOverview.ShowDialog();
             this.Close();
         }
@@ -41,7 +41,7 @@ namespace ChapeauUI
         private void btnTableOverview_Click(object sender, EventArgs e)
         {
             this.Hide();
-            TableView tableView = new TableView();  
+            TableView tableView = new TableView();
             tableView.ShowDialog();
             this.Close();
         }
@@ -51,15 +51,15 @@ namespace ChapeauUI
             this.Hide();
             ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview();
             employeeOverview.ShowDialog();
-            this.Close();   
+            this.Close();
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             this.Hide();
-            LoginView loginView = new LoginView();  
+            LoginView loginView = new LoginView();
             loginView.ShowDialog();
-            this.Close();   
+            this.Close();
         }
     }
 }

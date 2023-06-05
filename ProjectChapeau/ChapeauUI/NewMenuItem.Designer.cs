@@ -35,7 +35,6 @@
             txtBoxName = new TextBox();
             lblType = new Label();
             lblVAT = new Label();
-            lblTimeAvailability = new Label();
             btnCancel = new Button();
             btnConfirm = new Button();
             radBtnDrink = new RadioButton();
@@ -44,19 +43,20 @@
             radBtnDessert = new RadioButton();
             radBtnAlcoholic = new RadioButton();
             radBtnNonAlcoholic = new RadioButton();
-            radBtnLunchTime = new RadioButton();
-            radBtnDinnerTime = new RadioButton();
-            radBtnAllDay = new RadioButton();
             panel1 = new Panel();
             panel2 = new Panel();
-            panel3 = new Panel();
             numPrice = new NumericUpDown();
             lblPrice = new Label();
+            panel3 = new Panel();
+            panel4 = new Panel();
+            panel5 = new Panel();
+            panel6 = new Panel();
+            lblSubHeading = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
-            panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numPrice).BeginInit();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -81,7 +81,7 @@
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Location = new Point(62, 196);
+            lblName.Location = new Point(63, 264);
             lblName.Name = "lblName";
             lblName.Size = new Size(52, 20);
             lblName.TabIndex = 15;
@@ -89,7 +89,7 @@
             // 
             // txtBoxName
             // 
-            txtBoxName.Location = new Point(65, 235);
+            txtBoxName.Location = new Point(66, 303);
             txtBoxName.Name = "txtBoxName";
             txtBoxName.Size = new Size(182, 27);
             txtBoxName.TabIndex = 16;
@@ -97,7 +97,7 @@
             // lblType
             // 
             lblType.AutoSize = true;
-            lblType.Location = new Point(65, 340);
+            lblType.Location = new Point(65, 386);
             lblType.Name = "lblType";
             lblType.Size = new Size(43, 20);
             lblType.TabIndex = 17;
@@ -106,20 +106,11 @@
             // lblVAT
             // 
             lblVAT.AutoSize = true;
-            lblVAT.Location = new Point(65, 461);
+            lblVAT.Location = new Point(65, 529);
             lblVAT.Name = "lblVAT";
             lblVAT.Size = new Size(37, 20);
             lblVAT.TabIndex = 18;
             lblVAT.Text = "VAT:";
-            // 
-            // lblTimeAvailability
-            // 
-            lblTimeAvailability.AutoSize = true;
-            lblTimeAvailability.Location = new Point(65, 609);
-            lblTimeAvailability.Name = "lblTimeAvailability";
-            lblTimeAvailability.Size = new Size(143, 20);
-            lblTimeAvailability.TabIndex = 19;
-            lblTimeAvailability.Text = "Time of availability: ";
             // 
             // btnCancel
             // 
@@ -207,46 +198,13 @@
             radBtnNonAlcoholic.Text = "Non-alcoholic Item";
             radBtnNonAlcoholic.UseVisualStyleBackColor = true;
             // 
-            // radBtnLunchTime
-            // 
-            radBtnLunchTime.AutoSize = true;
-            radBtnLunchTime.Location = new Point(25, 22);
-            radBtnLunchTime.Name = "radBtnLunchTime";
-            radBtnLunchTime.Size = new Size(105, 24);
-            radBtnLunchTime.TabIndex = 28;
-            radBtnLunchTime.TabStop = true;
-            radBtnLunchTime.Text = "Lunch Time";
-            radBtnLunchTime.UseVisualStyleBackColor = true;
-            // 
-            // radBtnDinnerTime
-            // 
-            radBtnDinnerTime.AutoSize = true;
-            radBtnDinnerTime.Location = new Point(205, 22);
-            radBtnDinnerTime.Name = "radBtnDinnerTime";
-            radBtnDinnerTime.Size = new Size(111, 24);
-            radBtnDinnerTime.TabIndex = 29;
-            radBtnDinnerTime.TabStop = true;
-            radBtnDinnerTime.Text = "Dinner Time";
-            radBtnDinnerTime.UseVisualStyleBackColor = true;
-            // 
-            // radBtnAllDay
-            // 
-            radBtnAllDay.AutoSize = true;
-            radBtnAllDay.Location = new Point(400, 22);
-            radBtnAllDay.Name = "radBtnAllDay";
-            radBtnAllDay.Size = new Size(78, 24);
-            radBtnAllDay.TabIndex = 30;
-            radBtnAllDay.TabStop = true;
-            radBtnAllDay.Text = "All Day";
-            radBtnAllDay.UseVisualStyleBackColor = true;
-            // 
             // panel1
             // 
             panel1.Controls.Add(radBtnDessert);
             panel1.Controls.Add(radBtnMainDish);
             panel1.Controls.Add(radBtnStarter);
             panel1.Controls.Add(radBtnDrink);
-            panel1.Location = new Point(65, 379);
+            panel1.Location = new Point(65, 425);
             panel1.Name = "panel1";
             panel1.Size = new Size(734, 61);
             panel1.TabIndex = 31;
@@ -255,25 +213,15 @@
             // 
             panel2.Controls.Add(radBtnNonAlcoholic);
             panel2.Controls.Add(radBtnAlcoholic);
-            panel2.Location = new Point(63, 504);
+            panel2.Location = new Point(62, 572);
             panel2.Name = "panel2";
             panel2.Size = new Size(585, 73);
             panel2.TabIndex = 32;
             // 
-            // panel3
-            // 
-            panel3.Controls.Add(radBtnAllDay);
-            panel3.Controls.Add(radBtnDinnerTime);
-            panel3.Controls.Add(radBtnLunchTime);
-            panel3.Location = new Point(62, 642);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(688, 70);
-            panel3.TabIndex = 33;
-            // 
             // numPrice
             // 
             numPrice.DecimalPlaces = 2;
-            numPrice.Location = new Point(462, 236);
+            numPrice.Location = new Point(463, 304);
             numPrice.Name = "numPrice";
             numPrice.Size = new Size(150, 27);
             numPrice.TabIndex = 34;
@@ -281,25 +229,70 @@
             // lblPrice
             // 
             lblPrice.AutoSize = true;
-            lblPrice.Location = new Point(461, 206);
+            lblPrice.Location = new Point(462, 274);
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(44, 20);
             lblPrice.TabIndex = 35;
             lblPrice.Text = "Price:";
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.Green;
+            panel3.Location = new Point(0, 117);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(839, 10);
+            panel3.TabIndex = 54;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.Green;
+            panel4.Location = new Point(0, 1017);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(839, 38);
+            panel4.TabIndex = 56;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.IndianRed;
+            panel5.Controls.Add(panel6);
+            panel5.Location = new Point(0, 117);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(839, 46);
+            panel5.TabIndex = 55;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = Color.Green;
+            panel6.Location = new Point(0, 34);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(839, 10);
+            panel6.TabIndex = 50;
+            // 
+            // lblSubHeading
+            // 
+            lblSubHeading.AutoSize = true;
+            lblSubHeading.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSubHeading.Location = new Point(50, 188);
+            lblSubHeading.Name = "lblSubHeading";
+            lblSubHeading.Size = new Size(672, 46);
+            lblSubHeading.TabIndex = 57;
+            lblSubHeading.Text = "Please fill in this form to add the menu item";
             // 
             // NewMenuItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(lblSubHeading);
+            Controls.Add(panel3);
+            Controls.Add(panel4);
+            Controls.Add(panel5);
             Controls.Add(lblPrice);
             Controls.Add(numPrice);
-            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(btnConfirm);
             Controls.Add(btnCancel);
-            Controls.Add(lblTimeAvailability);
             Controls.Add(lblVAT);
             Controls.Add(lblType);
             Controls.Add(txtBoxName);
@@ -313,9 +306,8 @@
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numPrice).EndInit();
+            panel5.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -328,7 +320,6 @@
         private TextBox txtBoxName;
         private Label lblType;
         private Label lblVAT;
-        private Label lblTimeAvailability;
         private Button btnCancel;
         private Button btnConfirm;
         private RadioButton radBtnDrink;
@@ -337,13 +328,14 @@
         private RadioButton radBtnDessert;
         private RadioButton radBtnAlcoholic;
         private RadioButton radBtnNonAlcoholic;
-        private RadioButton radBtnLunchTime;
-        private RadioButton radBtnDinnerTime;
-        private RadioButton radBtnAllDay;
         private Panel panel1;
         private Panel panel2;
-        private Panel panel3;
         private NumericUpDown numPrice;
         private Label lblPrice;
+        private Panel panel3;
+        private Panel panel4;
+        private Panel panel5;
+        private Panel panel6;
+        private Label lblSubHeading;
     }
 }
