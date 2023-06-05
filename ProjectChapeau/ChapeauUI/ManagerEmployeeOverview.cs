@@ -100,10 +100,9 @@ namespace ChapeauUI
                     DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                throw;
+                MessageBox.Show(exception.Message);
             }
         }
 
@@ -113,18 +112,25 @@ namespace ChapeauUI
             //checks first if there is a selected row 
             if (listViewEmployees.SelectedItems.Count > 0)
             {
-                this.selectedEmployee = new Employee();
+                try
+                {
+                    this.selectedEmployee = new Employee();
 
-                ListViewItem selectedEmployee = listViewEmployees.SelectedItems[0];
+                    ListViewItem selectedEmployee = listViewEmployees.SelectedItems[0];
 
-                //adds the menuID from the row to the menu Item 
-                this.selectedEmployee.EmployeeId = int.Parse(selectedEmployee.SubItems[0].Text);
-                this.selectedEmployee.FirstName = selectedEmployee.SubItems[1].Text;
-                this.selectedEmployee.LastName = selectedEmployee.SubItems[2].Text;
-                //to get the correct enum, first get it as a string, then convert and assign
-                string occupation = selectedEmployee.SubItems[3].Text;
-                this.selectedEmployee.Occupation = (Role)Enum.Parse(typeof(Role), occupation);
-                ChangeToEditEmployee(this.selectedEmployee);
+                    //adds the menuID from the row to the menu Item 
+                    this.selectedEmployee.EmployeeId = int.Parse(selectedEmployee.SubItems[0].Text);
+                    this.selectedEmployee.FirstName = selectedEmployee.SubItems[1].Text;
+                    this.selectedEmployee.LastName = selectedEmployee.SubItems[2].Text;
+                    //to get the correct enum, first get it as a string, then convert and assign
+                    string occupation = selectedEmployee.SubItems[3].Text;
+                    this.selectedEmployee.Occupation = (Role)Enum.Parse(typeof(Role), occupation);
+                    ChangeToEditEmployee(this.selectedEmployee);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
             }
             else
             {
