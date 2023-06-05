@@ -16,6 +16,7 @@ namespace ChapeauModel
 
         public float Vat { get; set; } 
         public FoodType? CourseType { get; set; }
+        public MenuType? MenuType { get; set; }
 
         
         public MenuItem()
