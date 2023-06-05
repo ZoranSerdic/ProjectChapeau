@@ -14,13 +14,13 @@ namespace ChapeauUI
     {
         int quantity;
 
-        public OrderPopup()
+        public OrderPopup(string popupName, string popupDescription)
         {
             InitializeComponent();
 
             quantity = 0;
-            labelPopupName.Text = "Temporary name";
-            labelPopupDescription.Text = "With test and to see if it goes to a new line when reaching the end test";
+            labelPopupName.Text = popupName;
+            labelPopupDescription.Text = popupDescription;
         }
 
         private void buttonQuantityMinus_Click(object sender, EventArgs e)

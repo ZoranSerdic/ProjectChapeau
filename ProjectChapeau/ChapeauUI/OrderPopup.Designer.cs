@@ -56,13 +56,13 @@
             this.panelNameOneBackground.Size = new System.Drawing.Size(420, 41);
             this.panelNameOneBackground.TabIndex = 2;
             // 
-            // labelPopupNameOne
+            // labelPopupName
             // 
             this.labelPopupName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPopupName.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelPopupName.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelPopupName.Location = new System.Drawing.Point(0, 0);
-            this.labelPopupName.Name = "labelPopupNameOne";
+            this.labelPopupName.Name = "labelPopupName";
             this.labelPopupName.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelPopupName.Size = new System.Drawing.Size(420, 40);
             this.labelPopupName.TabIndex = 2;
@@ -78,14 +78,14 @@
             this.panelNameTwoBackground.Size = new System.Drawing.Size(420, 67);
             this.panelNameTwoBackground.TabIndex = 3;
             // 
-            // labelPopupNameTwo
+            // labelPopupDescription
             // 
             this.labelPopupDescription.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelPopupDescription.AutoEllipsis = true;
             this.labelPopupDescription.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.labelPopupDescription.ForeColor = System.Drawing.SystemColors.ControlText;
             this.labelPopupDescription.Location = new System.Drawing.Point(0, 1);
-            this.labelPopupDescription.Name = "labelPopupNameTwo";
+            this.labelPopupDescription.Name = "labelPopupDescription";
             this.labelPopupDescription.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelPopupDescription.Size = new System.Drawing.Size(420, 68);
             this.labelPopupDescription.TabIndex = 2;

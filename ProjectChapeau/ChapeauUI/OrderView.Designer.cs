@@ -47,6 +47,8 @@
             this.buttonFinaliseOrder = new System.Windows.Forms.Button();
             this.panelWhiteButtonBackground = new System.Windows.Forms.Panel();
             this.listViewMenuItems = new System.Windows.Forms.ListView();
+            this.columnName = new System.Windows.Forms.ColumnHeader();
+            this.columnDescription = new System.Windows.Forms.ColumnHeader();
             this.buttonGoBackDrinksMenu = new System.Windows.Forms.Button();
             this.panelMenuBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChapeauLogo)).BeginInit();
@@ -260,11 +262,28 @@
             // 
             // listViewMenuItems
             // 
+            this.listViewMenuItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnName,
+            this.columnDescription});
+            this.listViewMenuItems.FullRowSelect = true;
             this.listViewMenuItems.Location = new System.Drawing.Point(12, 130);
+            this.listViewMenuItems.MultiSelect = false;
             this.listViewMenuItems.Name = "listViewMenuItems";
-            this.listViewMenuItems.Size = new System.Drawing.Size(508, 535);
+            this.listViewMenuItems.Size = new System.Drawing.Size(508, 527);
             this.listViewMenuItems.TabIndex = 24;
             this.listViewMenuItems.UseCompatibleStateImageBehavior = false;
+            this.listViewMenuItems.View = System.Windows.Forms.View.Details;
+            this.listViewMenuItems.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewMenuItems_ItemSelectionChanged);
+            // 
+            // columnName
+            // 
+            this.columnName.Text = "Name";
+            this.columnName.Width = 180;
+            // 
+            // columnDescription
+            // 
+            this.columnDescription.Text = "Description";
+            this.columnDescription.Width = 300;
             // 
             // buttonGoBackDrinksMenu
             // 
@@ -331,5 +350,7 @@
         private Panel panelWhiteButtonBackground;
         private ListView listViewMenuItems;
         private Button buttonGoBackDrinksMenu;
+        private ColumnHeader columnName;
+        private ColumnHeader columnDescription;
     }
 }
