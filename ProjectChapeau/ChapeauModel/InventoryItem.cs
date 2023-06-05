@@ -9,10 +9,9 @@ namespace ChapeauModel
     public class InventoryItem
     {
         public int InventoryItemId { get; set; }
-
         public string Name { get; set; }
-
         public int InStock { get; set; }
+
         public InventoryItem()
         {
              //empty constructor 

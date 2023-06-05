@@ -8,15 +8,12 @@ namespace ChapeauModel
 {
     public class Food : MenuItem
     {
-
         public MenuType MenuTime { get; set; }
 
         public Food(int menuItemId, string name, decimal price, float vat, MenuType MenuTime) : base(menuItemId, name, price, vat)
         {
             this.MenuTime = MenuTime;
-        }
-
-        
+        }  
     }
 }
 

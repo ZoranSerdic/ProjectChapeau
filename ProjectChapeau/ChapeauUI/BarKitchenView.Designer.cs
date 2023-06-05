@@ -49,7 +49,6 @@
             columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
             buttonOrders = new Button();
-            buttonRefresh = new Button();
             labelHistory = new Label();
             timerRefreshDisplay = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
@@ -232,20 +231,6 @@
             buttonOrders.UseVisualStyleBackColor = false;
             buttonOrders.Click += buttonOrders_Click;
             // 
-            // buttonRefresh
-            // 
-            buttonRefresh.BackColor = Color.Transparent;
-            buttonRefresh.BackgroundImageLayout = ImageLayout.None;
-            buttonRefresh.FlatStyle = FlatStyle.Flat;
-            buttonRefresh.Font = new Font("Franklin Gothic Medium Cond", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonRefresh.Image = (Image)resources.GetObject("buttonRefresh.Image");
-            buttonRefresh.Location = new Point(1283, 26);
-            buttonRefresh.Name = "buttonRefresh";
-            buttonRefresh.Size = new Size(85, 80);
-            buttonRefresh.TabIndex = 16;
-            buttonRefresh.UseVisualStyleBackColor = false;
-            buttonRefresh.Click += buttonRefresh_Click;
-            // 
             // labelHistory
             // 
             labelHistory.AutoSize = true;
@@ -283,7 +268,6 @@
             ClientSize = new Size(1418, 968);
             Controls.Add(pictureBox1);
             Controls.Add(labelHistory);
-            Controls.Add(buttonRefresh);
             Controls.Add(buttonOrders);
             Controls.Add(listViewHistory);
             Controls.Add(buttonReady);
@@ -320,7 +304,6 @@
         private ColumnHeader columnHeader5;
         private ColumnHeader columnHeader6;
         private Button buttonOrders;
-        private Button buttonRefresh;
         private Label labelHistory;
         private System.Windows.Forms.Timer timerRefreshDisplay;
         private PictureBox pictureBox1;

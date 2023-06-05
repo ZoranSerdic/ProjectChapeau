@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ChapeauDAL
 {
@@ -109,20 +110,20 @@ namespace ChapeauDAL
 
         public MenuItem GetMenuItemById(int menuItemId)
         {
-            string query = @"SELECT M.menuItemId, M.[name], M.[price], V.vat, M.courseType 
+            string query = @"SELECT M.menuItemId, M.[name], M.[price], V.vat, M.courseType, M.menuType, M.description
                                 FROM menuItem AS M JOIN Vat AS V on M.vatId = V.vatId
                                 WHERE menuItemId = @MenuItemId"; 
             SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@MenuItemid", menuItemId);
+            sqlParameters[0] = new SqlParameter("@MenuItemId", menuItemId);
 
             DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0)
+            if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item, otherwise returns null
             {
                 DataRow dataRow = dataTable.Rows[0];
                 MenuItem menuItem = ReadMenuItem(dataRow);
                 return menuItem;
             }
-            return null; // Item not found
+            return null; // item not found
         }
 
         private MenuItem ReadMenuItem(DataRow dataRow)
@@ -131,10 +132,15 @@ namespace ChapeauDAL
             {
                 MenuItemId = (int)dataRow["menuItemId"],
                 Name = (string)dataRow["name"],
+                Description = dataRow["description"] == DBNull.Value ? string.Empty : (string)dataRow["description"],
                 Price = (decimal)dataRow["price"],
                 Vat = (float)(double)(dataRow)["vat"],
                 CourseType = (FoodType)Enum.Parse(typeof(FoodType), dataRow["courseType"].ToString(), ignoreCase: true)
             };
+            if (dataRow["menuType"] != DBNull.Value)
+                menuItem.MenuType = (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true);
+            else
+                menuItem.MenuType = MenuType.Lunch; 
             return menuItem;
         }
     }

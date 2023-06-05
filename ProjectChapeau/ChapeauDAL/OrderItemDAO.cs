@@ -14,20 +14,20 @@ namespace ChapeauDAL
         }
         public OrderItem GetOrderItemById(int orderItemId)
         {
-            string query = @"SELECT consistsOfId, preparedAt, menuItemId, comment, amount, status
+            string query = @"SELECT consistsOfId, menuItemId, comment, amount, status, preparedAt
                             FROM ConsistsOf
                             WHERE consistsOfId = @OrderItemId";
             SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@OrderItemid", orderItemId);
+            sqlParameters[0] = new SqlParameter("@OrderItemId", orderItemId);
 
             DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0)
+            if (dataTable.Rows.Count > 0) 
             {
                 DataRow dataRow = dataTable.Rows[0];
                 OrderItem orderItem = ReadOrderItem(dataRow);
                 return orderItem;
             }
-            return null; // Item not found
+            return null; // item with the given id is not found
         }
 
         private OrderItem ReadOrderItem(DataRow dataRow)
@@ -35,11 +35,11 @@ namespace ChapeauDAL
             OrderItem orderItem = new OrderItem()
             {
                 OrderItemId = (int)dataRow["consistsOfId"],
-                MenuItem = menuItemDAO.GetMenuItemById((int)dataRow["menuItemId"]),
+                MenuItem = menuItemDAO.GetMenuItemById((int)dataRow["menuItemId"]), // what if it returns null?
                 Amount = (int)dataRow["amount"],
                 Comment = dataRow["comment"] == DBNull.Value ? string.Empty : (string)dataRow["comment"],
                 Status = (OrderedItemStatus)Enum.Parse(typeof(OrderedItemStatus), dataRow["status"].ToString(), ignoreCase: true),
-                PreparedAt = dataRow["preparedAt"] == DBNull.Value ? (DateTime?)null : (DateTime)dataRow["preparedAt"] // preparedAt can be null
+                PreparedAt = dataRow["preparedAt"] == DBNull.Value ? null : (DateTime)dataRow["preparedAt"] // preparedAt can be null
             };
             return orderItem;
         }
@@ -55,15 +55,13 @@ namespace ChapeauDAL
                 new SqlParameter("@Id", orderItem.OrderItemId)
             };
 
-            // if the item is ready then we also add the preparedAt time
+            // if the item is ready then the preparedAt time is added as well
             if (orderItem.Status == OrderedItemStatus.Ready)
             {
                 query += ", preparedAt = @PreparedAt";
                 parameters.Add(new SqlParameter("@PreparedAt", orderItem.PreparedAt));
-            }; // is the item is ready we also add preparedAt time to the database
-
-            query += " WHERE consistsOfId = @Id";
-            
+            };
+            query += " WHERE consistsOfId = @Id";  
             SqlParameter[] sqlParameters = parameters.ToArray();
 
             ExecuteEditQuery(query, sqlParameters);
