@@ -14,35 +14,35 @@ namespace ChapeauDAL
         public List<MenuItem> GetAllMenuItems()
         {
             //gathering all menu items from the table
-            string query = "SELECT M.menuItemid, M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId;";
+            string query = "SELECT M.menuItemid,M.[Description], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId;";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         public List<MenuItem> GetAllDrinks()
         {
             //gathering all drinks from the table
-            string query = "SELECT M.menuItemid, M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Drink';";
+            string query = "SELECT M.menuItemid,M.[Description], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Drink';";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         public List<MenuItem> GetAllStarters()
         {
             //gathering all starters from the table
-            string query = "SELECT M.menuItemid, M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Starter';";
+            string query = "SELECT M.menuItemid, M.[Description], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Starter';";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         public List<MenuItem> GetAllMainDishes()
         {
             //gathering all main courses from the table
-            string query = "SELECT M.menuItemid, M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'MainCourse';";
+            string query = "SELECT M.menuItemid, M.[Description], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'MainCourse';";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
         public List<MenuItem> GetAllDesserts()
         {
             //gathering all desserts from the table
-            string query = "SELECT M.menuItemid, M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Dessert';";
+            string query = "SELECT M.menuItemid,M.[Description], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Dessert';";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
@@ -63,6 +63,7 @@ namespace ChapeauDAL
                     MenuItemId = (int)dr["menuitemId"],
                     Price = (decimal)dr["price"],
                     Name = dr["Name"].ToString(),
+                    Description = dr["Description"].ToString(),
                     //converts first into double, then a float
                     Vat = (float)(double)dr["vat"],
                 };
@@ -83,24 +84,26 @@ namespace ChapeauDAL
         public void AddItem(MenuItem item)
         {
             //this method adds the item into the menu Item table 
-            string query = "INSERT INTO MenuItem(vatId, price, [name], CourseType) VALUES (@vat, @price, @name, @courseType);";
-            SqlParameter[] sqlParameters = new SqlParameter[4];
+            string query = "INSERT INTO MenuItem(vatId, price, [name], CourseType,[Description]) VALUES (@vat, @price, @name, @courseType, @description);";
+            SqlParameter[] sqlParameters = new SqlParameter[5];
             sqlParameters[0] = new SqlParameter("@vat", item.Vat);
             sqlParameters[1] = new SqlParameter("@price", item.Price);
             sqlParameters[2] = new SqlParameter("@name", item.Name.ToString());
             sqlParameters[3] = new SqlParameter("@courseType", item.CourseType.ToString());
+            sqlParameters[4] = new SqlParameter("@description", item.Description.ToString());
             ExecuteEditQuery(query, sqlParameters);
         }
         public void UpdateItem(MenuItem item)
         {
             //this method updates existing items 
-            string query = "UPDATE MenuItem SET courseType = @newcourseType, vatId = @newvat, [name] = @newname, [price] = @newprice WHERE menuItemid = @itemId;";
-            SqlParameter[] sqlParameters = new SqlParameter[5];
+            string query = "UPDATE MenuItem SET [Description] = @newDescription, courseType = @newcourseType, vatId = @newvat, [name] = @newname, [price] = @newprice WHERE menuItemid = @itemId;";
+            SqlParameter[] sqlParameters = new SqlParameter[6];
             sqlParameters[0] = new SqlParameter("@newvat", item.Vat);
             sqlParameters[1] = new SqlParameter("@newprice", item.Price);
             sqlParameters[2] = new SqlParameter("@newname", item.Name);
             sqlParameters[3] = new SqlParameter("@newcourseType", item.CourseType.ToString());
             sqlParameters[4] = new SqlParameter("@itemId", item.MenuItemId);
+            sqlParameters[5] = new SqlParameter("@newDescription", item.Description.ToString());
             ExecuteEditQuery(query, sqlParameters);
         }
 

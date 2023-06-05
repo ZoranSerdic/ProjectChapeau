@@ -54,16 +54,16 @@ namespace ChapeauUI
         }
         private bool FieldsCorrect()
         {
-            if (CheckNameAndPrice() && CheckMenuType() && CheckVat())
+            if (CheckNamePriceDescription() && CheckMenuType() && CheckVat())
             {
                 return true;
             }
             return false;
         }
-        private bool CheckNameAndPrice()
+        private bool CheckNamePriceDescription()
         {
             //returns true if name and price are not empty 
-            if (txtBoxName.Text != "" && numPrice != null)
+            if (txtBoxName.Text != "" && numPrice != null && txtBoxDescription.Text != "")
             {
                 return true;
             }
@@ -105,6 +105,7 @@ namespace ChapeauUI
         {
             newItem.Name = txtBoxName.Text;
             newItem.Price = numPrice.Value;
+            newItem.Description = txtBoxDescription.Text;
 
             if (radBtnDrink.Checked)
             {

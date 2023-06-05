@@ -29,7 +29,8 @@ namespace ChapeauUI
 
             //adding the columns
             listViewItemsList.Columns.Add("Menu Item ID", 110);
-            listViewItemsList.Columns.Add("Name", 430);
+            listViewItemsList.Columns.Add("Name", 100);
+            listViewItemsList.Columns.Add("Description", 320);
             listViewItemsList.Columns.Add("Price", 60);
             listViewItemsList.Columns.Add("Vat", 60);
             listViewItemsList.Columns.Add("Type", 100); // could be removed 
@@ -39,6 +40,7 @@ namespace ChapeauUI
             {
                 ListViewItem li = new ListViewItem(item.MenuItemId.ToString());
                 li.SubItems.Add(item.Name);
+                li.SubItems.Add(item.Description);
                 li.SubItems.Add(item.Price.ToString("0.00"));
                 li.SubItems.Add(item.Vat.ToString());
                 li.SubItems.Add(item.CourseType.ToString());
@@ -51,19 +53,29 @@ namespace ChapeauUI
             //checks first if there is a selected row 
             if (listViewItemsList.SelectedItems.Count > 0)
             {
-                MenuItem item = new MenuItem();
-                ListViewItem selectedListViewItemRow = listViewItemsList.SelectedItems[0];
-
-                //adds the menuID from the row to the menu Item 
-                item.MenuItemId = int.Parse(selectedListViewItemRow.SubItems[0].Text);
-
-                //double checks action 
-                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
-                if (dialogResult == DialogResult.OK)
+                try
                 {
-                    menuItemService.RemoveItem(item);
-                    Return();
+                    MenuItem item = new MenuItem();
+                    ListViewItem selectedListViewItemRow = listViewItemsList.SelectedItems[0];
+
+                    //adds the menuID from the row to the menu Item 
+                    item.MenuItemId = int.Parse(selectedListViewItemRow.SubItems[0].Text);
+
+                    //double checks action 
+                    DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        menuItemService.RemoveItem(item);
+                        MessageBox.Show("Menu item was successfully removed from the database", "Success!");
+                        Return();
+                    }
                 }
+                catch (Exception exception)
+                {
+
+                    MessageBox.Show(exception.Message);
+                }
+                
             }
             else
             {

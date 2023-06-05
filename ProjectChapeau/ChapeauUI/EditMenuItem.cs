@@ -28,6 +28,7 @@ namespace ChapeauUI
         {
             txtBoxName.Text = menuItem.Name;
             numPrice.Value = menuItem.Price;
+            txtBoxDescription.Text = menuItem.Description;
             FillRadButtons();
         }
         private void FillRadButtons()
@@ -86,7 +87,7 @@ namespace ChapeauUI
                         updatedItem = new MenuItem();
                         CreateNewMenuItem();
                         menuItemService.UpdateItem(updatedItem);
-                        dialogResult = MessageBox.Show("Menu item was successfully edited in the database", "Success!");
+                        MessageBox.Show("Menu item was successfully edited in the database", "Success!");
                         ReturnToItemView();
                     }
                     catch (Exception exception)
@@ -98,7 +99,7 @@ namespace ChapeauUI
             else
             {
                 //shows message that the fields are inccorect 
-                DialogResult dialogResult = MessageBox.Show("Fields not filled in correctly", "Error");
+                MessageBox.Show("Fields not filled in correctly", "Error");
             }
         }
         private bool FieldsCorrect()
@@ -141,6 +142,7 @@ namespace ChapeauUI
             updatedItem.MenuItemId = menuItem.MenuItemId;
             updatedItem.Name = txtBoxName.Text;
             updatedItem.Price = numPrice.Value;
+            updatedItem.Description = txtBoxDescription.Text;
 
             if (radBtnDrink.Checked)
             {

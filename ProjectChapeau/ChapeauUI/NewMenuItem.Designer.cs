@@ -52,6 +52,8 @@
             panel5 = new Panel();
             panel6 = new Panel();
             lblSubHeading = new Label();
+            txtBoxDescription = new TextBox();
+            lblDescription = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -278,11 +280,29 @@
             lblSubHeading.TabIndex = 57;
             lblSubHeading.Text = "Please fill in this form to add the menu item";
             // 
+            // txtBoxDescription
+            // 
+            txtBoxDescription.Location = new Point(59, 728);
+            txtBoxDescription.Name = "txtBoxDescription";
+            txtBoxDescription.Size = new Size(663, 27);
+            txtBoxDescription.TabIndex = 59;
+            // 
+            // lblDescription
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Location = new Point(56, 689);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(88, 20);
+            lblDescription.TabIndex = 58;
+            lblDescription.Text = "Description:";
+            // 
             // NewMenuItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(txtBoxDescription);
+            Controls.Add(lblDescription);
             Controls.Add(lblSubHeading);
             Controls.Add(panel3);
             Controls.Add(panel4);
@@ -337,5 +357,7 @@
         private Panel panel5;
         private Panel panel6;
         private Label lblSubHeading;
+        private TextBox txtBoxDescription;
+        private Label lblDescription;
     }
 }

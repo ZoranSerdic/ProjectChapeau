@@ -52,6 +52,8 @@
             lblType = new Label();
             lblVat = new Label();
             lblSubHeading = new Label();
+            txtBoxDescription = new TextBox();
+            lblDescription = new Label();
             ((System.ComponentModel.ISupportInitialize)numPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
@@ -199,7 +201,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(62, 754);
+            btnCancel.Location = new Point(59, 807);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(185, 96);
             btnCancel.TabIndex = 41;
@@ -209,7 +211,7 @@
             // 
             // btnConfirm
             // 
-            btnConfirm.Location = new Point(567, 754);
+            btnConfirm.Location = new Point(567, 807);
             btnConfirm.Name = "btnConfirm";
             btnConfirm.Size = new Size(164, 96);
             btnConfirm.TabIndex = 42;
@@ -278,11 +280,29 @@
             lblSubHeading.TabIndex = 54;
             lblSubHeading.Text = "Please fill in this form to edit the menu item";
             // 
+            // txtBoxDescription
+            // 
+            txtBoxDescription.Location = new Point(62, 739);
+            txtBoxDescription.Name = "txtBoxDescription";
+            txtBoxDescription.Size = new Size(663, 27);
+            txtBoxDescription.TabIndex = 61;
+            // 
+            // lblDescription
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Location = new Point(59, 700);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(88, 20);
+            lblDescription.TabIndex = 60;
+            lblDescription.Text = "Description:";
+            // 
             // EditMenuItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(txtBoxDescription);
+            Controls.Add(lblDescription);
             Controls.Add(lblSubHeading);
             Controls.Add(lblVat);
             Controls.Add(lblType);
@@ -337,5 +357,7 @@
         private Label lblType;
         private Label lblVat;
         private Label lblSubHeading;
+        private TextBox txtBoxDescription;
+        private Label lblDescription;
     }
 }

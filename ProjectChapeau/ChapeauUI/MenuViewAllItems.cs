@@ -33,7 +33,8 @@ namespace ChapeauUI
 
             //adding the columns
             listViewMenuItems.Columns.Add("Menu Item ID", 110);
-            listViewMenuItems.Columns.Add("Name", 430);
+            listViewMenuItems.Columns.Add("Name", 100);
+            listViewMenuItems.Columns.Add("Description", 320);
             listViewMenuItems.Columns.Add("Price", 60);
             listViewMenuItems.Columns.Add("Vat", 60);
             listViewMenuItems.Columns.Add("Type", 100);
@@ -43,6 +44,7 @@ namespace ChapeauUI
             {
                 ListViewItem li = new ListViewItem(item.MenuItemId.ToString());
                 li.SubItems.Add(item.Name);
+                li.SubItems.Add(item.Description);
                 li.SubItems.Add(item.Price.ToString("0.00"));
                 li.SubItems.Add(item.Vat.ToString());
                 li.SubItems.Add(item.CourseType.ToString());
@@ -69,10 +71,11 @@ namespace ChapeauUI
                 //adds the menuID from the row to the menu Item 
                 selectedItem.MenuItemId = int.Parse(selectedMenuItemRow.SubItems[0].Text);
                 selectedItem.Name = selectedMenuItemRow.SubItems[1].Text;
-                selectedItem.Price = decimal.Parse(selectedMenuItemRow.SubItems[2].Text);
-                selectedItem.Vat = float.Parse(selectedMenuItemRow.SubItems[3].Text);
+                selectedItem.Description = selectedMenuItemRow.SubItems[2].Text;
+                selectedItem.Price = decimal.Parse(selectedMenuItemRow.SubItems[3].Text);
+                selectedItem.Vat = float.Parse(selectedMenuItemRow.SubItems[4].Text);
                 //to get the correct enum, first get it as a string, then convert and assign
-                string type = selectedMenuItemRow.SubItems[4].Text;
+                string type = selectedMenuItemRow.SubItems[5].Text;
                 selectedItem.CourseType = (FoodType)Enum.Parse(typeof(FoodType), type);
                 ChangeToEditEmployee();
             }
