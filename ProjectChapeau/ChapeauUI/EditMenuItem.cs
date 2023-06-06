@@ -34,6 +34,27 @@ namespace ChapeauUI
         private void FillRadButtons()
         {
             //preselects the correct radiobuttons for the user 
+            FillMenuTypeButtons();
+            FillCourseTypeButtons();
+            FillVatButtons();
+        }
+        private void FillMenuTypeButtons()
+        {
+            if (menuItem.MenuType == MenuType.Dinner)
+            {
+                radBtnDinner.Checked = true; 
+            }
+            else if (menuItem.MenuType == MenuType.Lunch)
+            {
+                radBtnLunch.Checked = true;
+            }
+            else
+            {
+                radBtnAllDay.Checked = true;    
+            }
+        }
+        private void FillCourseTypeButtons()
+        {
             if (menuItem.CourseType == FoodType.MainCourse)
             {
                 radBtnMainDish.Checked = true;
@@ -50,14 +71,15 @@ namespace ChapeauUI
             {
                 radBtnDessert.Checked = true;
             }
-
+        }
+        private void FillVatButtons()
+        {
             if (menuItem.Vat == (float)0.09)
             {
                 radBtnNonAlcoholic.Checked = true;
             }
             else
                 radBtnAlcoholic.Checked = true;
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -85,15 +107,17 @@ namespace ChapeauUI
                     try
                     {
                         updatedItem = new MenuItem();
-                        CreateNewMenuItem();
+                        CreateUpdatedMenuItem();
                         menuItemService.UpdateItem(updatedItem);
-                        MessageBox.Show("Menu item was successfully edited in the database", "Success!");
-                        ReturnToItemView();
                     }
                     catch (Exception exception)
                     {
                         MessageBox.Show(exception.Message);
+                        ReturnToItemView();
                     }
+
+                    MessageBox.Show("Menu item was successfully edited in the database", "Success!");
+                    ReturnToItemView();
                 }
             }
             else
@@ -104,7 +128,7 @@ namespace ChapeauUI
         }
         private bool FieldsCorrect()
         {
-            if (CheckNameAndPrice() && CheckMenuType() && CheckVat())
+            if (CheckNameAndPrice() && CheckCourseType() && CheckVat() && CheckMenuType())
             {
                 return true;
             }
@@ -120,6 +144,14 @@ namespace ChapeauUI
             return false;
         }
         private bool CheckMenuType()
+        {
+            if (radBtnAllDay.Checked || radBtnLunch.Checked || radBtnDinner.Checked)
+            {
+                return true; 
+            }
+            else{return false;}
+        }
+        private bool CheckCourseType()
         {
             //returns true if at least one radBtn is selected 
             if (radBtnDrink.Checked || radBtnStarter.Checked || radBtnMainDish.Checked || radBtnDessert.Checked)
@@ -137,13 +169,33 @@ namespace ChapeauUI
             }
             return false;
         }
-        private void CreateNewMenuItem()
+        private void CreateUpdatedMenuItem()
         {
             updatedItem.MenuItemId = menuItem.MenuItemId;
             updatedItem.Name = txtBoxName.Text;
             updatedItem.Price = numPrice.Value;
             updatedItem.Description = txtBoxDescription.Text;
-
+            SetMenuType();
+            SetCourseType();  
+            SetVAT();
+        }
+        private void SetMenuType() 
+        {
+            if (radBtnDinner.Checked)
+            {
+                updatedItem.MenuType = MenuType.Dinner;
+            }
+            else if (radBtnLunch.Checked)
+            {
+                updatedItem.MenuType = MenuType.Lunch;
+            }
+            else
+            {
+                updatedItem.MenuType = MenuType.AllDay; 
+            }
+        }
+        private void SetCourseType()
+        {
             if (radBtnDrink.Checked)
             {
                 updatedItem.CourseType = FoodType.Drink;
@@ -160,7 +212,9 @@ namespace ChapeauUI
             {
                 updatedItem.CourseType = FoodType.Dessert;
             }
-
+        }
+        private void SetVAT() 
+        {
             if (radBtnAlcoholic.Checked)
             {
                 updatedItem.Vat = 2;

@@ -54,11 +54,17 @@
             lblSubHeading = new Label();
             txtBoxDescription = new TextBox();
             lblDescription = new Label();
+            lblMenuType = new Label();
+            panel7 = new Panel();
+            radBtnAllDay = new RadioButton();
+            radBtnDinner = new RadioButton();
+            radBtnLunch = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numPrice).BeginInit();
             panel5.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -116,9 +122,9 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(125, 798);
+            btnCancel.Location = new Point(50, 913);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(94, 29);
+            btnCancel.Size = new Size(125, 59);
             btnCancel.TabIndex = 20;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
@@ -126,9 +132,9 @@
             // 
             // btnConfirm
             // 
-            btnConfirm.Location = new Point(629, 798);
+            btnConfirm.Location = new Point(576, 911);
             btnConfirm.Name = "btnConfirm";
-            btnConfirm.Size = new Size(94, 29);
+            btnConfirm.Size = new Size(140, 62);
             btnConfirm.TabIndex = 21;
             btnConfirm.Text = "Confirm";
             btnConfirm.UseVisualStyleBackColor = true;
@@ -282,7 +288,7 @@
             // 
             // txtBoxDescription
             // 
-            txtBoxDescription.Location = new Point(59, 728);
+            txtBoxDescription.Location = new Point(53, 856);
             txtBoxDescription.Name = "txtBoxDescription";
             txtBoxDescription.Size = new Size(663, 27);
             txtBoxDescription.TabIndex = 59;
@@ -290,17 +296,71 @@
             // lblDescription
             // 
             lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(56, 689);
+            lblDescription.Location = new Point(50, 817);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(88, 20);
             lblDescription.TabIndex = 58;
             lblDescription.Text = "Description:";
+            // 
+            // lblMenuType
+            // 
+            lblMenuType.AutoSize = true;
+            lblMenuType.Location = new Point(58, 658);
+            lblMenuType.Name = "lblMenuType";
+            lblMenuType.Size = new Size(84, 20);
+            lblMenuType.TabIndex = 65;
+            lblMenuType.Text = "Menu Type:";
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(radBtnAllDay);
+            panel7.Controls.Add(radBtnDinner);
+            panel7.Controls.Add(radBtnLunch);
+            panel7.Location = new Point(58, 697);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(585, 73);
+            panel7.TabIndex = 64;
+            // 
+            // radBtnAllDay
+            // 
+            radBtnAllDay.AutoSize = true;
+            radBtnAllDay.Location = new Point(369, 29);
+            radBtnAllDay.Name = "radBtnAllDay";
+            radBtnAllDay.Size = new Size(78, 24);
+            radBtnAllDay.TabIndex = 28;
+            radBtnAllDay.TabStop = true;
+            radBtnAllDay.Text = "All Day";
+            radBtnAllDay.UseVisualStyleBackColor = true;
+            // 
+            // radBtnDinner
+            // 
+            radBtnDinner.AutoSize = true;
+            radBtnDinner.Location = new Point(204, 29);
+            radBtnDinner.Name = "radBtnDinner";
+            radBtnDinner.Size = new Size(74, 24);
+            radBtnDinner.TabIndex = 27;
+            radBtnDinner.TabStop = true;
+            radBtnDinner.Text = "Dinner";
+            radBtnDinner.UseVisualStyleBackColor = true;
+            // 
+            // radBtnLunch
+            // 
+            radBtnLunch.AutoSize = true;
+            radBtnLunch.Location = new Point(24, 29);
+            radBtnLunch.Name = "radBtnLunch";
+            radBtnLunch.Size = new Size(68, 24);
+            radBtnLunch.TabIndex = 26;
+            radBtnLunch.TabStop = true;
+            radBtnLunch.Text = "Lunch";
+            radBtnLunch.UseVisualStyleBackColor = true;
             // 
             // NewMenuItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(lblMenuType);
+            Controls.Add(panel7);
             Controls.Add(txtBoxDescription);
             Controls.Add(lblDescription);
             Controls.Add(lblSubHeading);
@@ -328,6 +388,8 @@
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numPrice).EndInit();
             panel5.ResumeLayout(false);
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -359,5 +421,10 @@
         private Label lblSubHeading;
         private TextBox txtBoxDescription;
         private Label lblDescription;
+        private Label lblMenuType;
+        private Panel panel7;
+        private RadioButton radBtnAllDay;
+        private RadioButton radBtnDinner;
+        private RadioButton radBtnLunch;
     }
 }
