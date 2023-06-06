@@ -52,6 +52,7 @@
             labelHistory = new Label();
             timerRefreshDisplay = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
+            labelPrompt = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             buttonHistory.BackColor = Color.FromArgb(135, 227, 78);
             buttonHistory.FlatStyle = FlatStyle.Flat;
             buttonHistory.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonHistory.Location = new Point(307, 35);
+            buttonHistory.Location = new Point(300, 44);
             buttonHistory.Name = "buttonHistory";
             buttonHistory.Size = new Size(190, 53);
             buttonHistory.TabIndex = 8;
@@ -75,7 +76,7 @@
             buttonLogOut.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
             buttonLogOut.ForeColor = SystemColors.ButtonHighlight;
             buttonLogOut.ImageAlign = ContentAlignment.MiddleRight;
-            buttonLogOut.Location = new Point(932, 36);
+            buttonLogOut.Location = new Point(934, 44);
             buttonLogOut.Name = "buttonLogOut";
             buttonLogOut.Size = new Size(190, 53);
             buttonLogOut.TabIndex = 9;
@@ -89,7 +90,7 @@
             labelOrders.FlatStyle = FlatStyle.System;
             labelOrders.Font = new Font("Segoe UI", 23F, FontStyle.Bold, GraphicsUnit.Point);
             labelOrders.ForeColor = SystemColors.ActiveCaptionText;
-            labelOrders.Location = new Point(593, 26);
+            labelOrders.Location = new Point(608, 44);
             labelOrders.Name = "labelOrders";
             labelOrders.Size = new Size(206, 62);
             labelOrders.TabIndex = 10;
@@ -98,11 +99,12 @@
             // 
             // listViewOrders
             // 
+            listViewOrders.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             listViewOrders.BackColor = SystemColors.ControlLight;
             listViewOrders.Columns.AddRange(new ColumnHeader[] { Table, Quantity, Item, Received, Waiting, Status });
             listViewOrders.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
             listViewOrders.FullRowSelect = true;
-            listViewOrders.Location = new Point(46, 128);
+            listViewOrders.Location = new Point(46, 163);
             listViewOrders.MultiSelect = false;
             listViewOrders.Name = "listViewOrders";
             listViewOrders.ShowItemToolTips = true;
@@ -152,7 +154,7 @@
             buttonStart.BackColor = Color.Cyan;
             buttonStart.FlatStyle = FlatStyle.Flat;
             buttonStart.Font = new Font("Bahnschrift SemiBold", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonStart.Location = new Point(593, 879);
+            buttonStart.Location = new Point(593, 892);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(190, 53);
             buttonStart.TabIndex = 12;
@@ -166,7 +168,7 @@
             buttonReady.FlatStyle = FlatStyle.Popup;
             buttonReady.Font = new Font("Bahnschrift SemiBold", 12F, FontStyle.Bold, GraphicsUnit.Point);
             buttonReady.ForeColor = SystemColors.ControlText;
-            buttonReady.Location = new Point(593, 879);
+            buttonReady.Location = new Point(593, 892);
             buttonReady.Name = "buttonReady";
             buttonReady.Size = new Size(190, 53);
             buttonReady.TabIndex = 13;
@@ -176,11 +178,12 @@
             // 
             // listViewHistory
             // 
+            listViewHistory.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             listViewHistory.BackColor = SystemColors.ControlLight;
             listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
             listViewHistory.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point);
             listViewHistory.FullRowSelect = true;
-            listViewHistory.Location = new Point(46, 128);
+            listViewHistory.Location = new Point(46, 163);
             listViewHistory.MultiSelect = false;
             listViewHistory.Name = "listViewHistory";
             listViewHistory.ShowItemToolTips = true;
@@ -223,7 +226,7 @@
             buttonOrders.BackColor = Color.FromArgb(237, 122, 122);
             buttonOrders.FlatStyle = FlatStyle.Flat;
             buttonOrders.Font = new Font("Bahnschrift SemiBold", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonOrders.Location = new Point(307, 35);
+            buttonOrders.Location = new Point(300, 44);
             buttonOrders.Name = "buttonOrders";
             buttonOrders.Size = new Size(190, 53);
             buttonOrders.TabIndex = 15;
@@ -237,7 +240,7 @@
             labelHistory.FlatStyle = FlatStyle.System;
             labelHistory.Font = new Font("Segoe UI", 23F, FontStyle.Bold, GraphicsUnit.Point);
             labelHistory.ForeColor = SystemColors.ActiveCaptionText;
-            labelHistory.Location = new Point(593, 27);
+            labelHistory.Location = new Point(593, 44);
             labelHistory.Name = "labelHistory";
             labelHistory.Size = new Size(221, 62);
             labelHistory.TabIndex = 17;
@@ -260,12 +263,23 @@
             pictureBox1.TabIndex = 18;
             pictureBox1.TabStop = false;
             // 
+            // labelPrompt
+            // 
+            labelPrompt.AutoSize = true;
+            labelPrompt.Font = new Font("Segoe UI Historic", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelPrompt.Location = new Point(499, 120);
+            labelPrompt.Name = "labelPrompt";
+            labelPrompt.Size = new Size(424, 30);
+            labelPrompt.TabIndex = 19;
+            labelPrompt.Text = "Press on an item to start/finish preparation";
+            // 
             // BarKitchenView
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1418, 968);
+            Controls.Add(labelPrompt);
             Controls.Add(pictureBox1);
             Controls.Add(labelHistory);
             Controls.Add(buttonOrders);
@@ -307,5 +321,6 @@
         private Label labelHistory;
         private System.Windows.Forms.Timer timerRefreshDisplay;
         private PictureBox pictureBox1;
+        private Label labelPrompt;
     }
 }

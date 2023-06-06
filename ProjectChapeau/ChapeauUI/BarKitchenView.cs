@@ -6,7 +6,7 @@ using System.Data;
 namespace ChapeauUI
 {
     // change MenuItem ReadMenuItem(DataRow dataRow)
-    
+    // перевіркa на статус усіх айтемс одного типу на замовлення
 
     // code inside constructor?, error handling
     // add code for logged-in user
@@ -45,6 +45,7 @@ namespace ChapeauUI
 
         private void DisplayUnpreparedOrders() // depending on the logged in user the orders are shown : bar or kitchen
         {
+            labelPrompt.Show();
             try
             {
                 if (loggedInEmployee.Occupation == Role.Barman)
@@ -158,7 +159,7 @@ namespace ChapeauUI
             item.SubItems.Add(orderItem.Amount.ToString()); // 2nd column = number of ordered items
 
             // 3rd column - the nemu item name and description and if the comment is not empty - also adds it to this row
-            item.SubItems.Add(string.IsNullOrEmpty(orderItem.Comment) 
+            item.SubItems.Add(string.IsNullOrEmpty(orderItem.Comment)
                   ? $"{orderItem.MenuItem.Name} {orderItem.MenuItem.Description}"
                   : $"{orderItem.MenuItem.Name} {orderItem.MenuItem.Description}: {orderItem.Comment.ToLower()}");
 
@@ -207,13 +208,13 @@ namespace ChapeauUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while starting the order preparation: "+ ex.Message);
+                MessageBox.Show("An error occurred while starting the order preparation: " + ex.Message);
             }
             finally
             {
                 buttonStart.Hide();
                 DisplayUnpreparedOrders(); // refreshes the list view
-            }        
+            }
         }
 
         private void buttonReady_Click(object sender, EventArgs e)
@@ -226,7 +227,7 @@ namespace ChapeauUI
 
                 orderItemService.UpdateOrderItemStatus(orderItem); // updates status in the database
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while finishing the order: " + ex.Message);
             }
@@ -254,6 +255,7 @@ namespace ChapeauUI
 
         private void DisplayPreparedOrders() // depending on the logged-in user
         {
+            labelPrompt.Hide();
             try
             {
                 if (loggedInEmployee.Occupation == Role.Barman)
@@ -261,10 +263,10 @@ namespace ChapeauUI
                 else if (loggedInEmployee.Occupation == Role.Chef)
                     DisplayFoodHistory();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while displaying order history: " + ex.Message);
-            }         
+            }
         }
 
         private void DisplayDrinksHistory()
@@ -317,7 +319,7 @@ namespace ChapeauUI
 
             return item;
         }
-        
+
         private void buttonOrders_Click(object sender, EventArgs e)
         {
             buttonOrders.Hide();
