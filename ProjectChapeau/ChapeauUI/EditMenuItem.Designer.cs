@@ -54,11 +54,17 @@
             lblSubHeading = new Label();
             txtBoxDescription = new TextBox();
             lblDescription = new Label();
+            lblMenuType = new Label();
+            panel7 = new Panel();
+            radBtnDinner = new RadioButton();
+            radBtnLunch = new RadioButton();
+            radBtnAllDay = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)numPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // lblPrice
@@ -183,7 +189,7 @@
             // 
             panel2.Controls.Add(radBtnNonAlcoholic);
             panel2.Controls.Add(radBtnAlcoholic);
-            panel2.Location = new Point(65, 587);
+            panel2.Location = new Point(65, 565);
             panel2.Name = "panel2";
             panel2.Size = new Size(585, 73);
             panel2.TabIndex = 44;
@@ -201,7 +207,7 @@
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(59, 807);
+            btnCancel.Location = new Point(59, 896);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(185, 96);
             btnCancel.TabIndex = 41;
@@ -211,7 +217,7 @@
             // 
             // btnConfirm
             // 
-            btnConfirm.Location = new Point(567, 807);
+            btnConfirm.Location = new Point(567, 896);
             btnConfirm.Name = "btnConfirm";
             btnConfirm.Size = new Size(164, 96);
             btnConfirm.TabIndex = 42;
@@ -264,7 +270,7 @@
             // lblVat
             // 
             lblVat.AutoSize = true;
-            lblVat.Location = new Point(65, 548);
+            lblVat.Location = new Point(65, 526);
             lblVat.Name = "lblVat";
             lblVat.Size = new Size(33, 20);
             lblVat.TabIndex = 53;
@@ -282,7 +288,7 @@
             // 
             // txtBoxDescription
             // 
-            txtBoxDescription.Location = new Point(62, 739);
+            txtBoxDescription.Location = new Point(62, 822);
             txtBoxDescription.Name = "txtBoxDescription";
             txtBoxDescription.Size = new Size(663, 27);
             txtBoxDescription.TabIndex = 61;
@@ -290,17 +296,71 @@
             // lblDescription
             // 
             lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(59, 700);
+            lblDescription.Location = new Point(59, 783);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(88, 20);
             lblDescription.TabIndex = 60;
             lblDescription.Text = "Description:";
+            // 
+            // lblMenuType
+            // 
+            lblMenuType.AutoSize = true;
+            lblMenuType.Location = new Point(62, 653);
+            lblMenuType.Name = "lblMenuType";
+            lblMenuType.Size = new Size(84, 20);
+            lblMenuType.TabIndex = 63;
+            lblMenuType.Text = "Menu Type:";
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(radBtnAllDay);
+            panel7.Controls.Add(radBtnDinner);
+            panel7.Controls.Add(radBtnLunch);
+            panel7.Location = new Point(62, 692);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(585, 73);
+            panel7.TabIndex = 62;
+            // 
+            // radBtnDinner
+            // 
+            radBtnDinner.AutoSize = true;
+            radBtnDinner.Location = new Point(204, 29);
+            radBtnDinner.Name = "radBtnDinner";
+            radBtnDinner.Size = new Size(74, 24);
+            radBtnDinner.TabIndex = 27;
+            radBtnDinner.TabStop = true;
+            radBtnDinner.Text = "Dinner";
+            radBtnDinner.UseVisualStyleBackColor = true;
+            // 
+            // radBtnLunch
+            // 
+            radBtnLunch.AutoSize = true;
+            radBtnLunch.Location = new Point(24, 29);
+            radBtnLunch.Name = "radBtnLunch";
+            radBtnLunch.Size = new Size(68, 24);
+            radBtnLunch.TabIndex = 26;
+            radBtnLunch.TabStop = true;
+            radBtnLunch.Text = "Lunch";
+            radBtnLunch.UseVisualStyleBackColor = true;
+            // 
+            // radBtnAllDay
+            // 
+            radBtnAllDay.AutoSize = true;
+            radBtnAllDay.Location = new Point(369, 29);
+            radBtnAllDay.Name = "radBtnAllDay";
+            radBtnAllDay.Size = new Size(78, 24);
+            radBtnAllDay.TabIndex = 28;
+            radBtnAllDay.TabStop = true;
+            radBtnAllDay.Text = "All Day";
+            radBtnAllDay.UseVisualStyleBackColor = true;
             // 
             // EditMenuItem
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(lblMenuType);
+            Controls.Add(panel7);
             Controls.Add(txtBoxDescription);
             Controls.Add(lblDescription);
             Controls.Add(lblSubHeading);
@@ -328,6 +388,8 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -359,5 +421,10 @@
         private Label lblSubHeading;
         private TextBox txtBoxDescription;
         private Label lblDescription;
+        private Label lblMenuType;
+        private Panel panel7;
+        private RadioButton radBtnAllDay;
+        private RadioButton radBtnDinner;
+        private RadioButton radBtnLunch;
     }
 }

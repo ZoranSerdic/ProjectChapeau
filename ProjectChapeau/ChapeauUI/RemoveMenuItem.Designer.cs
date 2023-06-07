@@ -45,9 +45,9 @@
             // listViewItemsList
             // 
             listViewItemsList.FullRowSelect = true;
-            listViewItemsList.Location = new Point(21, 192);
+            listViewItemsList.Location = new Point(31, 192);
             listViewItemsList.Name = "listViewItemsList";
-            listViewItemsList.Size = new Size(794, 497);
+            listViewItemsList.Size = new Size(774, 497);
             listViewItemsList.TabIndex = 19;
             listViewItemsList.UseCompatibleStateImageBehavior = false;
             listViewItemsList.View = View.Details;

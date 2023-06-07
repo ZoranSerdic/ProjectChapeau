@@ -15,6 +15,7 @@ namespace ChapeauUI
     public partial class NewMenuItem : Form
     {
         MenuItemService menuItemService;
+        MenuItem newItem;
         public NewMenuItem()
         {
             InitializeComponent();
@@ -38,9 +39,17 @@ namespace ChapeauUI
                 if (dialogResult == DialogResult.OK)
                 {
                     //code for if the second confirmation occurs 
-                    MenuItem newItem = new MenuItem();
-                    CreateNewMenuItem(newItem);
-                    menuItemService.AddItem(newItem);
+                    this.newItem = new MenuItem();
+                    try
+                    {
+                        CreateNewMenuItem();
+                        menuItemService.AddItem(this.newItem);
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message);
+                        ReturnToMenu();
+                    }
                     dialogResult = MessageBox.Show("Menu item was successfully added to the database", "Success!");
                     ReturnToMenu();
                 }
@@ -54,7 +63,7 @@ namespace ChapeauUI
         }
         private bool FieldsCorrect()
         {
-            if (CheckNamePriceDescription() && CheckMenuType() && CheckVat())
+            if (CheckNamePriceDescription() && CheckCourseType() && CheckVat() && CheckMenuType())
             {
                 return true;
             }
@@ -70,6 +79,14 @@ namespace ChapeauUI
             return false;
         }
         private bool CheckMenuType()
+        {
+            if (radBtnAllDay.Checked || radBtnDinner.Checked || radBtnLunch.Checked)
+            {
+                return true;
+            }
+            return false; 
+        }
+        private bool CheckCourseType()
         {
             //returns true if at least one radBtn is selected 
             if (radBtnDrink.Checked || radBtnStarter.Checked || radBtnMainDish.Checked || radBtnDessert.Checked)
@@ -101,12 +118,32 @@ namespace ChapeauUI
             this.Close();
         }
 
-        private void CreateNewMenuItem(MenuItem newItem)
+        private void CreateNewMenuItem()
         {
+            this.newItem = new MenuItem();
+
             newItem.Name = txtBoxName.Text;
             newItem.Price = numPrice.Value;
             newItem.Description = txtBoxDescription.Text;
 
+            SetMenuType();
+            SetCourseType();
+            SetVat();
+        }
+        private void SetMenuType()
+        {
+            if (radBtnAllDay.Checked)
+            {
+                newItem.MenuType = MenuType.AllDay; 
+            }
+            else if (radBtnDinner.Checked)
+            {
+                newItem.MenuType = MenuType.Dinner;
+            }
+            else { newItem.MenuType = MenuType.Lunch;}
+        }
+        private void SetCourseType()
+        {
             if (radBtnDrink.Checked)
             {
                 newItem.CourseType = FoodType.Drink;
@@ -123,7 +160,9 @@ namespace ChapeauUI
             {
                 newItem.CourseType = FoodType.Dessert;
             }
-
+        }
+        private void SetVat()
+        {
             if (radBtnAlcoholic.Checked)
             {
                 newItem.Vat = 2;
