@@ -36,11 +36,42 @@ namespace ChapeauUI
 
         private string currentMenuLabel = "Starters";
 
-        public OrderView(Table tableId)
+        public OrderView(Table table, Employee employee)
         {
             order.OrderId = 1;
-            order.Table = tableId;
-            // Fill lists with data
+            order.Table = table;
+            order.Time = DateTime.Now;
+            order.Employee = employee;
+            order.OrderedItems = new List<OrderItem>();
+
+            OrderItem test = new OrderItem();
+            test.Amount = 1;
+            order.OrderedItems.Add(test);
+
+
+            //// Automatically determine Menu Type based on time
+            #region AutomaticTime
+            //DateTime dateTime = DateTime.Now;
+
+            //TimeSpan dinnerMenuStart = new TimeSpan(DinnerMenuStart, 0, 0);
+            //TimeSpan dinnerMenuEnd = new TimeSpan(DinnerMenuEnd, 0, 0);
+            //TimeSpan timeOfDay = dateTime.TimeOfDay;
+
+            //// Check
+            //if (timeOfDay >= 12 || timeOfDay <= 4)
+            //{
+            //    SwitchMenuType();
+            //}
+            #endregion
+
+            FillMenuItemLists();
+            InitializeComponent();
+            labelTableNumber.Text = $"Table {order.Table.TableId.ToString()}";
+            DisplayItems(starterLunchItems);
+        }
+
+        private void FillMenuItemLists()
+        {
             try
             {
                 starterLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Lunch.ToString()));
@@ -55,25 +86,6 @@ namespace ChapeauUI
             {
                 MessageBox.Show("An error occurred.\n" + e.Message);
             }
-
-            //// Automatically determine Menu Type based on time
-            //#region AutomaticTime
-            //DateTime dateTime = DateTime.Now;
-
-            //TimeSpan dinnerMenuStart = new TimeSpan(DinnerMenuStart, 0, 0);
-            //TimeSpan dinnerMenuEnd = new TimeSpan(DinnerMenuEnd, 0, 0);
-            //TimeSpan timeOfDay = dateTime.TimeOfDay;
-
-            //// Check
-            //if (timeOfDay >= 12 || timeOfDay <= 4)
-            //{
-            //    SwitchMenuType();
-            //}
-            //#endregion
-
-            InitializeComponent();
-            labelTableNumber.Text = $"Table {order.Table.TableId.ToString()}";
-            DisplayItems(starterLunchItems);
         }
 
         // Displays items in listViewMenuItems
