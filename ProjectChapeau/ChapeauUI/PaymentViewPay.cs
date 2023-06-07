@@ -124,12 +124,17 @@ namespace ChapeauUI
             subTotal += price;
             return price;
         }
-
         private float CalculateItemVat(OrderItem item)
         {
             //Calculate vat for display and add it to the running total for later
-            float vat = (float)item.MenuItem.Price * item.MenuItem.Vat;
-            if (item.MenuItem.Vat == (float)0.09) { vat9 += vat; } else { vat21 += vat; }
+            //maybe simplify below variable..
+            float vat = (float)Math.Round((float)item.MenuItem.Price * item.MenuItem.Vat, 2, MidpointRounding.AwayFromZero);
+
+            if (item.MenuItem.Vat == (float)0.09)
+            { vat9 += vat; }
+            else if (item.MenuItem.Vat == (float)0.21)
+            { vat21 += vat; }
+
             return vat;
         }
         private void UpdateLabels()
@@ -233,6 +238,14 @@ namespace ChapeauUI
             lblComeAgain.Visible = true;
             btnClose.Visible = true;
         }
+
+        private void listviewItems_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            //prevent header from being resized
+            e.Cancel = true;
+            e.NewWidth = listviewItems.Columns[e.ColumnIndex].Width;
+        }
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Hide();

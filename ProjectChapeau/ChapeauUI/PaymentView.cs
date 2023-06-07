@@ -4,8 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -133,18 +137,43 @@ namespace ChapeauUI
                 MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
             }
         }
+        private void btnSplit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidatePayment();
+                Bill bill = new Bill();
+                bill = CreateBill(bill);
+                bill.TotalTip = 0;
+
+                this.Hide();
+                PaymentViewSplit paymentviewsplit = new PaymentViewSplit(bill, items);
+                paymentviewsplit.ShowDialog();
+                this.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
+            }
+        }
 
         private void ValidatePayment()
         {
             //Error checking method
             //Check if amount is actually above total
-            if(Convert.ToDecimal(txtTotal.Text) < Total)
+
+            if (Convert.ToDecimal(txtTotal.Text) < Total)
             {
                 throw new Exception("Total amount is below total");
             }
 
             //Check if a payment method is selected
-            if(!rdbtnCash.Checked && !rdbtnCredit.Checked && !rdbtnDebit.Checked)
+            //This is to retrieve which method calls the validation method. If split button calls it this check is ignored
+            StackTrace stackTrace = new StackTrace();
+            MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
+
+            if (!rdbtnCash.Checked && !rdbtnCredit.Checked && !rdbtnDebit.Checked && methodBase.Name != "btnSplit_Click")
             {
                 throw new Exception("No payment method selected");
             }
@@ -290,10 +319,21 @@ namespace ChapeauUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            TableView tableview = new TableView();
-            tableview.ShowDialog(); //pass employee?
-            this.Close();
+            DialogResult result = MessageBox.Show("Are you sure you wish to cancel payment?","Confirm", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                this.Hide();
+                TableView tableview = new TableView();
+                tableview.ShowDialog(); //pass employee?
+                this.Close();
+            }
+        }
+
+        private void listviewItems_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            //prevent header from being resized
+            e.Cancel = true;
+            e.NewWidth = listviewItems.Columns[e.ColumnIndex].Width;
         }
 
         private void listviewItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
