@@ -15,9 +15,6 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        const int DinnerMenuStart = 12;
-        const int DinnerMenuEnd = 4;
-
         MenuItemService menuItemService = new MenuItemService();
 
         List<MenuItem> starterLunchItems = new List<MenuItem>();
@@ -28,47 +25,48 @@ namespace ChapeauUI
         List<MenuItem> dessertDinnerItems = new List<MenuItem>();
         List<MenuItem> drinkItems = new List<MenuItem>();
 
-        MenuType currentMenuType;
-        MenuType otherMenuType;
+        FoodType currentCourseType = FoodType.Starter;
+        MenuType currentMenuType = MenuType.Lunch;
+        MenuType otherMenuType = MenuType.Dinner;
 
         bool HideDrinkMenu;
 
-        string currentMenuLabel;
+        string currentMenuLabel = "Starters";
 
         public OrderView()
         {
-            currentMenuLabel = FoodType.Starter.ToString();
+            // Fill lists with data
+            try
+            {
+                starterLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Lunch.ToString()));
+                starterDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Dinner.ToString()));
+                mainCourseLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Lunch.ToString()));
+                mainCourseDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Dinner.ToString()));
+                dessertLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Lunch.ToString()));
+                dessertDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Dinner.ToString()));
+                drinkItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Drink.ToString(), MenuType.AllDay.ToString()));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("An error occurred.\n" + e.Message);
+            }
+
+            //// Automatically determine Menu Type based on time
+            //#region AutomaticTime
+            //DateTime dateTime = DateTime.Now;
+
+            //TimeSpan dinnerMenuStart = new TimeSpan(DinnerMenuStart, 0, 0);
+            //TimeSpan dinnerMenuEnd = new TimeSpan(DinnerMenuEnd, 0, 0);
+            //TimeSpan timeOfDay = dateTime.TimeOfDay;
+
+            //// Check
+            //if (timeOfDay >= 12 || timeOfDay <= 4)
+            //{
+            //    SwitchMenuType();
+            //}
+            //#endregion
 
             InitializeComponent();
-
-            // Get Data
-            starterLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Lunch.ToString()));
-            starterDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Dinner.ToString()));
-            mainCourseLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Lunch.ToString()));
-            mainCourseDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Dinner.ToString()));
-            dessertLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Lunch.ToString()));
-            dessertDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Dinner.ToString()));
-            drinkItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Drink.ToString(), MenuType.AllDay.ToString()));
-
-            // Automatically determine Menu Type based on time
-            #region AutomaticTime
-            DateTime dateTime = DateTime.Now;
-
-            TimeSpan dinnerMenuStart = new TimeSpan(DinnerMenuStart, 0, 0);
-            TimeSpan dinnerMenuEnd = new TimeSpan(DinnerMenuEnd, 0, 0);
-            TimeSpan timeOfDay = dateTime.TimeOfDay;
-
-            // Set default values
-            currentMenuType = MenuType.Lunch;
-            otherMenuType = MenuType.Dinner;
-
-            if (timeOfDay >= dinnerMenuStart || timeOfDay <= dinnerMenuEnd)
-            {
-                SwitchMenuType();
-            }
-            #endregion
-
-            // Starting Displays
             DisplayItems(starterLunchItems);
         }
 
@@ -87,71 +85,44 @@ namespace ChapeauUI
             }
         }
 
-        #region CategoryButtons
+        #region Buttons
         private void buttonCategoryStarters_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = FoodType.Starter.ToString();
+            currentMenuLabel = "Starters";
             HideDrinkMenu = true;
 
-            if (currentMenuType == MenuType.Lunch) 
-            { 
-                DisplayItems(starterLunchItems);
-            }
-            else
-            {
-                DisplayItems(starterDinnerItems);
-            }
-
-            SwitchMenuLabel(currentMenuLabel.ToString(), currentMenuType.ToString());
+            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryMainDish_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = FoodType.MainCourse.ToString();
-            HideDrinkMenu = true;
-
-            if (currentMenuType == MenuType.Lunch)
-            {
-                DisplayItems(mainCourseLunchItems);
-            }
-            else
-            {
-                DisplayItems(mainCourseDinnerItems);
-            }
+            currentMenuLabel = "Main Dish";
+            HideDrinkMenu = true;            
 
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDesserts_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = FoodType.Dessert.ToString();
+            currentMenuLabel = "Desserts";
             HideDrinkMenu = true;
-
-            if (currentMenuType == MenuType.Lunch)
-            {
-                DisplayItems(dessertLunchItems);
-            }
-            else
-            {
-                DisplayItems(dessertDinnerItems);
-            }
-
+            
+            UpdateListView();
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDrinks_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = FoodType.Drink.ToString();
+            currentMenuLabel = "Drinks";
 
             buttonSwitchMenu.Hide();
             buttonGoBackDrinksMenu.Show();
             HideDrinkMenu = false;
 
-            DisplayItems(drinkItems);
             SwitchMenuLabel(currentMenuLabel, "Category");
+            UpdateListView();
         }
-        #endregion
-        #region BottomButtons
+
         private void buttonSwitchMenu_Click(object sender, EventArgs e)
         {
             SwitchMenuType();
@@ -161,7 +132,7 @@ namespace ChapeauUI
         {
             currentMenuLabel = "Drinks";
 
-            SwitchMenuLabel("Drinks", "Category");
+            SwitchMenuLabel(currentMenuLabel, "Category");
         }
 
         private void buttonCloseOrder_Click(object sender, EventArgs e)
@@ -181,6 +152,36 @@ namespace ChapeauUI
         }
         #endregion
 
+        private void UpdateListView()
+        {
+            switch (currentCourseType)
+            {
+                case FoodType.Starter:
+                    if (currentMenuType == MenuType.Lunch)
+                        DisplayItems(starterLunchItems);
+                    else 
+                        DisplayItems(starterDinnerItems);
+                    break;
+                case FoodType.MainCourse:
+                    if (currentMenuType == MenuType.Lunch)
+                        DisplayItems(mainCourseLunchItems);
+                    else
+                        DisplayItems(mainCourseDinnerItems);
+                    break;
+                case FoodType.Dessert:
+                    if (currentMenuType == MenuType.Lunch)
+                        DisplayItems(dessertLunchItems);
+                    else
+                        DisplayItems(dessertDinnerItems);
+                    break;
+                case FoodType.Drink:
+                    DisplayItems(drinkItems);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         void SwitchMenuType()
         {
             if (currentMenuType == MenuType.Lunch)
@@ -196,6 +197,7 @@ namespace ChapeauUI
 
             buttonSwitchMenu.Text = $"Switch To {otherMenuType.ToString()} Menu";
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
+            UpdateListView();
         }
 
         void SwitchMenuLabel(string menuType, string menuTime)
