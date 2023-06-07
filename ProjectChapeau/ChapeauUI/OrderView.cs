@@ -72,7 +72,7 @@ namespace ChapeauUI
             //#endregion
 
             InitializeComponent();
-            labelTableNumber.Text = $"Table {tableId.ToString()}";
+            labelTableNumber.Text = $"Table {order.Table.TableId.ToString()}";
             DisplayItems(starterLunchItems);
         }
 
