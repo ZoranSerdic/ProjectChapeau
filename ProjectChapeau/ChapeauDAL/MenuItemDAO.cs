@@ -47,6 +47,51 @@ namespace ChapeauDAL
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+
+        #region OrderMethods
+        public List<MenuItem> GetCourseMenuType(string courseType, string menuType)
+        {
+            //gather specific courseType and menuType from the table
+            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] FROM menuitem AS M WHERE courseType = '{courseType}' AND menuType = '{menuType}';";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTableOrder(ExecuteSelectQuery(query, sqlParameters));
+        }
+        private List<MenuItem> ReadTableOrder(DataTable dataTable)
+        {
+            //this methods gets specific information from the menuItems in a list from the database 
+            List<MenuItem> items = new List<MenuItem>();
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                try
+                {
+                    //gets the courseType firstly as a string (starter, main, dessert, drink)
+                    string foodType = dr["courseType"].ToString();
+                    string menuType = dr["menuType"].ToString();
+
+                    //creates the new Item with all the information from the table
+                    MenuItem item = new MenuItem()
+                    {
+                        //parsing the string into the enum 
+                        CourseType = (FoodType)Enum.Parse(typeof(FoodType), foodType),
+                        MenuType = (MenuType)Enum.Parse(typeof(MenuType), menuType),
+                        MenuItemId = (int)dr["menuitemId"],
+                        Name = dr["Name"].ToString(),
+                        Description = dr["Description"].ToString(),
+                    };
+                    //adds the item to the list of all items 
+                    items.Add(item);
+                }
+                catch (Exception exception)
+                {
+                    throw;
+                }
+            }
+            //finally all items are returned in a list 
+            return items;
+        }
+        #endregion
+
         private List<MenuItem> ReadTables(DataTable dataTable)
         {
             //this methods gets all the menuItems in a list from the database 

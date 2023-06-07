@@ -15,18 +15,18 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        const int DinnerMenuStart = 14;
+        const int DinnerMenuStart = 12;
         const int DinnerMenuEnd = 4;
-        //const int ButtonWidth = 60;
-        //const int ButtonHeight = 25;
 
         MenuItemService menuItemService = new MenuItemService();
 
-        // TODO: separate into lunch and dinner menus
-        List<MenuItem> starterItems = new List<MenuItem>();
-        List<MenuItem> mainsItems = new List<MenuItem>();
-        List<MenuItem> dessertsItems = new List<MenuItem>();
-        List<MenuItem> drinksItems = new List<MenuItem>();
+        List<MenuItem> starterLunchItems = new List<MenuItem>();
+        List<MenuItem> starterDinnerItems = new List<MenuItem>();
+        List<MenuItem> mainCourseLunchItems = new List<MenuItem>();
+        List<MenuItem> mainCourseDinnerItems = new List<MenuItem>();
+        List<MenuItem> dessertLunchItems = new List<MenuItem>();
+        List<MenuItem> dessertDinnerItems = new List<MenuItem>();
+        List<MenuItem> drinkItems = new List<MenuItem>();
 
         MenuType currentMenuType;
         MenuType otherMenuType;
@@ -37,16 +37,18 @@ namespace ChapeauUI
 
         public OrderView()
         {
-            currentMenuLabel = "Starters";
+            currentMenuLabel = FoodType.Starter.ToString();
 
             InitializeComponent();
-            // Get Data
 
-            // TODO: separate into lunch and dinner menus
-            starterItems.AddRange(menuItemService.GetAllStarters());
-            mainsItems.AddRange(menuItemService.GetAllMains());
-            dessertsItems.AddRange(menuItemService.GetAllDesserts());
-            drinksItems.AddRange(menuItemService.GetAllDrinks());
+            // Get Data
+            starterLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Lunch.ToString()));
+            starterDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Dinner.ToString()));
+            mainCourseLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Lunch.ToString()));
+            mainCourseDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Dinner.ToString()));
+            dessertLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Lunch.ToString()));
+            dessertDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Dinner.ToString()));
+            drinkItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Drink.ToString(), MenuType.AllDay.ToString()));
 
             // Automatically determine Menu Type based on time
             #region AutomaticTime
@@ -67,11 +69,10 @@ namespace ChapeauUI
             #endregion
 
             // Starting Displays
-            DisplayItems(starterItems);
+            DisplayItems(starterLunchItems);
         }
 
-        // Fills MenuItem menuItems with the Starters
-
+        // Displays items in listViewMenuItems
         private void DisplayItems(List<MenuItem> items)
         {
             // clear the listview before filling it
@@ -81,113 +82,73 @@ namespace ChapeauUI
             {
                 ListViewItem listViewItem = new ListViewItem(item.Name);
                 listViewItem.SubItems.Add(item.Description);
-                //listViewItem.Tag = item;
-
-                //Button addButton = new Button();
-                //addButton.Text = "Add";
-                //addButton.AutoSize = true;
-                //addButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-
-                //listViewItem.Tag = addButton;
 
                 listViewMenuItems.Items.Add(listViewItem);
             }
-
-            //listViewMenuItems.DrawItem += listViewMenuItems_DrawItem;
-            //listViewMenuItems.MouseClick += listViewMenuItems_MouseClick;
         }
 
-        //private void listViewMenuItems_DrawItem(object sender, DrawListViewItemEventArgs e)
-        //{
-        //    e.DrawDefault = true;
-
-        //    //if (e.Item.Tag is Button addButton)
-        //    //{
-        //    //    addButton.Location = new Point(
-        //    //        e.Bounds.Right - addButton.Width,
-        //    //        e.Bounds.Top + (e.Bounds.Height - addButton.Height) / 2 
-        //    //    );
-
-        //    //    addButton.Parent = listViewMenuItems;
-        //    //}
-
-        //    int buttonX = e.Bounds.Right - ButtonWidth;
-        //    int buttonY = e.Bounds.Top + (e.Bounds.Height - ButtonHeight) / 2;
-
-        //    Button addButton = new Button();
-        //    addButton.Text = "Add";
-        //    addButton.Size = new Size(ButtonWidth, ButtonHeight);
-        //    addButton.Location = new Point(buttonX, buttonY);
-
-        //    addButton.Parent = listViewMenuItems;
-        //    addButton.BackColor = SystemColors.Control;
-
-        //    addButton.Click += (s, args) =>
-        //    {
-        //        ListViewItem listViewItem = listViewMenuItems.Items[e.Item.Index];
-        //        Button_Click(listViewItem);
-        //    };
-        //}
-
-        //private void listViewMenuItems_MouseClick(object sender, MouseEventArgs e) 
-        //{ 
-        //    ListView listView = (ListView)sender;
-        //    ListViewItem item = listView.GetItemAt(e.X, e.Y);
-
-        //    if (item != null && e.Button == MouseButtons.Left)
-        //    {
-        //        Rectangle bounds = item.GetBounds(ItemBoundsPortion.Entire);
-
-        //        if (bounds.Contains(e.Location) && e.X > bounds.Width - 60)
-        //        {
-        //            Button_Click(item);
-        //        }
-        //    }
-        //}
-
-        //private void Button_Click(ListViewItem listViewItem)
-        //{
-        //    string name = listViewItem.Text;
-        //    string description = listViewItem.SubItems[1].Text;
-        //}
         #region CategoryButtons
         private void buttonCategoryStarters_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = "Starters";
+            currentMenuLabel = FoodType.Starter.ToString();
             HideDrinkMenu = true;
 
-            DisplayItems(starterItems);
-            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
+            if (currentMenuType == MenuType.Lunch) 
+            { 
+                DisplayItems(starterLunchItems);
+            }
+            else
+            {
+                DisplayItems(starterDinnerItems);
+            }
+
+            SwitchMenuLabel(currentMenuLabel.ToString(), currentMenuType.ToString());
         }
 
         private void buttonCategoryMainDish_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = "Main Dish";
+            currentMenuLabel = FoodType.MainCourse.ToString();
             HideDrinkMenu = true;
 
-            DisplayItems(mainsItems);
+            if (currentMenuType == MenuType.Lunch)
+            {
+                DisplayItems(mainCourseLunchItems);
+            }
+            else
+            {
+                DisplayItems(mainCourseDinnerItems);
+            }
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDesserts_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = "Desserts";
+            currentMenuLabel = FoodType.Dessert.ToString();
             HideDrinkMenu = true;
 
-            DisplayItems(dessertsItems);
+            if (currentMenuType == MenuType.Lunch)
+            {
+                DisplayItems(dessertLunchItems);
+            }
+            else
+            {
+                DisplayItems(dessertDinnerItems);
+            }
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDrinks_Click(object sender, EventArgs e)
         {
-            currentMenuLabel = "Drinks";
+            currentMenuLabel = FoodType.Drink.ToString();
 
             buttonSwitchMenu.Hide();
             buttonGoBackDrinksMenu.Show();
             HideDrinkMenu = false;
 
-            DisplayItems(drinksItems);
-            SwitchMenuLabel("Drinks", "Category");
+            DisplayItems(drinkItems);
+            SwitchMenuLabel(currentMenuLabel, "Category");
         }
         #endregion
         #region BottomButtons
@@ -241,6 +202,18 @@ namespace ChapeauUI
         {
             if (HideDrinkMenu == true)
             {
+                switch (currentMenuType)
+                {
+                    case MenuType.Lunch:
+                        break;
+                    case MenuType.Dinner:
+                        break;
+                    case MenuType.AllDay:
+                        break;
+                    default:
+                        break;
+                }
+
                 buttonSwitchMenu.Show();
                 buttonGoBackDrinksMenu.Hide();
                 HideDrinkMenu = false;

@@ -42,6 +42,11 @@ namespace ChapeauService
         {
             return menuItemDAO.GetAllDesserts();
         }
+        //passes specific courseType and menuType
+        public List<MenuItem> GetCourseMenuType(string courseType, string menuType)
+        {
+            return menuItemDAO.GetCourseMenuType(courseType, menuType);
+        }
 
         public void RemoveItem(MenuItem item)
         {
