@@ -5,7 +5,6 @@ using System.Data;
 
 namespace ChapeauUI
 {
-    // change MenuItem ReadMenuItem(DataRow dataRow)
     // перевіркa на статус усіх айтемс одного типу на замовлення
 
     // code inside constructor?, error handling
@@ -361,9 +360,7 @@ namespace ChapeauUI
             buttonStart.Hide();
             buttonReady.Hide();
             if (listViewHistory.Visible)
-            {
                 DisplayPreparedOrders();
-            }
             else if (listViewOrders.Visible)
                 DisplayUnpreparedOrders();
         }

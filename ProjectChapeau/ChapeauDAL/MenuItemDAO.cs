@@ -147,12 +147,9 @@ namespace ChapeauDAL
                 Description = dataRow["description"] == DBNull.Value ? string.Empty : (string)dataRow["description"],
                 Price = (decimal)dataRow["price"],
                 Vat = (float)(double)(dataRow)["vat"],
-                CourseType = (FoodType)Enum.Parse(typeof(FoodType), dataRow["courseType"].ToString(), ignoreCase: true)
+                CourseType = (FoodType)Enum.Parse(typeof(FoodType), dataRow["courseType"].ToString(), ignoreCase: true),
+                MenuType = dataRow["menuType"] == DBNull.Value ? MenuType.AllDay : (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true)
             };
-            if (dataRow["menuType"] != DBNull.Value)
-                menuItem.MenuType = (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true);
-            else
-                menuItem.MenuType = MenuType.Lunch; 
             return menuItem;
         }
     }

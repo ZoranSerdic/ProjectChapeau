@@ -129,7 +129,7 @@
             // 
             Item.Text = "Item";
             Item.TextAlign = HorizontalAlignment.Center;
-            Item.Width = 780;
+            Item.Width = 750;
             // 
             // Received
             // 
@@ -147,7 +147,7 @@
             // 
             Status.Text = "Status";
             Status.TextAlign = HorizontalAlignment.Center;
-            Status.Width = 120;
+            Status.Width = 130;
             // 
             // buttonStart
             // 
@@ -194,20 +194,20 @@
             // 
             // columnHeader1
             // 
-            columnHeader1.Text = "     Table";
-            columnHeader1.Width = 120;
+            columnHeader1.Text = "Table";
+            columnHeader1.Width = 70;
             // 
             // columnHeader2
             // 
             columnHeader2.Text = "Quantity";
             columnHeader2.TextAlign = HorizontalAlignment.Center;
-            columnHeader2.Width = 150;
+            columnHeader2.Width = 100;
             // 
             // columnHeader3
             // 
             columnHeader3.Text = "Item";
             columnHeader3.TextAlign = HorizontalAlignment.Center;
-            columnHeader3.Width = 730;
+            columnHeader3.Width = 820;
             // 
             // columnHeader4
             // 
@@ -240,7 +240,7 @@
             labelHistory.FlatStyle = FlatStyle.System;
             labelHistory.Font = new Font("Segoe UI", 23F, FontStyle.Bold, GraphicsUnit.Point);
             labelHistory.ForeColor = SystemColors.ActiveCaptionText;
-            labelHistory.Location = new Point(593, 44);
+            labelHistory.Location = new Point(608, 44);
             labelHistory.Name = "labelHistory";
             labelHistory.Size = new Size(221, 62);
             labelHistory.TabIndex = 17;
@@ -267,7 +267,7 @@
             // 
             labelPrompt.AutoSize = true;
             labelPrompt.Font = new Font("Segoe UI Historic", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            labelPrompt.Location = new Point(499, 120);
+            labelPrompt.Location = new Point(505, 120);
             labelPrompt.Name = "labelPrompt";
             labelPrompt.Size = new Size(424, 30);
             labelPrompt.TabIndex = 19;

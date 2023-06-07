@@ -72,9 +72,9 @@ namespace ChapeauDAL
                     INNER JOIN MenuItem AS mI ON oI.menuItemId = mI.menuItemId
                     WHERE mI.courseType IN (@courseTypeStarters, @courseTypeMains, @courseTypeDesserts)
                     AND oI.status = @status
-                    
+                    AND CONVERT(date, o.time) = CONVERT(date, GETDATE())
                     ORDER BY oI.preparedAt DESC"; // shows the newest orders in the top
-            //AND CONVERT(date, o.time) = CONVERT(date, GETDATE())
+           
             // AND CONVERT(date, o.time) = CONVERT(date, GETDATE()) -- shows today's orders only
             SqlParameter[] sqlParameters = new SqlParameter[4];
             sqlParameters[0] = new SqlParameter("@courseTypeStarters", FoodType.Starter.ToString());
