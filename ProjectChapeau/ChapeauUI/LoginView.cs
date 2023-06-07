@@ -46,7 +46,7 @@ namespace ChapeauUI
         private void btnPaymentView_Click(object sender, EventArgs e)
         {
             Table table = new Table();
-            table.TableId = 1;
+            table.TableId = 2;
             table.Status = TableStatus.Occupied;
             PaymentView paymentView = new PaymentView(table);
             this.Hide();

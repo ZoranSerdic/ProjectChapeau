@@ -11,14 +11,24 @@ namespace ChapeauDAL
 {
     public class PaymentDAO : BaseDAO
     {
-        public void GenerateBill(Bill bill)
+        public void CreateBill(Bill bill)
         {
-            string query = "INSERT INTO [Bill] VALUES(@tableId, @totalAmount, 0, NULL, CURRENT_TIMESTAMP)";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] =  new SqlParameter("@tableId", bill.Table.TableId);
-            sqlParameters[1] = new SqlParameter ("@totalAmount", bill.TotalAmount);
+            try
+            {
+                string query = "INSERT INTO [Bill] VALUES(@tableId, @totalAmount, @tipAmount, @comment, @date)";
+                SqlParameter[] sqlParameters = new SqlParameter[5];
+                sqlParameters[0] = new SqlParameter("@tableId", bill.Table.TableId);
+                sqlParameters[1] = new SqlParameter("@totalAmount", bill.TotalAmount);
+                sqlParameters[2] = new SqlParameter("@tipAmount", bill.TotalTip);
+                sqlParameters[3] = new SqlParameter("@comment", string.IsNullOrEmpty(bill.Comment) ? DBNull.Value : bill.Comment);
+                sqlParameters[4] = new SqlParameter("@date", bill.Date);
 
-            ExecuteEditQuery(query, sqlParameters); 
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch 
+            {
+                throw new Exception("creating bill failed, try again");
+            }
         }
 
         public int GetCurrentBillId()
@@ -45,6 +55,15 @@ namespace ChapeauDAL
             string query = "UPDATE [Order] SET isPayed = 1 WHERE tableId = @tableId";
             SqlParameter[] sqlParameters = new SqlParameter[1];
             sqlParameters[0] = new SqlParameter("@tableId", table.TableId);
+
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        public void UpdateTableStatusToFree(Table table)
+        {
+            string query = "UPDATE [Table] SET Status = @freeStatus WHERE tableId = @tableId";
+            SqlParameter[] sqlParameters = new SqlParameter[2];
+            sqlParameters[0] = new SqlParameter("@freeStatus", TableStatus.Free.ToString());
+            sqlParameters[1] = new SqlParameter("@tableId", table.TableId);
 
             ExecuteEditQuery(query, sqlParameters);
         }

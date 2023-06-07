@@ -14,9 +14,8 @@ namespace ChapeauModel
         public decimal Amount { get; set; }
         public decimal Tip { get; set; }
 
-        public Payment(int paymentId, int billId, PaymentMethod method, decimal amount, decimal tip)
+        public Payment(int billId, PaymentMethod method, decimal amount, decimal tip)
         {
-            PaymentId = paymentId;
             BillId = billId;
             Method = method;
             Amount = amount;

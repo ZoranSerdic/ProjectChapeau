@@ -15,10 +15,9 @@ namespace ChapeauUI
 {
     public partial class PaymentView : Form
     {
-        PaymentService paymentService;
-        Table table;
-        Bill bill;
-        List<OrderItem> items;
+        private PaymentService paymentService;
+        private Table table;
+        private List<OrderItem> items;
 
         decimal subTotal;
         float vat9, vat21;
@@ -35,12 +34,12 @@ namespace ChapeauUI
             InitializeComponent();
             this.table = table;
             paymentService = new PaymentService();
-            bill = new Bill();
             items = new List<OrderItem>();
 
             //Get all items, combine, display
             InitializeDisplay();
 
+            //TODO - Add some sort of check to make sure the table has orders before checking out
         }
 
         private void InitializeDisplay()
@@ -104,9 +103,99 @@ namespace ChapeauUI
         private float CalculateItemVat(OrderItem item)
         {
             //Calculate vat for display and add it to the running total for later
-            float vat = (float)item.MenuItem.Price * item.MenuItem.Vat;
-            if(item.MenuItem.Vat == (float)0.09) { vat9 += vat; } else { vat21 += vat; }
+            //maybe simplify below variable..
+            float vat = (float)Math.Round((float)item.MenuItem.Price * item.MenuItem.Vat, 2, MidpointRounding.AwayFromZero);
+           
+            if(item.MenuItem.Vat == (float)0.09) 
+                { vat9 += vat; } 
+            else if (item.MenuItem.Vat == (float)0.21)
+                { vat21 += vat; }
+
             return vat;
+        }
+
+        private void btnPay_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ValidatePayment();
+                Bill bill = new Bill();
+                bill = CreateBill(bill);
+
+                this.Hide();
+                PaymentViewPay paymentviewpay = new PaymentViewPay(bill, SelectedMethod(), items);
+                paymentviewpay.ShowDialog();
+                this.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
+            }
+        }
+
+        private void ValidatePayment()
+        {
+            //Error checking method
+            //Check if amount is actually above total
+            if(Convert.ToDecimal(txtTotal.Text) < Total)
+            {
+                throw new Exception("Total amount is below total");
+            }
+
+            //Check if a payment method is selected
+            if(!rdbtnCash.Checked && !rdbtnCredit.Checked && !rdbtnDebit.Checked)
+            {
+                throw new Exception("No payment method selected");
+            }
+
+            //Edge case to make sure tip is never returned as null
+            if(string.IsNullOrEmpty(txtTip.Text))
+            {
+                txtTip.Text = "0.00";
+            }
+
+        }
+        private Bill CreateBill(Bill bill)
+        {
+            bill.Table = table;
+            bill.TotalAmount = Total;
+            bill.TotalTip = CalculateTip();
+            bill.Date = DateTime.Now;
+            bill.Comment = txtComment.Text;
+
+            return bill;
+        }
+        private decimal CalculateTip()
+        {
+            decimal total = Convert.ToDecimal(txtTotal.Text);
+            decimal tip = Convert.ToDecimal(txtTip.Text);
+
+            //If the total input is above the Total, the extra is calculated as the tip, else return the value of tip
+            if (total > Total)
+            {
+                return total - Total;
+            }
+            else
+            {
+                return tip;
+            }
+        }
+        private PaymentMethod SelectedMethod()
+        {
+            //This can never return null due to it checking if a button is selected prior to this being able to run
+            if(rdbtnCash.Checked)
+            {
+                return PaymentMethod.Cash;
+            }
+            else if(rdbtnCredit.Checked)
+            {
+                return PaymentMethod.Credit;
+            }
+            else
+            {
+                return PaymentMethod.Debit;
+            }
         }
         private void UpdateLabels()
         {
@@ -143,10 +232,17 @@ namespace ChapeauUI
 
         private void listviewItems_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
-            //Change heading to red
-            SolidBrush brush = new SolidBrush(Color.FromArgb(255, 204, 68, 75));
+            //Change heading background to red and text to white
+            SolidBrush brush = new SolidBrush(Color.FromArgb(255, 204, 68, 75)); //red background brush
+            Font font = new Font("Segoe UI", 9, FontStyle.Bold); //header text
+            StringFormat format = new StringFormat() 
+            { 
+                Alignment = StringAlignment.Center, 
+                LineAlignment = StringAlignment.Center,
+            };
+
             e.Graphics.FillRectangle(brush, e.Bounds);
-            e.DrawText();
+            e.Graphics.DrawString(e.Header.Text, font, Brushes.White, e.Bounds, format);
         }
 
         private void listviewItems_DrawItem(object sender, DrawListViewItemEventArgs e)
@@ -160,11 +256,12 @@ namespace ChapeauUI
             decimal value = 0;
             if (!string.IsNullOrEmpty(txtTotal.Text) && !decimal.TryParse(txtTotal.Text, out value) || value < 0 || value > 99999 || txtTotal.Text.StartsWith("0"))
             {
-                txtTotal.Text = Total.ToString();
+                txtTotal.Text = Total.ToString("0.00");
+                return;
             }
 
-            //If total amount in box is above total, set tip to zero. Extra will be calculated to tip later
-            if(Convert.ToDecimal(txtTotal.Text) > Total)
+            //If total amount in box is above Total, set tip to zero. Extra will be calculated to tip later
+            if(!string.IsNullOrEmpty(txtTotal.Text) && Convert.ToDecimal(txtTotal.Text) > Total)
             {
                 txtTip.Text = "0.00";
             }
@@ -189,6 +286,14 @@ namespace ChapeauUI
             {
                 txtTip.Text = "0.00";
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            TableView tableview = new TableView();
+            tableview.ShowDialog(); //pass employee?
+            this.Close();
         }
 
         private void listviewItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

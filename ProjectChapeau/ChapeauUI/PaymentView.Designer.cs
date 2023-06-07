@@ -55,6 +55,7 @@
             this.lblSub = new System.Windows.Forms.Label();
             this.txtTip = new System.Windows.Forms.TextBox();
             this.txtTotal = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chapeauIcon)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -143,6 +144,7 @@
             this.btnPay.TabIndex = 4;
             this.btnPay.Text = "Pay";
             this.btnPay.UseVisualStyleBackColor = false;
+            this.btnPay.Click += new System.EventHandler(this.btnPay_Click);
             // 
             // rdbtnCash
             // 
@@ -338,12 +340,26 @@
             this.txtTotal.Text = "0.00";
             this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
             // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
+            this.btnCancel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCancel.ForeColor = System.Drawing.Color.Transparent;
+            this.btnCancel.Location = new System.Drawing.Point(4, 3);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(113, 29);
+            this.btnCancel.TabIndex = 15;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // PaymentView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(234)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(412, 887);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.txtTip);
             this.Controls.Add(this.panel1);
@@ -363,6 +379,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PaymentView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PaymentView";
             ((System.ComponentModel.ISupportInitialize)(this.chapeauIcon)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -401,5 +418,6 @@
         private Label lblvat9;
         private Label lblSubtotal;
         private Label lblTotal;
+        private Button btnCancel;
     }
 }

@@ -19,9 +19,8 @@ namespace ChapeauModel
         { 
 
         }
-        public Bill(int billId, Table table, decimal totalAmount, decimal totalTip, DateTime date, string? comment)
+        public Bill(Table table, decimal totalAmount, decimal totalTip, DateTime date, string? comment)
         {
-            BillId = billId;
             Table = table;
             TotalAmount = totalAmount;
             TotalTip = totalTip;

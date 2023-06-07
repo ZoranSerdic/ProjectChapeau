@@ -17,9 +17,9 @@ namespace ChapeauService
             paymentDAO= new PaymentDAO();
         }
 
-        public void GenerateBill(Bill bill)
+        public void CreateBill(Bill bill)
         {
-            paymentDAO.GenerateBill(bill);
+            paymentDAO.CreateBill(bill);
         }
 
         public int GetCurrentBillId()
@@ -46,6 +46,10 @@ namespace ChapeauService
         public void UpdateOrderPaidStatus(Table table)
         {
             paymentDAO.UpdateOrderPaidStatus(table);
+        }
+        public void UpdateTableStatusToFree(Table table)
+        {
+            paymentDAO.UpdateTableStatusToFree(table);
         }
     }
 }
