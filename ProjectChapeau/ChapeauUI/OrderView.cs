@@ -15,23 +15,23 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        MenuItemService menuItemService = new MenuItemService();
+        private MenuItemService menuItemService = new MenuItemService();
 
-        List<MenuItem> starterLunchItems = new List<MenuItem>();
-        List<MenuItem> starterDinnerItems = new List<MenuItem>();
-        List<MenuItem> mainCourseLunchItems = new List<MenuItem>();
-        List<MenuItem> mainCourseDinnerItems = new List<MenuItem>();
-        List<MenuItem> dessertLunchItems = new List<MenuItem>();
-        List<MenuItem> dessertDinnerItems = new List<MenuItem>();
-        List<MenuItem> drinkItems = new List<MenuItem>();
+        private List<MenuItem> starterLunchItems = new List<MenuItem>();
+        private List<MenuItem> starterDinnerItems = new List<MenuItem>();
+        private List<MenuItem> mainCourseLunchItems = new List<MenuItem>();
+        private List<MenuItem> mainCourseDinnerItems = new List<MenuItem>();
+        private List<MenuItem> dessertLunchItems = new List<MenuItem>();
+        private List<MenuItem> dessertDinnerItems = new List<MenuItem>();
+        private List<MenuItem> drinkItems = new List<MenuItem>();
 
-        FoodType currentCourseType = FoodType.Starter;
-        MenuType currentMenuType = MenuType.Lunch;
-        MenuType otherMenuType = MenuType.Dinner;
+        private FoodType currentCourseType = FoodType.Starter;
+        private MenuType currentMenuType = MenuType.Lunch;
+        private MenuType otherMenuType = MenuType.Dinner;
 
-        bool HideDrinkMenu;
+        private bool HideDrinkMenu;
 
-        string currentMenuLabel = "Starters";
+        private string currentMenuLabel = "Starters";
 
         public OrderView()
         {
@@ -88,22 +88,27 @@ namespace ChapeauUI
         #region Buttons
         private void buttonCategoryStarters_Click(object sender, EventArgs e)
         {
+            currentCourseType = FoodType.Starter;
             currentMenuLabel = "Starters";
             HideDrinkMenu = true;
 
+            UpdateListView();
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryMainDish_Click(object sender, EventArgs e)
         {
+            currentCourseType = FoodType.MainCourse;
             currentMenuLabel = "Main Dish";
-            HideDrinkMenu = true;            
+            HideDrinkMenu = true;
 
+            UpdateListView();
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDesserts_Click(object sender, EventArgs e)
         {
+            currentCourseType = FoodType.Dessert;
             currentMenuLabel = "Desserts";
             HideDrinkMenu = true;
             
@@ -113,6 +118,7 @@ namespace ChapeauUI
 
         private void buttonCategoryDrinks_Click(object sender, EventArgs e)
         {
+            currentCourseType = FoodType.Drink;
             currentMenuLabel = "Drinks";
 
             buttonSwitchMenu.Hide();
@@ -182,7 +188,7 @@ namespace ChapeauUI
             }
         }
 
-        void SwitchMenuType()
+        private void SwitchMenuType()
         {
             if (currentMenuType == MenuType.Lunch)
             {
@@ -200,7 +206,7 @@ namespace ChapeauUI
             UpdateListView();
         }
 
-        void SwitchMenuLabel(string menuType, string menuTime)
+        private void SwitchMenuLabel(string menuType, string menuTime)
         {
             if (HideDrinkMenu == true)
             {
