@@ -12,25 +12,27 @@ namespace ChapeauUI
 {
     public partial class OrderPopup : Form
     {
-        int quantity;
+        int quantity = 0;
 
         public OrderPopup(string popupName, string popupDescription)
         {
             InitializeComponent();
 
-            quantity = 0;
             labelPopupName.Text = popupName;
             labelPopupDescription.Text = popupDescription;
+            labelQuantityAmount.Text = quantity.ToString();
         }
 
         private void buttonQuantityMinus_Click(object sender, EventArgs e)
         {
             quantity--;
+            UpdateQuantity();
         }
 
         private void buttonQuantityPlus_Click(object sender, EventArgs e)
         {
             quantity++;
+            UpdateQuantity();
         }
 
         private void buttonPopupAddOrder_Click(object sender, EventArgs e)
@@ -45,7 +47,7 @@ namespace ChapeauUI
             this.Close();
         }
 
-        void UpdateQuantity(int quantity)
+        void UpdateQuantity()
         {
             labelQuantityAmount.Text = quantity.ToString();
         }

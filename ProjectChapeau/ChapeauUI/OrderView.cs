@@ -15,6 +15,9 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
+        // TODO: Bianca's tableview gives Table tableID
+        Order order = new Order();
+
         private MenuItemService menuItemService = new MenuItemService();
 
         private List<MenuItem> starterLunchItems = new List<MenuItem>();
@@ -33,8 +36,10 @@ namespace ChapeauUI
 
         private string currentMenuLabel = "Starters";
 
-        public OrderView()
+        public OrderView(Table tableId)
         {
+            order.OrderId = 1;
+            order.Table = tableId;
             // Fill lists with data
             try
             {
@@ -67,13 +72,14 @@ namespace ChapeauUI
             //#endregion
 
             InitializeComponent();
+            labelTableNumber.Text = $"Table {tableId.ToString()}";
             DisplayItems(starterLunchItems);
         }
 
         // Displays items in listViewMenuItems
         private void DisplayItems(List<MenuItem> items)
         {
-            // clear the listview before filling it
+            // clear the listview items before filling it
             listViewMenuItems.Items.Clear();
 
             foreach (MenuItem item in items) 
@@ -120,13 +126,13 @@ namespace ChapeauUI
         {
             currentCourseType = FoodType.Drink;
             currentMenuLabel = "Drinks";
+            HideDrinkMenu = false;
 
             buttonSwitchMenu.Hide();
             buttonGoBackDrinksMenu.Show();
-            HideDrinkMenu = false;
 
-            SwitchMenuLabel(currentMenuLabel, "Category");
             UpdateListView();
+            SwitchMenuLabel(currentMenuLabel, "Category");
         }
 
         private void buttonSwitchMenu_Click(object sender, EventArgs e)
@@ -231,7 +237,7 @@ namespace ChapeauUI
             labelMenuTime.Text = menuTime;
         }
 
-        // When ListViewMenuItems is selected it will create the OrderPopup form
+        // When ListViewMenuItems item is selected it will create the OrderPopup form
         private void listViewMenuItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (e.IsSelected && listViewMenuItems.SelectedItems.Count == 1)

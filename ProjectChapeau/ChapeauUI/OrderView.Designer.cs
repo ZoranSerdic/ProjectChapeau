@@ -64,6 +64,7 @@
             this.labelTableNumber.Size = new System.Drawing.Size(129, 45);
             this.labelTableNumber.TabIndex = 0;
             this.labelTableNumber.Text = "Table 1";
+            this.labelTableNumber.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelMenuBackground
             // 
