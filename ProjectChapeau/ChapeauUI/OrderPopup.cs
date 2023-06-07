@@ -12,7 +12,8 @@ namespace ChapeauUI
 {
     public partial class OrderPopup : Form
     {
-        int quantity = 0;
+        public string Comment { get; set; }
+        public int Amount { get; set; }
 
         public OrderPopup(string popupName, string popupDescription)
         {
@@ -20,26 +21,30 @@ namespace ChapeauUI
 
             labelPopupName.Text = popupName;
             labelPopupDescription.Text = popupDescription;
-            labelQuantityAmount.Text = quantity.ToString();
+            labelQuantityAmount.Text = Amount.ToString();
         }
 
         private void buttonQuantityMinus_Click(object sender, EventArgs e)
         {
-            quantity--;
+            if (Amount > 0)
+            {
+                Amount--;
+            }
+
             UpdateQuantity();
         }
 
         private void buttonQuantityPlus_Click(object sender, EventArgs e)
         {
-            quantity++;
+            Amount++;
             UpdateQuantity();
         }
 
         private void buttonPopupAddOrder_Click(object sender, EventArgs e)
         {
             // TODO: Add order to a list which contains of all the other orders
-
-            // for each quantity add separately 
+            Comment = textBoxPopupComment.Text;
+            this.Close();
         }
 
         private void buttonPopupCancel_Click(object sender, EventArgs e)
@@ -49,7 +54,7 @@ namespace ChapeauUI
 
         void UpdateQuantity()
         {
-            labelQuantityAmount.Text = quantity.ToString();
+            labelQuantityAmount.Text = Amount.ToString();
         }
     }
 }

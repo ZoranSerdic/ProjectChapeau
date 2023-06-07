@@ -66,5 +66,20 @@ namespace ChapeauDAL
 
             ExecuteEditQuery(query, sqlParameters);
         }
+
+        public void AddOrder(OrderItem item)
+        {
+            //this method adds the item into the menu Item table 
+            string query = "INSERT INTO dbo.ConsistOf (orderId, menuItemId, comment, amount, status, preparedAt) " +
+                "VALUES (@orderId, @menuItemId, @comment, @amount, @status, @preparedAt);";
+            SqlParameter[] sqlParameters = new SqlParameter[5];
+            sqlParameters[0] = new SqlParameter("@orderId", item.OrderItemId);
+            sqlParameters[1] = new SqlParameter("@menuItemId", item.MenuItem);
+            sqlParameters[2] = new SqlParameter("@comment", item.Comment);
+            sqlParameters[3] = new SqlParameter("@amount", item.Amount);
+            sqlParameters[4] = new SqlParameter("@status", item.Status);
+            sqlParameters[5] = new SqlParameter("@preparedAt", item.PreparedAt);
+            ExecuteEditQuery(query, sqlParameters);
+        }
     }
 }

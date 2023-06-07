@@ -15,8 +15,8 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        // TODO: Bianca's tableview gives Table tableID
-        Order order = new Order();
+        // TODO: Bianca's tableview gives Table tableID & Employee
+        private Order order = new Order();
 
         private MenuItemService menuItemService = new MenuItemService();
 
@@ -38,7 +38,7 @@ namespace ChapeauUI
 
         public OrderView(Table table, Employee employee)
         {
-            order.OrderId = 1;
+            order.OrderId = 7;
             order.Table = table;
             order.Time = DateTime.Now;
             order.Employee = employee;
@@ -98,6 +98,7 @@ namespace ChapeauUI
             {
                 ListViewItem listViewItem = new ListViewItem(item.Name);
                 listViewItem.SubItems.Add(item.Description);
+                listViewItem.Tag = item.MenuItemId;
 
                 listViewMenuItems.Items.Add(listViewItem);
             }
@@ -260,13 +261,22 @@ namespace ChapeauUI
                 // Retrieve information from item
                 string name = e.Item.SubItems[0].Text;
                 string description = e.Item.SubItems[1].Text;
+                int menuId = (int)e.Item.Tag;
 
+                MenuItem a = new MenuItem();
+                a.MenuItemId = menuId;
                 // Create form
                 OrderPopup orderPopup = new OrderPopup(name, description);
                 orderPopup.FormClosed += (s, ev) =>
                 {
                     // Reattach the event handler after the form is closed
                     listViewMenuItems.ItemSelectionChanged += listViewMenuItems_ItemSelectionChanged;
+
+                    // Retrieve information from orderPopup and put it in new order
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.Comment = orderPopup.Comment;
+                    orderItem.Amount = orderPopup.Amount;
+                    orderItem.MenuItem = menuId;
                 };
                 orderPopup.ShowDialog();
             }
