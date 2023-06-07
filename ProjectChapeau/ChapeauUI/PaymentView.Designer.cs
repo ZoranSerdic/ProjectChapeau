@@ -76,6 +76,7 @@
             this.listviewItems.TabIndex = 0;
             this.listviewItems.UseCompatibleStateImageBehavior = false;
             this.listviewItems.View = System.Windows.Forms.View.Details;
+            this.listviewItems.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listviewItems_ColumnWidthChanging);
             this.listviewItems.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listviewItems_DrawColumnHeader);
             this.listviewItems.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listviewItems_DrawItem);
             this.listviewItems.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listviewItems_ItemSelectionChanged);
@@ -132,6 +133,7 @@
             this.btnSplit.TabIndex = 3;
             this.btnSplit.Text = "Split";
             this.btnSplit.UseVisualStyleBackColor = false;
+            this.btnSplit.Click += new System.EventHandler(this.btnSplit_Click);
             // 
             // btnPay
             // 

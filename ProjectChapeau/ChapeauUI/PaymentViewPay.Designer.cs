@@ -91,6 +91,7 @@
             this.listviewItems.TabIndex = 4;
             this.listviewItems.UseCompatibleStateImageBehavior = false;
             this.listviewItems.View = System.Windows.Forms.View.Details;
+            this.listviewItems.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listviewItems_ColumnWidthChanging);
             this.listviewItems.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listviewItems_DrawColumnHeader);
             this.listviewItems.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listviewItems_DrawItem);
             this.listviewItems.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listviewItems_ItemSelectionChanged);
@@ -391,7 +392,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(234)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(416, 881);
+            this.ClientSize = new System.Drawing.Size(416, 891);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblComeAgain);
             this.Controls.Add(this.lblSuccess);
@@ -410,6 +411,9 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.listviewItems);
             this.Controls.Add(this.chapeauIcon);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "PaymentViewPay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "PaymentViewPay";
