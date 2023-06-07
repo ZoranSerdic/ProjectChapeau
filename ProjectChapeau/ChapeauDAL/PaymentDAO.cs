@@ -11,28 +11,84 @@ namespace ChapeauDAL
 {
     public class PaymentDAO : BaseDAO
     {
-        //Practice queries inserted into current active DB
-        //INSERT INTO [Bill](tableId, totalAmount, totalTip, comment, date) VALUES(1, 500, 100, NULL, CURRENT_TIMESTAMP);
-        //INSERT INTO[Payment](billId, paymentMethod, amount, tip) VALUES(IDENT_CURRENT('Bill'), 'Debit', 250, 50)
-        public void CreateBill(int tableId, decimal totalAmount)
+        public void GenerateBill(Bill bill)
         {
             string query = "INSERT INTO [Bill] VALUES(@tableId, @totalAmount, 0, NULL, CURRENT_TIMESTAMP)";
-            SqlParameter[] sqlParameters = new SqlParameter[]
-            {
-                new SqlParameter("@tableId", tableId),
-                new SqlParameter("@totalAmount", totalAmount)
-            };
+            SqlParameter[] sqlParameters = new SqlParameter[2];
+            sqlParameters[0] =  new SqlParameter("@tableId", bill.Table.TableId);
+            sqlParameters[1] = new SqlParameter ("@totalAmount", bill.TotalAmount);
 
             ExecuteEditQuery(query, sqlParameters); 
         }
 
         public int GetCurrentBillId()
         {
-            string query = "SELECT MAX(@billId) AS id FROM Bill";
-            string bill = "billId";
-            DataRow datarow = ExecuteSelectQuery(query, new SqlParameter("@billId", bill)).Rows[0];
+            //Grab the most up to date id for the bill to use to query orders
+            string query = "SELECT MAX(billId) AS id FROM [Bill]";
+            DataTable dataTable = ExecuteSelectQuery(query);
+            DataRow row = dataTable.Rows[0];
+            return (int)row["id"];
+        }
+        public void AddPayment(Payment payment)
+        {
+            string query = "INSERT INTO [Payment] VALUES(@billId, @paymentMethod, @amount, @tip)";
+            SqlParameter[] sqlParameters = new SqlParameter[4];
+            sqlParameters[0] = new SqlParameter("@billId", payment.BillId);
+            sqlParameters[1] = new SqlParameter("@paymentMethod", payment.Method.ToString());
+            sqlParameters[2] = new SqlParameter("@amount", payment.Amount);
+            sqlParameters[3] = new SqlParameter("@tip", payment.Tip);
 
-            return (int)datarow["id"];
+            ExecuteEditQuery(query, sqlParameters);
+        }
+        public void UpdateOrderPaidStatus(Table table)
+        {
+            string query = "UPDATE [Order] SET isPayed = 1 WHERE tableId = @tableId";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@tableId", table.TableId);
+
+            ExecuteEditQuery(query, sqlParameters);
+        }
+
+        public List<OrderItem> GetAllItemsFromActiveOrders(Table table)
+        {
+            //This takes all the active orders (IsPaid = false) from the table and returns all the items to process the payment
+            string query = @"SELECT m.name, m.price, c.amount, v.vat
+                FROM [Order] 
+                JOIN ConsistsOf AS c on [Order].orderId = c.orderId 
+                JOIN MenuItem AS m ON c.menuItemId = m.menuItemId
+                JOIN VAT AS v ON m.vatId = v.vatId
+                WHERE [Order].tableId = @tableId AND [Order].IsPayed = 0";
+
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@tableId", table.TableId);
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+
+            List<OrderItem> orderItems = new List<OrderItem>();
+
+            foreach(DataRow dr in dataTable.Rows)
+            {
+                orderItems.Add(ReadOrderItems(dr));
+            }
+
+            return orderItems;
+        }
+        private OrderItem ReadOrderItems(DataRow dr)
+        {
+            MenuItem item = new MenuItem
+            {
+                Name = (string)dr["name"],
+                Price = (decimal)dr["price"],
+                Vat = Convert.ToSingle(dr["vat"]) //I didn't realize SQL floats were actually doubles, so converting 
+            };
+
+            OrderItem order = new OrderItem
+            {
+                MenuItem = item,
+                Amount = (int)dr["amount"]
+            };
+
+            return order;
         }
     }
 }

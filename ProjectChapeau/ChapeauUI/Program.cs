@@ -1,3 +1,5 @@
+using ChapeauModel;
+
 namespace ChapeauUI
 {
     internal static class Program

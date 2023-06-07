@@ -15,6 +15,10 @@ namespace ChapeauModel
         public DateTime Date { get; set; }
         public string? Comment { get; set; }
 
+        public Bill() 
+        { 
+
+        }
         public Bill(int billId, Table table, decimal totalAmount, decimal totalTip, DateTime date, string? comment)
         {
             BillId = billId;

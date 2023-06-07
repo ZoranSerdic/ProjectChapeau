@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChapeauModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,7 +45,10 @@ namespace ChapeauUI
 
         private void btnPaymentView_Click(object sender, EventArgs e)
         {
-            PaymentView paymentView = new PaymentView();
+            Table table = new Table();
+            table.TableId = 1;
+            table.Status = TableStatus.Occupied;
+            PaymentView paymentView = new PaymentView(table);
             this.Hide();
             paymentView.ShowDialog();
             this.Close();
