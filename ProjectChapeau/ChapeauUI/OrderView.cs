@@ -16,10 +16,9 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        // GET RID OF GLOBAL VARIABLES, CREATE A METHOD OR SOMETHING
+        // GET RID OF GLOBAL VARIABLES, CREATE A METHOD OR RETURN ?
 
-
-        // TODO: Bianca's tableview gives Table tableID & Employee
+        // TODO: Bianca's tableview gives Table tableID & Employee for Order order
         Order order = new Order();
 
         private MenuItemService menuItemService = new MenuItemService();
@@ -30,8 +29,6 @@ namespace ChapeauUI
         private FoodType currentCourseType = FoodType.Starter;
         private MenuType currentMenuType = MenuType.Lunch;
         private MenuType otherMenuType = MenuType.Dinner;
-
-        private bool HideDrinkMenu;
 
         private string currentMenuLabel = "Starters";
 
@@ -85,7 +82,8 @@ namespace ChapeauUI
         {
             currentCourseType = FoodType.Starter;
             currentMenuLabel = "Starters";
-            HideDrinkMenu = true;
+
+            DisplayItems(currentMenuItems);
 
             FillMenuItemList(currentCourseType, currentMenuType);
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
@@ -95,9 +93,10 @@ namespace ChapeauUI
         {
             currentCourseType = FoodType.MainCourse;
             currentMenuLabel = "Main Dish";
-            HideDrinkMenu = true;
 
             FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
@@ -105,22 +104,23 @@ namespace ChapeauUI
         {
             currentCourseType = FoodType.Dessert;
             currentMenuLabel = "Desserts";
-            HideDrinkMenu = true;
 
             FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDrinks_Click(object sender, EventArgs e)
         {
             currentCourseType = FoodType.Drink;
-            currentMenuLabel = "Drinks";
-            HideDrinkMenu = false;
+            currentMenuType = MenuType.AllDay;
 
-            buttonSwitchMenu.Hide();
-            buttonGoBackDrinksMenu.Show();
+            currentMenuLabel = "Drinks";
 
             FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, "Category");
         }
 
@@ -173,23 +173,16 @@ namespace ChapeauUI
 
         private void SwitchMenuLabel(string menuType, string menuTime)
         {
-            if (HideDrinkMenu == true)
+            switch (currentMenuType)
             {
-                switch (currentMenuType)
-                {
-                    case MenuType.Lunch:
-                        break;
-                    case MenuType.Dinner:
-                        break;
-                    case MenuType.AllDay:
-                        break;
-                    default:
-                        break;
-                }
-
-                buttonSwitchMenu.Show();
-                buttonGoBackDrinksMenu.Hide();
-                HideDrinkMenu = false;
+                case MenuType.Lunch:
+                    break;
+                case MenuType.Dinner:
+                    break;
+                case MenuType.AllDay:
+                    break;
+                default:
+                    break;
             }
 
             labelMenuType.Text = menuType;
@@ -251,15 +244,29 @@ namespace ChapeauUI
         public void CreateOrder(Order order)
         {
             // First need to create the order, which creates an orderId
-            // Then I can 
-            
+
+            try
+            {
+                orderItemService.CreateOrder(order);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("An error occurred.\n" + e.Message);
+            }
         }
 
         public void AddOrderItem(Order order)
         {
-            foreach (OrderItem orderItem in order.OrderedItems)
+            try
             {
-                orderItemService.AddOrderItem(orderItem);
+                foreach (OrderItem orderItem in order.OrderedItems)
+                {
+                    orderItemService.AddOrderItem(orderItem);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("An error occurred.\n" + e.Message);
             }
         }
     }

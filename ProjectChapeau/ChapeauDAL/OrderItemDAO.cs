@@ -73,6 +73,7 @@ namespace ChapeauDAL
         {
             try
             {
+                // This method creates the Order in the database
                 string query = "INSERT INTO [Order] (tableId, time, employeeId, isPayed)" +
                     "VALUES (@tableId, @time, @employeeId, @isPayed);";
                 SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -92,7 +93,7 @@ namespace ChapeauDAL
         {
             try
             {
-                //this method adds the item into the menu Item table 
+                // This method adds an OrderItem(ConsistOf) in Order
                 string query = "INSERT INTO ConsistOf (orderId, menuItemId, comment, amount, status, preparedAt) " +
                     "VALUES (@orderId, @menuItemId, @comment, @amount, @status, @preparedAt);";
                 SqlParameter[] sqlParameters = new SqlParameter[5];
