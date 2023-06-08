@@ -80,17 +80,19 @@ namespace ChapeauUI
         #region Buttons
         private void buttonCategoryStarters_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Show();
             currentCourseType = FoodType.Starter;
             currentMenuLabel = "Starters";
 
+            FillMenuItemList(currentCourseType, currentMenuType);
             DisplayItems(currentMenuItems);
 
-            FillMenuItemList(currentCourseType, currentMenuType);
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryMainDish_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Show();
             currentCourseType = FoodType.MainCourse;
             currentMenuLabel = "Main Dish";
 
@@ -102,6 +104,7 @@ namespace ChapeauUI
 
         private void buttonCategoryDesserts_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Show();
             currentCourseType = FoodType.Dessert;
             currentMenuLabel = "Desserts";
 
@@ -113,12 +116,11 @@ namespace ChapeauUI
 
         private void buttonCategoryDrinks_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Hide();
             currentCourseType = FoodType.Drink;
-            currentMenuType = MenuType.AllDay;
-
             currentMenuLabel = "Drinks";
 
-            FillMenuItemList(currentCourseType, currentMenuType);
+            FillMenuItemList(currentCourseType, MenuType.AllDay);
             DisplayItems(currentMenuItems);
 
             SwitchMenuLabel(currentMenuLabel, "Category");
@@ -167,8 +169,11 @@ namespace ChapeauUI
             }
 
             buttonSwitchMenu.Text = $"Switch To {otherMenuType.ToString()} Menu";
-            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
+
+            FillMenuItemList(currentCourseType, currentMenuType);
             DisplayItems(currentMenuItems);
+
+            SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void SwitchMenuLabel(string menuType, string menuTime)
@@ -245,28 +250,14 @@ namespace ChapeauUI
         {
             // First need to create the order, which creates an orderId
 
-            try
-            {
-                orderItemService.CreateOrder(order);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("An error occurred.\n" + e.Message);
-            }
+            orderItemService.CreateOrder(order);
         }
 
         public void AddOrderItem(Order order)
         {
-            try
+            foreach (OrderItem orderItem in order.OrderedItems)
             {
-                foreach (OrderItem orderItem in order.OrderedItems)
-                {
-                    orderItemService.AddOrderItem(orderItem);
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("An error occurred.\n" + e.Message);
+                orderItemService.AddOrderItem(orderItem);
             }
         }
     }
