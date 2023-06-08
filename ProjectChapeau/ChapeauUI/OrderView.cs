@@ -82,7 +82,7 @@ namespace ChapeauUI
             // clear the listview items before filling it
             listViewMenuItems.Items.Clear();
 
-            foreach (MenuItem item in items) 
+            foreach (MenuItem item in items)
             {
                 ListViewItem listViewItem = new ListViewItem(item.Name);
                 listViewItem.SubItems.Add(item.Description);
@@ -117,7 +117,7 @@ namespace ChapeauUI
             currentCourseType = FoodType.Dessert;
             currentMenuLabel = "Desserts";
             HideDrinkMenu = true;
-            
+
             UpdateListView();
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
@@ -171,7 +171,7 @@ namespace ChapeauUI
                 case FoodType.Starter:
                     if (currentMenuType == MenuType.Lunch)
                         DisplayItems(starterLunchItems);
-                    else 
+                    else
                         DisplayItems(starterDinnerItems);
                     break;
                 case FoodType.MainCourse:
@@ -258,6 +258,11 @@ namespace ChapeauUI
                 };
                 orderPopup.ShowDialog();
             }
+        }
+
+        private void OrderView_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

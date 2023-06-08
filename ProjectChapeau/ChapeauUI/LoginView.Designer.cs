@@ -28,89 +28,88 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnTableView = new System.Windows.Forms.Button();
-            this.btnOrderView = new System.Windows.Forms.Button();
-            this.btnBarKitchenView = new System.Windows.Forms.Button();
-            this.btnPaymentView = new System.Windows.Forms.Button();
-            this.btnManagerView = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            btnTableView = new Button();
+            btnOrderView = new Button();
+            btnBarKitchenView = new Button();
+            btnPaymentView = new Button();
+            btnManagerView = new Button();
+            label1 = new Label();
+            SuspendLayout();
             // 
             // btnTableView
             // 
-            this.btnTableView.Location = new System.Drawing.Point(316, 131);
-            this.btnTableView.Name = "btnTableView";
-            this.btnTableView.Size = new System.Drawing.Size(153, 29);
-            this.btnTableView.TabIndex = 0;
-            this.btnTableView.Text = "Table View";
-            this.btnTableView.UseVisualStyleBackColor = true;
-            this.btnTableView.Click += new System.EventHandler(this.btnTableView_Click);
+            btnTableView.Location = new Point(316, 131);
+            btnTableView.Name = "btnTableView";
+            btnTableView.Size = new Size(153, 29);
+            btnTableView.TabIndex = 0;
+            btnTableView.Text = "Table View";
+            btnTableView.UseVisualStyleBackColor = true;
+            btnTableView.Click += btnTableView_Click;
             // 
             // btnOrderView
             // 
-            this.btnOrderView.Location = new System.Drawing.Point(316, 166);
-            this.btnOrderView.Name = "btnOrderView";
-            this.btnOrderView.Size = new System.Drawing.Size(153, 29);
-            this.btnOrderView.TabIndex = 1;
-            this.btnOrderView.Text = "Order View";
-            this.btnOrderView.UseVisualStyleBackColor = true;
-            this.btnOrderView.Click += new System.EventHandler(this.btnOrderView_Click);
+            btnOrderView.Location = new Point(316, 166);
+            btnOrderView.Name = "btnOrderView";
+            btnOrderView.Size = new Size(153, 29);
+            btnOrderView.TabIndex = 1;
+            btnOrderView.Text = "Order View";
+            btnOrderView.UseVisualStyleBackColor = true;
+            btnOrderView.Click += btnOrderView_Click;
             // 
             // btnBarKitchenView
             // 
-            this.btnBarKitchenView.Location = new System.Drawing.Point(316, 201);
-            this.btnBarKitchenView.Name = "btnBarKitchenView";
-            this.btnBarKitchenView.Size = new System.Drawing.Size(153, 29);
-            this.btnBarKitchenView.TabIndex = 2;
-            this.btnBarKitchenView.Text = "Bar Kitchen View";
-            this.btnBarKitchenView.UseVisualStyleBackColor = true;
-            this.btnBarKitchenView.Click += new System.EventHandler(this.btnBarKitchenView_Click);
+            btnBarKitchenView.Location = new Point(316, 201);
+            btnBarKitchenView.Name = "btnBarKitchenView";
+            btnBarKitchenView.Size = new Size(153, 29);
+            btnBarKitchenView.TabIndex = 2;
+            btnBarKitchenView.Text = "Bar Kitchen View";
+            btnBarKitchenView.UseVisualStyleBackColor = true;
+            btnBarKitchenView.Click += btnBarKitchenView_Click;
             // 
             // btnPaymentView
             // 
-            this.btnPaymentView.Location = new System.Drawing.Point(316, 236);
-            this.btnPaymentView.Name = "btnPaymentView";
-            this.btnPaymentView.Size = new System.Drawing.Size(153, 29);
-            this.btnPaymentView.TabIndex = 3;
-            this.btnPaymentView.Text = "Payment View";
-            this.btnPaymentView.UseVisualStyleBackColor = true;
-            this.btnPaymentView.Click += new System.EventHandler(this.btnPaymentView_Click);
+            btnPaymentView.Location = new Point(316, 236);
+            btnPaymentView.Name = "btnPaymentView";
+            btnPaymentView.Size = new Size(153, 29);
+            btnPaymentView.TabIndex = 3;
+            btnPaymentView.Text = "Payment View";
+            btnPaymentView.UseVisualStyleBackColor = true;
+            btnPaymentView.Click += btnPaymentView_Click;
             // 
             // btnManagerView
             // 
-            this.btnManagerView.Location = new System.Drawing.Point(316, 271);
-            this.btnManagerView.Name = "btnManagerView";
-            this.btnManagerView.Size = new System.Drawing.Size(153, 29);
-            this.btnManagerView.TabIndex = 5;
-            this.btnManagerView.Text = "Manager View";
-            this.btnManagerView.UseVisualStyleBackColor = true;
-            this.btnManagerView.Click += new System.EventHandler(this.btnManagerView_Click);
+            btnManagerView.Location = new Point(316, 271);
+            btnManagerView.Name = "btnManagerView";
+            btnManagerView.Size = new Size(153, 29);
+            btnManagerView.TabIndex = 5;
+            btnManagerView.Text = "Manager View";
+            btnManagerView.UseVisualStyleBackColor = true;
+            btnManagerView.Click += btnManagerView_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(279, 39);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(219, 20);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "This is the temporary login view";
+            label1.AutoSize = true;
+            label1.Location = new Point(279, 39);
+            label1.Name = "label1";
+            label1.Size = new Size(219, 20);
+            label1.TabIndex = 6;
+            label1.Text = "This is the temporary login view";
             // 
             // LoginView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnManagerView);
-            this.Controls.Add(this.btnPaymentView);
-            this.Controls.Add(this.btnBarKitchenView);
-            this.Controls.Add(this.btnOrderView);
-            this.Controls.Add(this.btnTableView);
-            this.Name = "LoginView";
-            this.Text = "LoginView";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(label1);
+            Controls.Add(btnManagerView);
+            Controls.Add(btnPaymentView);
+            Controls.Add(btnBarKitchenView);
+            Controls.Add(btnOrderView);
+            Controls.Add(btnTableView);
+            Name = "LoginView";
+            Text = "LoginView";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
