@@ -19,6 +19,35 @@ namespace ChapeauDAL
             return ReadTables(ExecuteSelectQuery(query));
         }
         // if there are no paramenters, get rid of them 
+        // only one method for Getting by Menu Type
+        public List<MenuItem> GetAllDrinks()
+        {
+            //gathering all drinks from the table
+            string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Drink';";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public List<MenuItem> GetAllStarters()
+        {
+            //gathering all starters from the table
+            string query = "SELECT M.menuItemid, M.[Description],M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Starter';";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public List<MenuItem> GetAllMainDishes()
+        {
+            //gathering all main courses from the table
+            string query = "SELECT M.menuItemid, M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'MainCourse';";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+        public List<MenuItem> GetAllDesserts()
+        {
+            //gathering all desserts from the table
+            string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Dessert';";
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
 
         #region OrderMethods
         public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
