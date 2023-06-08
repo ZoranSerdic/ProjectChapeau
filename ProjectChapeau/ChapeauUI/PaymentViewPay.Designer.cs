@@ -358,7 +358,7 @@
             // 
             this.pictureCheck.Image = global::ChapeauUI.Properties.Resources.checkcircle;
             this.pictureCheck.InitialImage = null;
-            this.pictureCheck.Location = new System.Drawing.Point(113, 108);
+            this.pictureCheck.Location = new System.Drawing.Point(113, 102);
             this.pictureCheck.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureCheck.Name = "pictureCheck";
             this.pictureCheck.Size = new System.Drawing.Size(232, 159);
@@ -391,7 +391,7 @@
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
             this.btnClose.Font = new System.Drawing.Font("Arial Rounded MT Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnClose.ForeColor = System.Drawing.Color.Transparent;
-            this.btnClose.Location = new System.Drawing.Point(154, 363);
+            this.btnClose.Location = new System.Drawing.Point(154, 355);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(137, 60);

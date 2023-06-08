@@ -315,6 +315,7 @@
             this.btnConfirm.TabIndex = 34;
             this.btnConfirm.Text = "Pay";
             this.btnConfirm.UseVisualStyleBackColor = false;
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
             // btnCancel
             // 
@@ -339,6 +340,7 @@
             this.txtTotal.Size = new System.Drawing.Size(114, 34);
             this.txtTotal.TabIndex = 41;
             this.txtTotal.Text = "0.00";
+            this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
             // 
             // txtTip
             // 
@@ -349,6 +351,7 @@
             this.txtTip.Size = new System.Drawing.Size(114, 34);
             this.txtTip.TabIndex = 40;
             this.txtTip.Text = "0.00";
+            this.txtTip.TextChanged += new System.EventHandler(this.txtTip_TextChanged);
             // 
             // lblTotal2
             // 
@@ -382,6 +385,7 @@
             this.rdbtnCredit.TabStop = true;
             this.rdbtnCredit.Text = "Credit";
             this.rdbtnCredit.UseVisualStyleBackColor = true;
+            this.rdbtnCredit.CheckedChanged += new System.EventHandler(this.rdbtnCredit_CheckedChanged);
             // 
             // rdbtnDebit
             // 
@@ -395,6 +399,7 @@
             this.rdbtnDebit.TabStop = true;
             this.rdbtnDebit.Text = "Debit";
             this.rdbtnDebit.UseVisualStyleBackColor = true;
+            this.rdbtnDebit.CheckedChanged += new System.EventHandler(this.rdbtnDebit_CheckedChanged);
             // 
             // rdbtnCash
             // 
@@ -408,6 +413,7 @@
             this.rdbtnCash.TabStop = true;
             this.rdbtnCash.Text = "Cash";
             this.rdbtnCash.UseVisualStyleBackColor = true;
+            this.rdbtnCash.CheckedChanged += new System.EventHandler(this.rdbtnCash_CheckedChanged);
             // 
             // lblAmount
             // 

@@ -23,9 +23,9 @@ namespace ChapeauUI
         private Table table;
         private List<OrderItem> items;
 
-        decimal subTotal;
-        float vat9, vat21;
-        public decimal Total
+        private decimal subTotal;
+        private float vat9, vat21;
+        private decimal Total
         {
             get
             {
@@ -59,7 +59,7 @@ namespace ChapeauUI
         {
             //Combine duplicate items into one index
             List<OrderItem> combinedItems = new List<OrderItem>();
-            List<string> addedNames = new List<String>();
+            List<string> addedNames = new List<string>();
 
             foreach (OrderItem item in items)
             {
@@ -134,7 +134,7 @@ namespace ChapeauUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
+                MessageBox.Show($"ERROR processing payment! \nERROR: {ex.Message}!");
             }
         }
         private void btnSplit_Click(object sender, EventArgs e)
@@ -154,7 +154,7 @@ namespace ChapeauUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
+                MessageBox.Show($"ERROR processing payment! \nERROR: {ex.Message}!");
             }
         }
 

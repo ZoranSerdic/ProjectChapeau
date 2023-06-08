@@ -16,10 +16,11 @@ namespace ChapeauUI
     {
         private Bill bill;
         private List<OrderItem> items;
+        private List<Payment> payments;
 
-        decimal subTotal;
-        float vat9, vat21;
-        public decimal Total
+        private decimal subTotal, amountRemaining;
+        private float vat9, vat21;
+        private decimal Total
         {
             get
             {
@@ -31,6 +32,7 @@ namespace ChapeauUI
             InitializeComponent();
             this.bill = bill;
             this.items = items;
+            payments = new List<Payment>();
 
             InitializeDisplay();
         }
@@ -39,6 +41,7 @@ namespace ChapeauUI
             CalculateItems(items);
             UpdateLabels();
             StyleListView();
+            DisableInputFields();
         }
 
         private void CalculateItems(List<OrderItem> items)
@@ -47,19 +50,18 @@ namespace ChapeauUI
 
             foreach (OrderItem item in items)
             { 
-                decimal price = CalculateItemPrice(item);
-                float vat = CalculateItemVat(item);
+                CalculateItemPrice(item);
+                CalculateItemVat(item);
             }
 
         }
-        private decimal CalculateItemPrice(OrderItem item)
+        private void CalculateItemPrice(OrderItem item)
         {
             //Calculate price for display and add it to the running total
             decimal price = item.MenuItem.Price * item.Amount;
             subTotal += price;
-            return price;
         }
-        private float CalculateItemVat(OrderItem item)
+        private void CalculateItemVat(OrderItem item)
         {
             //Calculate vat for display and add it to the running total for later
             //maybe simplify below variable..
@@ -70,7 +72,60 @@ namespace ChapeauUI
             else if (item.MenuItem.Vat == (float)0.21)
             { vat21 += vat; }
 
-            return vat;
+        }
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Payment payment = new Payment(1, SelectedMethod(), 20, 500);
+                //AddPaymentToTable(payment);
+                //CalculateAmountRemaining(payment);
+                //StyleListView(); //ran again to add gray and white separators to the table
+                //payments.Add(payment);
+
+                ProcessPayment();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
+            }
+        }
+        private void ProcessPayment()
+        {
+
+        }
+        private void AddPaymentToTable(Payment payment)
+        {
+            int index = listviewPayments.Items.Count + 1;
+
+            listviewPayments.Items.Add((index).ToString());
+
+            listviewPayments.Items[index - 1].SubItems.Add(payment.Amount.ToString("€0.00"));
+            listviewPayments.Items[index - 1].SubItems.Add(payment.Tip.ToString("€0.00"));
+            listviewPayments.Items[index - 1].SubItems.Add(payment.Method.ToString());
+        }
+        private void CalculateAmountRemaining(Payment payment)
+        {
+            decimal amountRemaining = Convert.ToDecimal(lblTotalLeft.Text) - payment.Amount;
+            lblTotalLeft.Text = amountRemaining.ToString("0.00");
+            
+        }
+        private PaymentMethod SelectedMethod()
+        {
+            //This can never return null due to it checking if a button is selected prior to this being able to run
+            if (rdbtnCash.Checked)
+            {
+                return PaymentMethod.Cash;
+            }
+            else if (rdbtnCredit.Checked)
+            {
+                return PaymentMethod.Credit;
+            }
+            else
+            {
+                return PaymentMethod.Debit;
+            }
         }
         private void UpdateLabels()
         {
@@ -123,7 +178,6 @@ namespace ChapeauUI
         {
             e.DrawDefault = true;
         }
-
         private void listviewPayments_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
             //prevent header from being resized
@@ -137,6 +191,60 @@ namespace ChapeauUI
             PaymentView paymentview = new PaymentView(bill.Table);
             paymentview.ShowDialog();
             this.Close();
+        }
+
+        private void rdbtnCash_CheckedChanged(object sender, EventArgs e)
+        {
+            DisableInputFields();
+        }
+
+        private void rdbtnDebit_CheckedChanged(object sender, EventArgs e)
+        {
+            EnableInputFields();
+        }
+
+        private void rdbtnCredit_CheckedChanged(object sender, EventArgs e)
+        {
+            EnableInputFields();
+        }
+
+        private void txtTotal_TextChanged(object sender, EventArgs e)
+        {
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(txtTotal.Text) && !decimal.TryParse(txtTotal.Text, out value) || value < 0 || value > 99999 || txtTotal.Text.StartsWith("0"))
+            {
+                txtTotal.Text = "0.00";
+                return;
+            }
+        }
+
+        private void txtTip_TextChanged(object sender, EventArgs e)
+        {
+            decimal value = 0; 
+            if (!string.IsNullOrEmpty(txtTip.Text) && !decimal.TryParse(txtTip.Text, out value) || value < 0 || value > 99999 || txtTip.Text.StartsWith("0"))
+            {
+                txtTip.Text = "0.00";
+                return;
+            }
+        }
+
+        private void DisableInputFields()
+        {
+            txtCardName.Enabled = false;
+            txtCardName.Clear();
+            txtCardNumber.Enabled = false;
+            txtCardNumber.Clear();
+            txtExpDate.Enabled = false;
+            txtExpDate.Clear();
+            txtCVV.Enabled = false;
+            txtCVV.Clear();
+        }
+        private void EnableInputFields()
+        {
+            txtCardName.Enabled = true;
+            txtCardNumber.Enabled = true;
+            txtExpDate.Enabled = true;
+            txtCVV.Enabled = true;
         }
 
     }

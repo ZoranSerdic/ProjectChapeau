@@ -17,11 +17,11 @@ namespace ChapeauUI
     {
         private Bill bill;
         private List<OrderItem> items;
-        PaymentMethod method;
+        private PaymentMethod method;
 
-        decimal subTotal;
-        float vat9, vat21;
-        public decimal Total
+        private decimal subTotal;
+        private float vat9, vat21;
+        private decimal Total
         {
             get
             {
