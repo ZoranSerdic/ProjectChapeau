@@ -27,9 +27,10 @@ namespace ChapeauUI
         public void DisplayItems(List<InventoryItem> items)
         {
             //adding the columns
-            listViewInventory.Columns.Add("ID", 100);
+            listViewInventory.Columns.Add("Stock item ID", 120);
             listViewInventory.Columns.Add("Name", 180);
             listViewInventory.Columns.Add("Count in stock", 150);
+            listViewInventory.Columns.Add("Menu item ID", 120);
 
             //adding the rows to the listview
             foreach (InventoryItem item in items)
@@ -37,19 +38,11 @@ namespace ChapeauUI
                 ListViewItem li = new ListViewItem(item.InventoryItemId.ToString());
                 li.SubItems.Add(item.Name);
                 li.SubItems.Add(item.InStock.ToString());
+                li.SubItems.Add(item.MenuItemID.ToString());
                 li.Tag = item;
                 listViewInventory.Items.Add(li);
             }
         }
-
-        private void btnReturn_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            ManagerView managerView = new ManagerView();
-            managerView.ShowDialog();
-            this.Close();
-        }
-
         private void btnRemoveItem_Click(object sender, EventArgs e)
         {
             //checks first if there is a selected row 
@@ -94,30 +87,29 @@ namespace ChapeauUI
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if (BoxesNotEmpty() && !update)
+            if (BoxesNotEmpty())
             {
-                InventoryItem item = new InventoryItem();
-                item.Name = txtBoxName.Text;
-                item.InStock = int.Parse(txtBoxCount.Text);
-                service.AddInventoryItem(item);
+                selectedItem = new InventoryItem();
+                if (update)
+                {
+                    ListViewItem seletedRow = listViewInventory.SelectedItems[0];
+                    
+                    //adds the menuID from the row to the menu Item 
+                    selectedItem.InventoryItemId = int.Parse(seletedRow.SubItems[0].Text);
+                    selectedItem.Name = txtBoxMenuId.Text;
+                    selectedItem.InStock = int.Parse(txtBoxCount.Text);
+                    service.UpdateInventoryItem(selectedItem);
+                    update = false;
+                }
+                else
+                {
+                    selectedItem.MenuItemID = int.Parse(txtBoxMenuId.Text);
+                    selectedItem.InStock = int.Parse(txtBoxCount.Text);
+                    service.AddInventoryItem(selectedItem);
+                }
                 panelAdd.Hide();
-                UpdateListView();
                 ClearTextBoxes();
-            }
-            else if (BoxesNotEmpty() && update)
-            {
-                ListViewItem seletedRow = listViewInventory.SelectedItems[0];
-                InventoryItem item = new InventoryItem();
-
-                //adds the menuID from the row to the menu Item 
-                item.InventoryItemId = int.Parse(seletedRow.SubItems[0].Text);
-                item.Name = txtBoxName.Text;
-                item.InStock = int.Parse(txtBoxCount.Text);
-                service.UpdateInventoryItem(item);
-                panelAdd.Hide();
                 UpdateListView();
-                update = false;
-                ClearTextBoxes();
             }
             else
             {
@@ -131,7 +123,7 @@ namespace ChapeauUI
         }
         private bool BoxesNotEmpty()
         {
-            if (txtBoxName.Text != "" || txtBoxCount.Text != "")
+            if (txtBoxMenuId.Text != "" || txtBoxCount.Text != "")
             {
                 return true;
             }
@@ -147,6 +139,14 @@ namespace ChapeauUI
                 txtBoxCount.Text = string.Empty;
             }
         }
+        private void txtBoxMenuId_TextChanged(object sender, EventArgs e)
+        {
+            //try to parse the input, if it is unsuccessful, the inside textbox is cleared
+            if (!int.TryParse(txtBoxMenuId.Text, out int result))
+            {
+                txtBoxMenuId.Text = string.Empty;
+            }
+        }
 
         private void btnEditItem_Click(object sender, EventArgs e)
         {
@@ -155,12 +155,13 @@ namespace ChapeauUI
             {
                 ListViewItem seletedRow = listViewInventory.SelectedItems[0];
 
-
                 txtBoxCount.Text = (seletedRow.SubItems[2].Text).ToString();
-                txtBoxName.Text = (seletedRow.SubItems[1].Text).ToString();
+                txtBoxMenuId.Text = (seletedRow.SubItems[3].Text).ToString();
                 update = true;
                 btnConfirm.Text = "Update";
                 panelAdd.Show();
+                txtBoxMenuId.Hide();    
+                lblName.Hide();
             }
             else
             {
@@ -170,7 +171,16 @@ namespace ChapeauUI
         private void ClearTextBoxes()
         {
             txtBoxCount.Text = string.Empty;
-            txtBoxName.Text = string.Empty;
+            txtBoxMenuId.Text = string.Empty;
         }
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ManagerView managerView = new ManagerView();
+            managerView.ShowDialog();
+            this.Close();
+        }
+
+        
     }
 }

@@ -41,7 +41,7 @@
             btnCancel = new Button();
             btnConfirm = new Button();
             txtBoxCount = new TextBox();
-            txtBoxName = new TextBox();
+            txtBoxMenuId = new TextBox();
             lblCount = new Label();
             lblName = new Label();
             panel4 = new Panel();
@@ -129,10 +129,10 @@
             panelAdd.Controls.Add(btnCancel);
             panelAdd.Controls.Add(btnConfirm);
             panelAdd.Controls.Add(txtBoxCount);
-            panelAdd.Controls.Add(txtBoxName);
+            panelAdd.Controls.Add(txtBoxMenuId);
             panelAdd.Controls.Add(lblCount);
             panelAdd.Controls.Add(lblName);
-            panelAdd.Location = new Point(87, 626);
+            panelAdd.Location = new Point(87, 639);
             panelAdd.Name = "panelAdd";
             panelAdd.Size = new Size(690, 228);
             panelAdd.TabIndex = 45;
@@ -174,12 +174,13 @@
             txtBoxCount.TabIndex = 3;
             txtBoxCount.TextChanged += txtBoxCount_TextChanged;
             // 
-            // txtBoxName
+            // txtBoxMenuId
             // 
-            txtBoxName.Location = new Point(44, 103);
-            txtBoxName.Name = "txtBoxName";
-            txtBoxName.Size = new Size(125, 27);
-            txtBoxName.TabIndex = 2;
+            txtBoxMenuId.Location = new Point(44, 103);
+            txtBoxMenuId.Name = "txtBoxMenuId";
+            txtBoxMenuId.Size = new Size(125, 27);
+            txtBoxMenuId.TabIndex = 2;
+            txtBoxMenuId.TextChanged += txtBoxMenuId_TextChanged;
             // 
             // lblCount
             // 
@@ -195,9 +196,9 @@
             lblName.AutoSize = true;
             lblName.Location = new Point(44, 63);
             lblName.Name = "lblName";
-            lblName.Size = new Size(86, 20);
+            lblName.Size = new Size(102, 20);
             lblName.TabIndex = 0;
-            lblName.Text = "Item Name:";
+            lblName.Text = "Menu Item ID:";
             // 
             // panel4
             // 
@@ -271,7 +272,7 @@
         private Label lblCount;
         private Label lblName;
         private TextBox txtBoxCount;
-        private TextBox txtBoxName;
+        private TextBox txtBoxMenuId;
         private Button btnCancel;
         private Button btnConfirm;
         private Label lblPanelHeading;

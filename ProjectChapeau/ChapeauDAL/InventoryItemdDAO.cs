@@ -14,7 +14,7 @@ namespace ChapeauDAL
         public List<InventoryItem> GetAllInventoryItems()
         {
             //gathering all inventory items from the table
-            string query = "SELECT I.inStock, I.inventoryItemId, M.[name] FROM InventoryItem AS I JOIN MenuItem AS M ON I.MenuItemKey = menuItemId;";
+            string query = "SELECT I.inStock, I.inventoryItemId, I.MenuItemKey, M.[name] FROM InventoryItem AS I JOIN MenuItem AS M ON I.MenuItemKey = menuItemId;";
             return ReadTables(ExecuteSelectQuery(query));
         }
         public void RemoveItem(InventoryItem item)
@@ -30,17 +30,16 @@ namespace ChapeauDAL
             string query = "INSERT INTO InventoryItem(inStock, menuItemKey) VALUES (@inStock, @menuItemKey);";
             SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@menuItemKey", item.InventoryItemId);
+            sqlParameters[1] = new SqlParameter("@menuItemKey", item.MenuItemID);
             ExecuteEditQuery(query, sqlParameters);
         }
         public void UpdateItem(InventoryItem item)
         {
             //this method updates the existing item 
-            string query = "UPDATE InventoryItem SET inStock = @inStock, [name] = @newName WHERE inventoryItemId = @ItemID;";
-            SqlParameter[] sqlParameters = new SqlParameter[3];
+            string query = "UPDATE InventoryItem SET inStock = @inStock WHERE inventoryItemId = @ItemID;";
+            SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@newName", item.Name.ToString());
-            sqlParameters[2] = new SqlParameter("@ItemID", item.InventoryItemId);
+            sqlParameters[1] = new SqlParameter("@ItemID", item.InventoryItemId);
             ExecuteEditQuery(query, sqlParameters);
         }
         private List<InventoryItem> ReadTables(DataTable dataTable)
