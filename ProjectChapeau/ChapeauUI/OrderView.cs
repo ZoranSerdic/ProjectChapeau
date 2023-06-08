@@ -38,16 +38,12 @@ namespace ChapeauUI
 
         public OrderView(Table table, Employee employee)
         {
+            // Update this when getting tableID and employee
             order.OrderId = 7;
             order.Table = table;
             order.Time = DateTime.Now;
             order.Employee = employee;
             order.OrderedItems = new List<OrderItem>();
-
-            OrderItem test = new OrderItem();
-            test.Amount = 1;
-            order.OrderedItems.Add(test);
-
 
             //// Automatically determine Menu Type based on time
             #region AutomaticTime
@@ -94,7 +90,7 @@ namespace ChapeauUI
             // clear the listview items before filling it
             listViewMenuItems.Items.Clear();
 
-            foreach (MenuItem item in items) 
+            foreach (MenuItem item in items)
             {
                 ListViewItem listViewItem = new ListViewItem(item.Name);
                 listViewItem.SubItems.Add(item.Description);
@@ -130,7 +126,7 @@ namespace ChapeauUI
             currentCourseType = FoodType.Dessert;
             currentMenuLabel = "Desserts";
             HideDrinkMenu = true;
-            
+
             UpdateListView();
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
@@ -184,7 +180,7 @@ namespace ChapeauUI
                 case FoodType.Starter:
                     if (currentMenuType == MenuType.Lunch)
                         DisplayItems(starterLunchItems);
-                    else 
+                    else
                         DisplayItems(starterDinnerItems);
                     break;
                 case FoodType.MainCourse:
@@ -263,8 +259,19 @@ namespace ChapeauUI
                 string description = e.Item.SubItems[1].Text;
                 int menuId = (int)e.Item.Tag;
 
-                MenuItem a = new MenuItem();
-                a.MenuItemId = menuId;
+                // Find matching item in lists
+                // Rework
+                MenuItem menuItem = new MenuItem();
+                foreach (List<MenuItem> menuItems in new List<MenuItem>[] 
+                { 
+                    starterLunchItems, starterDinnerItems, mainCourseLunchItems, mainCourseDinnerItems, dessertLunchItems, dessertDinnerItems, drinkItems 
+                })
+                {
+                    menuItem = FindMenuItemById(menuItems, menuId);
+                    if (menuItem != null)
+                        break;
+                }
+
                 // Create form
                 OrderPopup orderPopup = new OrderPopup(name, description);
                 orderPopup.FormClosed += (s, ev) =>
@@ -272,14 +279,47 @@ namespace ChapeauUI
                     // Reattach the event handler after the form is closed
                     listViewMenuItems.ItemSelectionChanged += listViewMenuItems_ItemSelectionChanged;
 
-                    // Retrieve information from orderPopup and put it in new order
-                    OrderItem orderItem = new OrderItem();
-                    orderItem.Comment = orderPopup.Comment;
-                    orderItem.Amount = orderPopup.Amount;
-                    orderItem.MenuItem = menuId;
+                    // Retrieve information from orderPopup and put it in new orderItem
+                    OrderItem orderItem = new OrderItem
+                    {
+                        OrderItemId = 7, // GenerateOrderId()
+                        MenuItem = menuItem,
+                        Comment = orderPopup.Comment,
+                        Amount = orderPopup.Amount
+                    };
+
+                    // Add to list
+                    order.OrderedItems.Add(orderItem);
                 };
+
                 orderPopup.ShowDialog();
             }
+        }
+
+        private MenuItem FindMenuItemById(List<MenuItem> items, int menuId) 
+        {
+            foreach (MenuItem item in starterLunchItems)
+            {
+                if (item.MenuItemId == menuId)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public void SendOrders()
+        {
+            foreach (OrderItem order in order.OrderedItems)
+            {
+                // seend sql
+            }
+        }
+
+        // TODO: creates Id's
+        private int GenerateOrderId()
+        {
+            return 1;
         }
     }
 }
