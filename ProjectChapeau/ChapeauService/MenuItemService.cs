@@ -43,7 +43,7 @@ namespace ChapeauService
             return menuItemDAO.GetAllDesserts();
         }
         //passes specific courseType and menuType
-        public List<MenuItem> GetCourseMenuType(string courseType, string menuType)
+        public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
         {
             return menuItemDAO.GetCourseMenuType(courseType, menuType);
         }

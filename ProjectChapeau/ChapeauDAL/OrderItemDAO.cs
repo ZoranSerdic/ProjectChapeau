@@ -1,6 +1,8 @@
 ﻿using ChapeauModel;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace ChapeauDAL
 {
@@ -67,19 +69,46 @@ namespace ChapeauDAL
             ExecuteEditQuery(query, sqlParameters);
         }
 
-        public void AddOrder(OrderItem item)
+        public void CreateOrder(Order order)
         {
-            //this method adds the item into the menu Item table 
-            string query = "INSERT INTO dbo.ConsistOf (orderId, menuItemId, comment, amount, status, preparedAt) " +
-                "VALUES (@orderId, @menuItemId, @comment, @amount, @status, @preparedAt);";
-            SqlParameter[] sqlParameters = new SqlParameter[5];
-            sqlParameters[0] = new SqlParameter("@orderId", item.OrderItemId);
-            sqlParameters[1] = new SqlParameter("@menuItemId", item.MenuItem);
-            sqlParameters[2] = new SqlParameter("@comment", item.Comment);
-            sqlParameters[3] = new SqlParameter("@amount", item.Amount);
-            sqlParameters[4] = new SqlParameter("@status", item.Status);
-            sqlParameters[5] = new SqlParameter("@preparedAt", item.PreparedAt);
-            ExecuteEditQuery(query, sqlParameters);
+            try
+            {
+                string query = "INSERT INTO [Order] (tableId, time, employeeId, isPayed)" +
+                    "VALUES (@tableId, @time, @employeeId, @isPayed);";
+                SqlParameter[] sqlParameters = new SqlParameter[3];
+                sqlParameters[0] = new SqlParameter("@tableId", order.Table.TableId);
+                sqlParameters[1] = new SqlParameter("@time", order.Time);
+                sqlParameters[2] = new SqlParameter("@employeeId", order.Employee.EmployeeId);
+                sqlParameters[3] = new SqlParameter("@isPayed", order.IsPaid);
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void AddOrderItem(OrderItem item)
+        {
+            try
+            {
+                //this method adds the item into the menu Item table 
+                string query = "INSERT INTO ConsistOf (orderId, menuItemId, comment, amount, status, preparedAt) " +
+                    "VALUES (@orderId, @menuItemId, @comment, @amount, @status, @preparedAt);";
+                SqlParameter[] sqlParameters = new SqlParameter[5];
+                sqlParameters[0] = new SqlParameter("@orderId", item.OrderItemId);
+                sqlParameters[1] = new SqlParameter("@menuItemId", item.MenuItem);
+                sqlParameters[2] = new SqlParameter("@comment", item.Comment);
+                sqlParameters[3] = new SqlParameter("@amount", item.Amount);
+                sqlParameters[4] = new SqlParameter("@status", item.Status);
+                sqlParameters[5] = new SqlParameter("@preparedAt", item.PreparedAt);
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
     }
 }

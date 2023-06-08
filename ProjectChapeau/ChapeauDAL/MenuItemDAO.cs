@@ -16,8 +16,7 @@ namespace ChapeauDAL
         {
             //gathering all menu items from the table
             string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId;";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public List<MenuItem> GetAllDrinks()
         {
@@ -44,16 +43,17 @@ namespace ChapeauDAL
         {
             //gathering all desserts from the table
             string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Dessert';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query));
         }
 
         #region OrderMethods
-        public List<MenuItem> GetCourseMenuType(string courseType, string menuType)
+        public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
         {
             //gather specific courseType and menuType from the table
-            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] FROM menuitem AS M WHERE courseType = '{courseType}' AND menuType = '{menuType}';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
+            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] FROM menuitem AS M WHERE courseType = @courseType AND menuType = @menuType;";
+            SqlParameter[] sqlParameters = new SqlParameter[2];
+            sqlParameters[0] = new SqlParameter("@courseType", courseType.ToString());
+            sqlParameters[1] = new SqlParameter("@menuType", menuType.ToString());
             return ReadTableOrder(ExecuteSelectQuery(query, sqlParameters));
         }
         private List<MenuItem> ReadTableOrder(DataTable dataTable)
