@@ -36,7 +36,7 @@ namespace ChapeauUI
 
             //adding the columns
             listViewMenuItems.Columns.Add("ID", 50);
-            listViewMenuItems.Columns.Add("Name", 150);
+            listViewMenuItems.Columns.Add("Name", 170);
             listViewMenuItems.Columns.Add("Description", 320);
             listViewMenuItems.Columns.Add("Price", 60);
             listViewMenuItems.Columns.Add("Vat", 60);
@@ -55,11 +55,11 @@ namespace ChapeauUI
                 listViewMenuItems.Items.Add(li);
             }
         }
-        
+
         private void UpdateListview()
         {
             listViewMenuItems.Items.Clear();
-            items.Clear();  
+            items.Clear();
             items.AddRange(menuItemsService.GetAllMenuItems());
             DisplayMenuItems(items);
         }

@@ -138,16 +138,16 @@ namespace ChapeauUI
         }
         private bool FieldsCorrect()
         {
-            if (CheckNamePriceDescription() && CheckCourseType() && CheckVat() && CheckMenuType())
+            if (CheckNameAndPrice() && CheckCourseType() && CheckVat() && CheckMenuType())
             {
                 return true;
             }
             return false;
         }
-        private bool CheckNamePriceDescription()
+        private bool CheckNameAndPrice()
         {
             //returns true if name and price are not empty 
-            if (txtBoxName.Text != "" && numPrice != null && txtBoxDescription.Text != "")
+            if (txtBoxName.Text != "" && numPrice != null)
             {
                 return true;
             }

@@ -76,9 +76,9 @@
             // listViewMenuItems
             // 
             listViewMenuItems.FullRowSelect = true;
-            listViewMenuItems.Location = new Point(12, 195);
+            listViewMenuItems.Location = new Point(2, 195);
             listViewMenuItems.Name = "listViewMenuItems";
-            listViewMenuItems.Size = new Size(794, 497);
+            listViewMenuItems.Size = new Size(839, 525);
             listViewMenuItems.TabIndex = 16;
             listViewMenuItems.UseCompatibleStateImageBehavior = false;
             listViewMenuItems.View = View.Details;
