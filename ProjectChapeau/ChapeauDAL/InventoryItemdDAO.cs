@@ -30,7 +30,7 @@ namespace ChapeauDAL
             string query = "INSERT INTO InventoryItem(inStock, menuItemKey) VALUES (@inStock, @menuItemKey);";
             SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@menuItemKey", item.Name);
+            sqlParameters[1] = new SqlParameter("@menuItemKey", item.InventoryItemId);
             ExecuteEditQuery(query, sqlParameters);
         }
         public void UpdateItem(InventoryItem item)
@@ -55,6 +55,7 @@ namespace ChapeauDAL
                 {
                     InStock = (int)dr["inStock"],
                     InventoryItemId = (int)dr["inventoryItemId"],
+                    MenuItemID = (int)dr["MenuItemKey"],
                     Name = dr["name"].ToString(),
                 };
                 //adds the item to the list of all items 
