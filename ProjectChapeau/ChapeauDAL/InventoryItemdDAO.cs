@@ -14,9 +14,8 @@ namespace ChapeauDAL
         public List<InventoryItem> GetAllInventoryItems()
         {
             //gathering all inventory items from the table
-            string query = "SELECT [inventoryItemId], inStock, [name] FROM InventoryItem;";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            string query = "SELECT I.inStock, I.inventoryItemId, M.[name] FROM InventoryItem AS I JOIN MenuItem AS M ON I.MenuItemKey = menuItemId;";
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public void RemoveItem(InventoryItem item)
         {
@@ -28,10 +27,10 @@ namespace ChapeauDAL
         public void AddItem(InventoryItem item)
         {
             //this method adds the item into the inventory Item table 
-            string query = "INSERT INTO InventoryItem(inStock, [name]) VALUES (@inStock, @name);";
+            string query = "INSERT INTO InventoryItem(inStock, menuItemKey) VALUES (@inStock, @menuItemKey);";
             SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@name", item.Name.ToString());
+            sqlParameters[1] = new SqlParameter("@menuItemKey", item.Name);
             ExecuteEditQuery(query, sqlParameters);
         }
         public void UpdateItem(InventoryItem item)

@@ -27,7 +27,7 @@ namespace ChapeauUI
         public void DisplayItems(List<InventoryItem> items)
         {
             //adding the columns
-            listViewInventory.Columns.Add("Stock Item ID", 150);
+            listViewInventory.Columns.Add("ID", 100);
             listViewInventory.Columns.Add("Name", 180);
             listViewInventory.Columns.Add("Count in stock", 150);
 

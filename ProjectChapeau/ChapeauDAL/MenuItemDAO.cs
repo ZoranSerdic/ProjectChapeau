@@ -18,6 +18,8 @@ namespace ChapeauDAL
             string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId;";
             return ReadTables(ExecuteSelectQuery(query));
         }
+        // if there are no paramenters, get rid of them 
+        // only one method for Getting by Menu Type
         public List<MenuItem> GetAllDrinks()
         {
             //gathering all drinks from the table
