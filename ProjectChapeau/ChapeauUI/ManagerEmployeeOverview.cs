@@ -140,7 +140,7 @@ namespace ChapeauUI
         private void ChangeToEditEmployee(Employee selectedEmployee)
         {
             this.Hide();
-            EditEmployee editEmployee = new EditEmployee(selectedEmployee);
+            NewEmployee editEmployee = new NewEmployee(selectedEmployee);
             editEmployee.ShowDialog();
             this.Close();
         }

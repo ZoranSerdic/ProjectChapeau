@@ -33,8 +33,10 @@ namespace ChapeauUI
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MenuOverviewView menuOverviewView = new MenuOverviewView();
-            menuOverviewView.ShowDialog();
+            //MenuOverviewView menuOverviewView = new MenuOverviewView();
+            //menuOverviewView.ShowDialog();
+            MenuViewAllItems menu = new MenuViewAllItems();
+            menu.ShowDialog();
             this.Close();
         }
 

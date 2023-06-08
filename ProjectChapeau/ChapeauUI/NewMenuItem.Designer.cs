@@ -82,9 +82,9 @@
             lblHeading.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Point);
             lblHeading.Location = new Point(267, 33);
             lblHeading.Name = "lblHeading";
-            lblHeading.Size = new Size(379, 67);
+            lblHeading.Size = new Size(417, 67);
             lblHeading.TabIndex = 13;
-            lblHeading.Text = "New menu item";
+            lblHeading.Text = "Menu Items Form";
             // 
             // lblName
             // 

@@ -19,6 +19,8 @@ namespace ChapeauDAL
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+        // if there are no paramenters, get rid of them 
+        // only one method for Getting by Menu Type
         public List<MenuItem> GetAllDrinks()
         {
             //gathering all drinks from the table
