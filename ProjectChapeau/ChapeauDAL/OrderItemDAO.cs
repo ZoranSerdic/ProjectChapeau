@@ -29,7 +29,7 @@ namespace ChapeauDAL
                 OrderItem orderItem = ReadOrderItem(dataRow);
                 return orderItem;
             }
-            return null; // item with the given id is not found
+            throw new Exception($"Order item with the {orderItemId} id was not found!");
         }
 
         private OrderItem ReadOrderItem(DataRow dataRow)
@@ -37,11 +37,11 @@ namespace ChapeauDAL
             OrderItem orderItem = new OrderItem()
             {
                 OrderItemId = (int)dataRow["consistsOfId"],
-                MenuItem = menuItemDAO.GetMenuItemById((int)dataRow["menuItemId"]), // what if it returns null?
+                MenuItem = menuItemDAO.GetMenuItemById((int)dataRow["menuItemId"]),
                 Amount = (int)dataRow["amount"],
-                Comment = dataRow["comment"] == DBNull.Value ? string.Empty : (string)dataRow["comment"],
+                Comment = dataRow["comment"] == DBNull.Value ? string.Empty : (string)dataRow["comment"], // if its null in the database it will become empty string in orderItem
                 Status = (OrderedItemStatus)Enum.Parse(typeof(OrderedItemStatus), dataRow["status"].ToString(), ignoreCase: true),
-                PreparedAt = dataRow["preparedAt"] == DBNull.Value ? null : (DateTime)dataRow["preparedAt"] // preparedAt can be null
+                PreparedAt = dataRow["preparedAt"] == DBNull.Value ? null : (DateTime)dataRow["preparedAt"] // untill the orderItem is prepared the time preparedAt is null
             };
             return orderItem;
         }
@@ -51,9 +51,9 @@ namespace ChapeauDAL
             string query = @"UPDATE ConsistsOf
                             SET status = @Status";
 
-            List<SqlParameter> parameters = new List<SqlParameter>
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
             {
-                new SqlParameter("@Status", orderItem.Status.ToString()),
+                new SqlParameter("@Status", orderItem.Status.ToString()), 
                 new SqlParameter("@Id", orderItem.OrderItemId)
             };
 
@@ -61,12 +61,11 @@ namespace ChapeauDAL
             if (orderItem.Status == OrderedItemStatus.Ready)
             {
                 query += ", preparedAt = @PreparedAt";
-                parameters.Add(new SqlParameter("@PreparedAt", orderItem.PreparedAt));
+                sqlParameters.Add(new SqlParameter("@PreparedAt", orderItem.PreparedAt));
             };
-            query += " WHERE consistsOfId = @Id";  
-            SqlParameter[] sqlParameters = parameters.ToArray();
+            query += " WHERE consistsOfId = @Id";  // add the query
 
-            ExecuteEditQuery(query, sqlParameters);
+            ExecuteEditQuery(query, sqlParameters.ToArray());
         }
 
         public void CreateOrder(Order order)

@@ -85,8 +85,8 @@ namespace ChapeauDAL
                 Employee employee = ReadEmployee(dataRow);
                 return employee;
             }
-            return null; // Employee not found
-        }
+            throw new Exception($"Employee with the {employeeId} id was not found!");
+    }
 
         private Employee ReadEmployee(DataRow dataRow)
         {

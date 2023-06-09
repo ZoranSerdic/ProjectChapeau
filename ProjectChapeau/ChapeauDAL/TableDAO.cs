@@ -26,8 +26,8 @@ namespace ChapeauDAL
                 Table table = ReadTable(dataRow);
                 return table;
             }
-            return null; // Table not found
-        }
+            throw new Exception($"Table with the {tableId} id was not found!");
+    }
 
         private Table ReadTable(DataRow dataRow)
         {

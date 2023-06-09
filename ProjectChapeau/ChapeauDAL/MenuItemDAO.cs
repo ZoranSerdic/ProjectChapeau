@@ -177,14 +177,14 @@ namespace ChapeauDAL
             sqlParameters[0] = new SqlParameter("@MenuItemId", menuItemId);
 
             DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item, otherwise returns null
+            if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item
             {
                 DataRow dataRow = dataTable.Rows[0];
                 MenuItem menuItem = ReadMenuItem(dataRow);
                 return menuItem;
             }
-            return null; // item not found
-        }
+            throw new Exception($"Menu item with the {menuItemId} id was not found!");
+    }
 
         private MenuItem ReadMenuItem(DataRow dataRow)
         {
@@ -192,11 +192,11 @@ namespace ChapeauDAL
             {
                 MenuItemId = (int)dataRow["menuItemId"],
                 Name = (string)dataRow["name"],
-                Description = dataRow["description"] == DBNull.Value ? string.Empty : (string)dataRow["description"],
+                Description = dataRow["description"] == DBNull.Value ? string.Empty : (string)dataRow["description"], // if there's no description in the database, then makes it am empty string in nenuItem
                 Price = (decimal)dataRow["price"],
                 Vat = (float)(double)(dataRow)["vat"],
                 CourseType = (FoodType)Enum.Parse(typeof(FoodType), dataRow["courseType"].ToString(), ignoreCase: true),
-                MenuType = dataRow["menuType"] == DBNull.Value ? MenuType.AllDay : (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true)
+                MenuType = dataRow["menuType"] == DBNull.Value ? MenuType.AllDay : (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true) // sets by default menuType to All Day
             };
             return menuItem;
         }
