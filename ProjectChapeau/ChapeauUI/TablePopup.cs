@@ -24,8 +24,8 @@ namespace ChapeauUI
             InitializeComponent();
             this.table = table;
             this.tableView = tableView;
-            labelTableNumber.Text = $"Table {table.Number}";
-            labelTableHaveBeenOccupied.Text = $"Table {table.Number} has been occupied";
+            labelTableNumber.Text = $"Table {table.TableId}";
+            labelTableHaveBeenOccupied.Text = $"Table {table.TableId} has been occupied";
         }
 
         private void buttonGenerateBill_Click(object sender, EventArgs e)
@@ -60,10 +60,7 @@ namespace ChapeauUI
 
         private void buttonPlaceOrder_Click(object sender, EventArgs e)
         {
-            OrderView orderView = new OrderView(this.table);
-            this.Hide();
-            orderView.ShowDialog();
-            this.Close();
+            
         }
     }
 }

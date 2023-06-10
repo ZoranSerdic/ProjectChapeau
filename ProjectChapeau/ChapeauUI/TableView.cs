@@ -63,8 +63,8 @@ namespace ChapeauUI
             tableIndex++;
 
             Button button = new Button();
-            button.Name = "buttonTable" + table.Number;
-            button.Text = $" {table.Number} ";
+            button.Name = "buttonTable" + table.TableId;
+            button.Text = $" {table.TableId} ";
             button.Size = new Size(buttonSize, buttonSize);
 
             if (table.Status == TableStatus.Free)
@@ -105,7 +105,7 @@ namespace ChapeauUI
         }
         public void UpdateButtonAppearance(Table table)
         {
-            Button button = Controls.Find("buttonTable" + table.Number, true).FirstOrDefault() as Button;
+            Button button = Controls.Find("buttonTable" + table.TableId, true).FirstOrDefault() as Button;
             if (button != null)
             {
                 if (table.Status == TableStatus.Occupied)

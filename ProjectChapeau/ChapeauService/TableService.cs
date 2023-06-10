@@ -19,10 +19,6 @@ namespace ChapeauService
         {
             return tableDAO.GetTableById(tableId);
         }
-        public Table GetTableByNumber(int number)
-        {
-            return tableDAO.GetTableByNumber(number);
-        }
         public List<Table> GetAllTables()
         {
             return tableDAO.GetAllTables();
