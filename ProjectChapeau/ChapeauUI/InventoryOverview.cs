@@ -58,8 +58,15 @@ namespace ChapeauUI
                 DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
                 if (dialogResult == DialogResult.OK)
                 {
-                    service.RemoveInventoryItem(selectedItem);
-                    UpdateListView();
+                    try
+                    {
+                        service.RemoveInventoryItem(selectedItem);
+                        UpdateListView();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message); 
+                    }
                 }
             }
             else
@@ -90,22 +97,29 @@ namespace ChapeauUI
             if (BoxesNotEmpty())
             {
                 selectedItem = new InventoryItem();
-                if (update)
+                try
                 {
-                    ListViewItem seletedRow = listViewInventory.SelectedItems[0];
-                    
-                    //adds the menuID from the row to the menu Item 
-                    selectedItem.InventoryItemId = int.Parse(seletedRow.SubItems[0].Text);
-                    selectedItem.Name = txtBoxMenuId.Text;
-                    selectedItem.InStock = int.Parse(txtBoxCount.Text);
-                    service.UpdateInventoryItem(selectedItem);
-                    update = false;
+                    if (update)
+                    {
+                        ListViewItem seletedRow = listViewInventory.SelectedItems[0];
+
+                        //adds the menuID from the row to the menu Item 
+                        selectedItem.InventoryItemId = int.Parse(seletedRow.SubItems[0].Text);
+                        selectedItem.Name = txtBoxMenuId.Text;
+                        selectedItem.InStock = int.Parse(txtBoxCount.Text);
+                        service.UpdateInventoryItem(selectedItem);
+                        update = false;
+                    }
+                    else
+                    {
+                        selectedItem.MenuItemID = int.Parse(txtBoxMenuId.Text);
+                        selectedItem.InStock = int.Parse(txtBoxCount.Text);
+                        service.AddInventoryItem(selectedItem);
+                    }
                 }
-                else
+                catch (Exception exception)
                 {
-                    selectedItem.MenuItemID = int.Parse(txtBoxMenuId.Text);
-                    selectedItem.InStock = int.Parse(txtBoxCount.Text);
-                    service.AddInventoryItem(selectedItem);
+                    MessageBox.Show(exception.Message);
                 }
                 panelAdd.Hide();
                 ClearTextBoxes();
@@ -180,7 +194,5 @@ namespace ChapeauUI
             managerView.ShowDialog();
             this.Close();
         }
-
-        
     }
 }

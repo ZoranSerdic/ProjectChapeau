@@ -36,11 +36,11 @@ namespace ChapeauUI
 
             //adding the columns
             listViewMenuItems.Columns.Add("ID", 50);
-            listViewMenuItems.Columns.Add("Name", 170);
-            listViewMenuItems.Columns.Add("Description", 320);
+            listViewMenuItems.Columns.Add("Name", 190);
+            listViewMenuItems.Columns.Add("Description", 360);
             listViewMenuItems.Columns.Add("Price", 60);
             listViewMenuItems.Columns.Add("Vat", 60);
-            listViewMenuItems.Columns.Add("Type", 80);
+            listViewMenuItems.Columns.Add("Type", 100);
 
             //adding the rows to the listview
             foreach (MenuItem item in items)

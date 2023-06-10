@@ -26,12 +26,19 @@ namespace ChapeauDAL
         }
         public void AddItem(InventoryItem item)
         {
-            //this method adds the item into the inventory Item table 
-            string query = "INSERT INTO InventoryItem(inStock, menuItemKey) VALUES (@inStock, @menuItemKey);";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@menuItemKey", item.MenuItemID);
-            ExecuteEditQuery(query, sqlParameters);
+            try
+            {
+                //this method adds the item into the inventory Item table 
+                string query = "INSERT INTO InventoryItem(inStock, menuItemKey) VALUES (@inStock, @menuItemKey);";
+                SqlParameter[] sqlParameters = new SqlParameter[2];
+                sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
+                sqlParameters[1] = new SqlParameter("@menuItemKey", item.MenuItemID);
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Invalid Stock Item ID", ex);
+            }
         }
         public void UpdateItem(InventoryItem item)
         {
