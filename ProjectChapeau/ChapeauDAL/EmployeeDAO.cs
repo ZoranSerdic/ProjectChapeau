@@ -10,8 +10,7 @@ namespace ChapeauDAL
         {
             //gathering all employees from the table
             string query = "SELECT employeeId, [hash], firstname, lastname, occupation FROM Employee;";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query));
         }
 
         private List<Employee> ReadTables(DataTable dataTable)

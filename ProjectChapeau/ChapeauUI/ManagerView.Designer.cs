@@ -40,6 +40,7 @@
             panel4 = new Panel();
             panel3 = new Panel();
             panel5 = new Panel();
+            btnBills = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel3.SuspendLayout();
             SuspendLayout();
@@ -48,7 +49,7 @@
             // 
             btnStock.BackColor = SystemColors.ActiveCaption;
             btnStock.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            btnStock.Location = new Point(189, 254);
+            btnStock.Location = new Point(190, 194);
             btnStock.Name = "btnStock";
             btnStock.Size = new Size(448, 133);
             btnStock.TabIndex = 0;
@@ -60,7 +61,7 @@
             // 
             btnMenu.BackColor = SystemColors.ActiveCaption;
             btnMenu.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            btnMenu.Location = new Point(189, 410);
+            btnMenu.Location = new Point(190, 350);
             btnMenu.Name = "btnMenu";
             btnMenu.Size = new Size(448, 133);
             btnMenu.TabIndex = 1;
@@ -72,7 +73,7 @@
             // 
             btnEmployees.BackColor = SystemColors.ActiveCaption;
             btnEmployees.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            btnEmployees.Location = new Point(189, 568);
+            btnEmployees.Location = new Point(190, 508);
             btnEmployees.Name = "btnEmployees";
             btnEmployees.Size = new Size(448, 133);
             btnEmployees.TabIndex = 2;
@@ -84,7 +85,7 @@
             // 
             btnTableOverview.BackColor = SystemColors.ActiveCaption;
             btnTableOverview.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            btnTableOverview.Location = new Point(189, 731);
+            btnTableOverview.Location = new Point(190, 831);
             btnTableOverview.Name = "btnTableOverview";
             btnTableOverview.Size = new Size(448, 133);
             btnTableOverview.TabIndex = 3;
@@ -155,12 +156,25 @@
             panel5.Size = new Size(839, 10);
             panel5.TabIndex = 50;
             // 
+            // btnBills
+            // 
+            btnBills.BackColor = SystemColors.ActiveCaption;
+            btnBills.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            btnBills.Location = new Point(190, 667);
+            btnBills.Name = "btnBills";
+            btnBills.Size = new Size(448, 133);
+            btnBills.TabIndex = 57;
+            btnBills.Text = "Finances";
+            btnBills.UseVisualStyleBackColor = false;
+            btnBills.Click += btnBills_Click;
+            // 
             // ManagerView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(836, 1055);
+            Controls.Add(btnBills);
             Controls.Add(panel1);
             Controls.Add(panel4);
             Controls.Add(panel3);
@@ -193,5 +207,6 @@
         private Panel panel4;
         private Panel panel3;
         private Panel panel5;
+        private Button btnBills;
     }
 }
