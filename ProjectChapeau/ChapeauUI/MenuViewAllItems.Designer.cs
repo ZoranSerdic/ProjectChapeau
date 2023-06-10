@@ -38,6 +38,8 @@
             panel4 = new Panel();
             panel3 = new Panel();
             panel5 = new Panel();
+            btnAdd = new Button();
+            btnRemove = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel3.SuspendLayout();
             SuspendLayout();
@@ -63,9 +65,9 @@
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(25, 736);
+            btnReturn.Location = new Point(37, 918);
             btnReturn.Name = "btnReturn";
-            btnReturn.Size = new Size(205, 118);
+            btnReturn.Size = new Size(153, 78);
             btnReturn.TabIndex = 15;
             btnReturn.Text = "Return";
             btnReturn.UseVisualStyleBackColor = true;
@@ -74,18 +76,18 @@
             // listViewMenuItems
             // 
             listViewMenuItems.FullRowSelect = true;
-            listViewMenuItems.Location = new Point(12, 195);
+            listViewMenuItems.Location = new Point(2, 195);
             listViewMenuItems.Name = "listViewMenuItems";
-            listViewMenuItems.Size = new Size(794, 497);
+            listViewMenuItems.Size = new Size(839, 525);
             listViewMenuItems.TabIndex = 16;
             listViewMenuItems.UseCompatibleStateImageBehavior = false;
             listViewMenuItems.View = View.Details;
             // 
             // btnEditMenuItem
             // 
-            btnEditMenuItem.Location = new Point(545, 747);
+            btnEditMenuItem.Location = new Point(346, 747);
             btnEditMenuItem.Name = "btnEditMenuItem";
-            btnEditMenuItem.Size = new Size(240, 97);
+            btnEditMenuItem.Size = new Size(180, 97);
             btnEditMenuItem.TabIndex = 17;
             btnEditMenuItem.Text = "Edit selected menu item";
             btnEditMenuItem.UseVisualStyleBackColor = true;
@@ -124,11 +126,33 @@
             panel5.Size = new Size(839, 10);
             panel5.TabIndex = 50;
             // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(44, 755);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(146, 89);
+            btnAdd.TabIndex = 57;
+            btnAdd.Text = "Add new item ";
+            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Location = new Point(633, 751);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(174, 97);
+            btnRemove.TabIndex = 58;
+            btnRemove.Text = "Remove Item";
+            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
+            // 
             // MenuViewAllItems
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(836, 1055);
+            Controls.Add(btnRemove);
+            Controls.Add(btnAdd);
             Controls.Add(panel1);
             Controls.Add(panel4);
             Controls.Add(panel3);
@@ -156,5 +180,7 @@
         private Panel panel4;
         private Panel panel3;
         private Panel panel5;
+        private Button btnAdd;
+        private Button btnRemove;
     }
 }

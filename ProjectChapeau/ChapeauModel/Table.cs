@@ -10,7 +10,5 @@ namespace ChapeauModel
     {
         public int TableId { get; set; }
         public TableStatus Status { get; set; }
-
-        public int Number { get; set; } 
     }
 }

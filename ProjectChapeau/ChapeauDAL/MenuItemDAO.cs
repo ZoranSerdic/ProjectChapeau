@@ -16,44 +16,16 @@ namespace ChapeauDAL
         {
             //gathering all menu items from the table
             string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId;";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query));
         }
-        public List<MenuItem> GetAllDrinks()
-        {
-            //gathering all drinks from the table
-            string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Drink';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-        public List<MenuItem> GetAllStarters()
-        {
-            //gathering all starters from the table
-            string query = "SELECT M.menuItemid, M.[Description],M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Starter';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-        public List<MenuItem> GetAllMainDishes()
-        {
-            //gathering all main courses from the table
-            string query = "SELECT M.menuItemid, M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'MainCourse';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-        public List<MenuItem> GetAllDesserts()
-        {
-            //gathering all desserts from the table
-            string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId WHERE courseType = 'Dessert';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-
         #region OrderMethods
-        public List<MenuItem> GetCourseMenuType(string courseType, string menuType)
+        public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
         {
             //gather specific courseType and menuType from the table
-            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] FROM menuitem AS M WHERE courseType = '{courseType}' AND menuType = '{menuType}';";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
+            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] FROM menuitem AS M WHERE courseType = @courseType AND menuType = @menuType;";
+            SqlParameter[] sqlParameters = new SqlParameter[2];
+            sqlParameters[0] = new SqlParameter("@courseType", courseType.ToString());
+            sqlParameters[1] = new SqlParameter("@menuType", menuType.ToString());
             return ReadTableOrder(ExecuteSelectQuery(query, sqlParameters));
         }
         private List<MenuItem> ReadTableOrder(DataTable dataTable)
@@ -123,7 +95,7 @@ namespace ChapeauDAL
                 }
                 catch (Exception exception)
                 {
-                    throw;
+                    throw new Exception(exception.Message); 
                 }
             }
             //finally all items are returned in a list 
@@ -174,14 +146,14 @@ namespace ChapeauDAL
             sqlParameters[0] = new SqlParameter("@MenuItemId", menuItemId);
 
             DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item, otherwise returns null
+            if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item
             {
                 DataRow dataRow = dataTable.Rows[0];
                 MenuItem menuItem = ReadMenuItem(dataRow);
                 return menuItem;
             }
-            return null; // item not found
-        }
+            throw new Exception($"Menu item with the {menuItemId} id was not found!");
+    }
 
         private MenuItem ReadMenuItem(DataRow dataRow)
         {
@@ -189,11 +161,11 @@ namespace ChapeauDAL
             {
                 MenuItemId = (int)dataRow["menuItemId"],
                 Name = (string)dataRow["name"],
-                Description = dataRow["description"] == DBNull.Value ? string.Empty : (string)dataRow["description"],
+                Description = dataRow["description"] == DBNull.Value ? string.Empty : (string)dataRow["description"], // if there's no description in the database, then makes it am empty string in nenuItem
                 Price = (decimal)dataRow["price"],
                 Vat = (float)(double)(dataRow)["vat"],
                 CourseType = (FoodType)Enum.Parse(typeof(FoodType), dataRow["courseType"].ToString(), ignoreCase: true),
-                MenuType = dataRow["menuType"] == DBNull.Value ? MenuType.AllDay : (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true)
+                MenuType = dataRow["menuType"] == DBNull.Value ? MenuType.AllDay : (MenuType)Enum.Parse(typeof(MenuType), dataRow["menuType"].ToString(), ignoreCase: true) // sets by default menuType to All Day
             };
             return menuItem;
         }

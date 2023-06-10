@@ -11,6 +11,7 @@ namespace ChapeauModel
         public int InventoryItemId { get; set; }
         public string Name { get; set; }
         public int InStock { get; set; }
+        public int MenuItemID { get; set; } 
 
         public InventoryItem()
         {

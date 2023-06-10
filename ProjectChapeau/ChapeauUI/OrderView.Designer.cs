@@ -49,11 +49,12 @@
             listViewMenuItems = new ListView();
             columnName = new ColumnHeader();
             columnDescription = new ColumnHeader();
-            buttonGoBackDrinksMenu = new Button();
             panelMenuBackground.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxChapeauLogo).BeginInit();
             panelWhiteButtonBackground.SuspendLayout();
             SuspendLayout();
+
+            
             // 
             // labelTableNumber
             // 
@@ -284,48 +285,36 @@
             columnDescription.Text = "Description";
             columnDescription.Width = 300;
             // 
-            // buttonGoBackDrinksMenu
-            // 
-            buttonGoBackDrinksMenu.AutoSize = true;
-            buttonGoBackDrinksMenu.BackColor = Color.FromArgb(57, 67, 183);
-            buttonGoBackDrinksMenu.Font = new Font("Segoe UI", 19.8F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonGoBackDrinksMenu.ForeColor = SystemColors.ControlLightLight;
-            buttonGoBackDrinksMenu.Location = new Point(57, 827);
-            buttonGoBackDrinksMenu.Name = "buttonGoBackDrinksMenu";
-            buttonGoBackDrinksMenu.Size = new Size(407, 56);
-            buttonGoBackDrinksMenu.TabIndex = 25;
-            buttonGoBackDrinksMenu.Text = "Go Back To Drinks Menu";
-            buttonGoBackDrinksMenu.UseVisualStyleBackColor = false;
-            buttonGoBackDrinksMenu.Visible = false;
-            buttonGoBackDrinksMenu.Click += buttonGoBackDrinksMenu_Click;
-            // 
+
+            
+
+            //
             // OrderView
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(229, 234, 250);
-            ClientSize = new Size(532, 953);
-            Controls.Add(buttonGoBackDrinksMenu);
-            Controls.Add(buttonFinaliseOrder);
-            Controls.Add(buttonCloseOrder);
-            Controls.Add(buttonSwitchMenu);
-            Controls.Add(pictureBoxChapeauLogo);
-            Controls.Add(panelGreenSeparatorThree);
-            Controls.Add(panelGreenSeparatorTwo);
-            Controls.Add(panelGreenSeparatorOne);
-            Controls.Add(listViewMenuItems);
-            Controls.Add(panelWhiteButtonBackground);
-            Controls.Add(panelMenuBackground);
-            Controls.Add(labelTableNumber);
-            Name = "OrderView";
-            Text = "OrderView";
-            Load += OrderView_Load;
-            panelMenuBackground.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBoxChapeauLogo).EndInit();
-            panelWhiteButtonBackground.ResumeLayout(false);
-            panelWhiteButtonBackground.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(234)))), ((int)(((byte)(250)))));
+            this.ClientSize = new System.Drawing.Size(532, 953);
+            this.Controls.Add(this.buttonFinaliseOrder);
+            this.Controls.Add(this.buttonCloseOrder);
+            this.Controls.Add(this.buttonSwitchMenu);
+            this.Controls.Add(this.pictureBoxChapeauLogo);
+            this.Controls.Add(this.panelGreenSeparatorThree);
+            this.Controls.Add(this.panelGreenSeparatorTwo);
+            this.Controls.Add(this.panelGreenSeparatorOne);
+            this.Controls.Add(this.listViewMenuItems);
+            this.Controls.Add(this.panelWhiteButtonBackground);
+            this.Controls.Add(this.panelMenuBackground);
+            this.Controls.Add(this.labelTableNumber);
+            this.Name = "OrderView";
+            this.Text = "OrderView";
+            this.panelMenuBackground.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChapeauLogo)).EndInit();
+            this.panelWhiteButtonBackground.ResumeLayout(false);
+            this.panelWhiteButtonBackground.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -348,7 +337,6 @@
         private Button buttonFinaliseOrder;
         private Panel panelWhiteButtonBackground;
         private ListView listViewMenuItems;
-        private Button buttonGoBackDrinksMenu;
         private ColumnHeader columnName;
         private ColumnHeader columnDescription;
     }

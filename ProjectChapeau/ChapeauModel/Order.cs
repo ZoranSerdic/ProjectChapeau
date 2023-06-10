@@ -19,14 +19,5 @@ namespace ChapeauModel
         {
             
         }
-        public Order(int orderId, Table table, DateTime time, Employee employee)
-        {
-            OrderId = orderId;
-            Table = table; Time = time;
-            Employee = employee;
-
-            IsPaid = false;
-            OrderedItems = new List<OrderItem>();
-        }
     }
 }

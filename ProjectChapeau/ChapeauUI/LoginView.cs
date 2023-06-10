@@ -29,11 +29,20 @@ namespace ChapeauUI
 
         private void btnOrderView_Click(object sender, EventArgs e)
         {
-            // TODO: Bianca's TableOverview needs to provide orderView with Table TableID
-            Table tableId = new Table();
-            tableId.TableId = 12;
+            // TODO: Bianca's TableOverview needs to provide orderView with TableID & Employee
+            Table table = new Table();
+            table.TableId = 12;
+            table.Status = TableStatus.Occupied;
 
-            OrderView orderView = new OrderView(tableId);
+            Employee employee = new Employee();
+            employee.EmployeeId = 10;
+            employee.Pincode = "pincode";
+            employee.FirstName = "Bob";
+            employee.LastName = "AlsoBob";
+            employee.Occupation = Role.Waiter;
+
+            // ^ Remove after TableOverview form works / is created
+            OrderView orderView = new OrderView(table, employee);
             this.Hide();
             orderView.ShowDialog();
             this.Close();

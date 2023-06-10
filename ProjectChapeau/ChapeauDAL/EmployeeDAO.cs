@@ -10,8 +10,7 @@ namespace ChapeauDAL
         {
             //gathering all employees from the table
             string query = "SELECT employeeId, [hash], firstname, lastname, occupation FROM Employee;";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            return ReadTables(ExecuteSelectQuery(query));
         }
 
         private List<Employee> ReadTables(DataTable dataTable)
@@ -85,8 +84,8 @@ namespace ChapeauDAL
                 Employee employee = ReadEmployee(dataRow);
                 return employee;
             }
-            return null; // Employee not found
-        }
+            throw new Exception($"Employee with the {employeeId} id was not found!");
+    }
 
         private Employee ReadEmployee(DataRow dataRow)
         {

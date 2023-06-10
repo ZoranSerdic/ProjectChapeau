@@ -22,28 +22,9 @@ namespace ChapeauService
         {
             return menuItemDAO.GetAllMenuItems();
         }
-        //passes on all the drinks 
-        public List<MenuItem> GetAllDrinks()
-        {
-            return menuItemDAO.GetAllDrinks();
-        }
-        //passes on all the starters 
-        public List<MenuItem> GetAllStarters()
-        {
-            return menuItemDAO.GetAllStarters();
-        }
-        //passes on all the main courses 
-        public List<MenuItem> GetAllMains()
-        {
-            return menuItemDAO.GetAllMainDishes();
-        }
-        //passes on all the desserts 
-        public List<MenuItem> GetAllDesserts()
-        {
-            return menuItemDAO.GetAllDesserts();
-        }
+        
         //passes specific courseType and menuType
-        public List<MenuItem> GetCourseMenuType(string courseType, string menuType)
+        public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
         {
             return menuItemDAO.GetCourseMenuType(courseType, menuType);
         }

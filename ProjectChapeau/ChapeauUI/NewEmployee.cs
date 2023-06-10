@@ -18,37 +18,67 @@ namespace ChapeauUI
     public partial class NewEmployee : Form
     {
         private Employee newEmployee;
+        private Employee employeeToUpdate; 
         private EmployeeService service;
+        private bool update;
         public NewEmployee()
         {
             InitializeComponent();
             service = new EmployeeService();
+            update = false;
         }
-
-        private void btnCancel_Click(object sender, EventArgs e)
+        public NewEmployee(Employee employee)
         {
-            ReturnToEmployeeOverview();
+            InitializeComponent();
+            service = new EmployeeService();
+            employeeToUpdate = employee;
+            update = true; 
+            PrefillForm();  
         }
-        private void ReturnToEmployeeOverview()
+        private void PrefillForm()
         {
-            this.Hide();
-            ManagerEmployeeOverview overview = new ManagerEmployeeOverview();
-            overview.ShowDialog();
-            this.Close();
+            //fills the form with the information provided by the employee 
+            txtBoxFirstName.Text = employeeToUpdate.FirstName;
+            txtBoxLastName.Text = employeeToUpdate.LastName;
+            if (employeeToUpdate.Occupation == Role.Barman)
+            {
+                radBtnBartender.Checked = true;
+            }
+            else if (employeeToUpdate.Occupation == Role.Chef)
+            {
+                radBtnChef.Checked = true;
+            }
+            else
+                radBtnWaiter.Checked = true;
         }
+        
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-            if (CheckForm())
+            try
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
-                if (dialogResult == DialogResult.OK)
+                if (CheckForm())
                 {
-                    CreateNewEmployee();
-                    service.AddEmployee(newEmployee);
-                    dialogResult = MessageBox.Show("Action performed successfully", "success");
-                    ReturnToEmployeeOverview();
+                    DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        CreateNewEmployee();
+                        if (!update)
+                        {
+                            service.AddEmployee(newEmployee);
+                        }
+                        else
+                        {
+                            service.UpdateEmployee(newEmployee);
+                        }
+                        dialogResult = MessageBox.Show("Action performed successfully", "success");
+                        ReturnToEmployeeOverview();
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
             }
         }
         string Hash(string password)
@@ -63,6 +93,10 @@ namespace ChapeauUI
         private void CreateNewEmployee()
         {
             newEmployee = new Employee();
+            if (update)
+            {
+                newEmployee.EmployeeId = employeeToUpdate.EmployeeId;
+            }
             newEmployee.FirstName = txtBoxFirstName.Text;
             newEmployee.LastName = txtBoxLastName.Text;
             newEmployee.Pincode = Hash(txtBoxPin2.Text);
@@ -136,6 +170,8 @@ namespace ChapeauUI
                 return false;
             }
         }
+
+        //making sure that the pins are only numbers 
         private void txtBoxPin1_TextChanged(object sender, EventArgs e)
         {
             //try to parse the input, if it is unsuccessful, the inside textbox is cleared
@@ -151,6 +187,20 @@ namespace ChapeauUI
             {
                 txtBoxPin2.Text = string.Empty;
             }
+        }
+
+
+        //methods for returning 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            ReturnToEmployeeOverview();
+        }
+        private void ReturnToEmployeeOverview()
+        {
+            this.Hide();
+            ManagerEmployeeOverview overview = new ManagerEmployeeOverview();
+            overview.ShowDialog();
+            this.Close();
         }
     }
 }

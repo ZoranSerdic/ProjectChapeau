@@ -1,4 +1,5 @@
-﻿using ChapeauModel;
+﻿using ChapeauDAL;
+using ChapeauModel;
 using ChapeauService;
 using System;
 using System.Collections.Generic;
@@ -15,65 +16,49 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        // TODO: Bianca's tableview gives Table tableID
+        // GET RID OF GLOBAL VARIABLES, CREATE A METHOD OR RETURN ?
+
+        // TODO: Bianca's tableview gives Table tableID & Employee for Order order
         Order order = new Order();
 
         private MenuItemService menuItemService = new MenuItemService();
+        private OrderItemService orderItemService = new OrderItemService();
 
-        private List<MenuItem> starterLunchItems = new List<MenuItem>();
-        private List<MenuItem> starterDinnerItems = new List<MenuItem>();
-        private List<MenuItem> mainCourseLunchItems = new List<MenuItem>();
-        private List<MenuItem> mainCourseDinnerItems = new List<MenuItem>();
-        private List<MenuItem> dessertLunchItems = new List<MenuItem>();
-        private List<MenuItem> dessertDinnerItems = new List<MenuItem>();
-        private List<MenuItem> drinkItems = new List<MenuItem>();
+        private List<MenuItem> currentMenuItems = new List<MenuItem>();
 
         private FoodType currentCourseType = FoodType.Starter;
         private MenuType currentMenuType = MenuType.Lunch;
         private MenuType otherMenuType = MenuType.Dinner;
 
-        private bool HideDrinkMenu;
-
         private string currentMenuLabel = "Starters";
 
-        public OrderView(Table tableId)
+        public OrderView(Table table, Employee employee)
         {
-            order.OrderId = 1;
-            order.Table = tableId;
-            // Fill lists with data
+            // Update this when getting tableID and employee
+            order.OrderId = 7;
+            order.Table = table;
+            order.Time = DateTime.Now;
+            order.Employee = employee;
+            order.OrderedItems = new List<OrderItem>();
+
+            FillMenuItemList(FoodType.Starter, MenuType.Lunch);
+            InitializeComponent();
+            labelTableNumber.Text = $"Table {order.Table.TableId.ToString()}";
+            DisplayItems(currentMenuItems);
+        }
+
+        private void FillMenuItemList(FoodType foodType, MenuType menuType)
+        {
+            currentMenuItems.Clear();
+
             try
             {
-                starterLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Lunch.ToString()));
-                starterDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Starter.ToString(), MenuType.Dinner.ToString()));
-                mainCourseLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Lunch.ToString()));
-                mainCourseDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.MainCourse.ToString(), MenuType.Dinner.ToString()));
-                dessertLunchItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Lunch.ToString()));
-                dessertDinnerItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Dessert.ToString(), MenuType.Dinner.ToString()));
-                drinkItems.AddRange(menuItemService.GetCourseMenuType(FoodType.Drink.ToString(), MenuType.AllDay.ToString()));
+                currentMenuItems.AddRange(menuItemService.GetCourseMenuType(foodType, menuType));
             }
             catch (Exception e)
             {
                 MessageBox.Show("An error occurred.\n" + e.Message);
             }
-
-            //// Automatically determine Menu Type based on time
-            //#region AutomaticTime
-            //DateTime dateTime = DateTime.Now;
-
-            //TimeSpan dinnerMenuStart = new TimeSpan(DinnerMenuStart, 0, 0);
-            //TimeSpan dinnerMenuEnd = new TimeSpan(DinnerMenuEnd, 0, 0);
-            //TimeSpan timeOfDay = dateTime.TimeOfDay;
-
-            //// Check
-            //if (timeOfDay >= 12 || timeOfDay <= 4)
-            //{
-            //    SwitchMenuType();
-            //}
-            //#endregion
-
-            InitializeComponent();
-            labelTableNumber.Text = $"Table {order.Table.TableId.ToString()}";
-            DisplayItems(starterLunchItems);
         }
 
         // Displays items in listViewMenuItems
@@ -86,6 +71,7 @@ namespace ChapeauUI
             {
                 ListViewItem listViewItem = new ListViewItem(item.Name);
                 listViewItem.SubItems.Add(item.Description);
+                listViewItem.Tag = item.MenuItemId;
 
                 listViewMenuItems.Items.Add(listViewItem);
             }
@@ -94,44 +80,49 @@ namespace ChapeauUI
         #region Buttons
         private void buttonCategoryStarters_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Show();
             currentCourseType = FoodType.Starter;
             currentMenuLabel = "Starters";
-            HideDrinkMenu = true;
 
-            UpdateListView();
+            FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryMainDish_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Show();
             currentCourseType = FoodType.MainCourse;
             currentMenuLabel = "Main Dish";
-            HideDrinkMenu = true;
 
-            UpdateListView();
+            FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDesserts_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Show();
             currentCourseType = FoodType.Dessert;
             currentMenuLabel = "Desserts";
-            HideDrinkMenu = true;
 
-            UpdateListView();
+            FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
         private void buttonCategoryDrinks_Click(object sender, EventArgs e)
         {
+            buttonSwitchMenu.Hide();
             currentCourseType = FoodType.Drink;
             currentMenuLabel = "Drinks";
-            HideDrinkMenu = false;
 
-            buttonSwitchMenu.Hide();
-            buttonGoBackDrinksMenu.Show();
+            FillMenuItemList(currentCourseType, MenuType.AllDay);
+            DisplayItems(currentMenuItems);
 
-            UpdateListView();
             SwitchMenuLabel(currentMenuLabel, "Category");
         }
 
@@ -164,35 +155,6 @@ namespace ChapeauUI
         }
         #endregion
 
-        private void UpdateListView()
-        {
-            switch (currentCourseType)
-            {
-                case FoodType.Starter:
-                    if (currentMenuType == MenuType.Lunch)
-                        DisplayItems(starterLunchItems);
-                    else
-                        DisplayItems(starterDinnerItems);
-                    break;
-                case FoodType.MainCourse:
-                    if (currentMenuType == MenuType.Lunch)
-                        DisplayItems(mainCourseLunchItems);
-                    else
-                        DisplayItems(mainCourseDinnerItems);
-                    break;
-                case FoodType.Dessert:
-                    if (currentMenuType == MenuType.Lunch)
-                        DisplayItems(dessertLunchItems);
-                    else
-                        DisplayItems(dessertDinnerItems);
-                    break;
-                case FoodType.Drink:
-                    DisplayItems(drinkItems);
-                    break;
-                default:
-                    break;
-            }
-        }
 
         private void SwitchMenuType()
         {
@@ -208,29 +170,25 @@ namespace ChapeauUI
             }
 
             buttonSwitchMenu.Text = $"Switch To {otherMenuType.ToString()} Menu";
+
+            FillMenuItemList(currentCourseType, currentMenuType);
+            DisplayItems(currentMenuItems);
+
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
-            UpdateListView();
         }
 
         private void SwitchMenuLabel(string menuType, string menuTime)
         {
-            if (HideDrinkMenu == true)
+            switch (currentMenuType)
             {
-                switch (currentMenuType)
-                {
-                    case MenuType.Lunch:
-                        break;
-                    case MenuType.Dinner:
-                        break;
-                    case MenuType.AllDay:
-                        break;
-                    default:
-                        break;
-                }
-
-                buttonSwitchMenu.Show();
-                buttonGoBackDrinksMenu.Hide();
-                HideDrinkMenu = false;
+                case MenuType.Lunch:
+                    break;
+                case MenuType.Dinner:
+                    break;
+                case MenuType.AllDay:
+                    break;
+                default:
+                    break;
             }
 
             labelMenuType.Text = menuType;
@@ -248,6 +206,10 @@ namespace ChapeauUI
                 // Retrieve information from item
                 string name = e.Item.SubItems[0].Text;
                 string description = e.Item.SubItems[1].Text;
+                int menuId = (int)e.Item.Tag;
+
+                MenuItem menuItem = new MenuItem();
+                menuItem.MenuItemId = menuId;
 
                 // Create form
                 OrderPopup orderPopup = new OrderPopup(name, description);
@@ -255,13 +217,50 @@ namespace ChapeauUI
                 {
                     // Reattach the event handler after the form is closed
                     listViewMenuItems.ItemSelectionChanged += listViewMenuItems_ItemSelectionChanged;
+
+                    // Retrieve information from orderPopup and put it in new orderItem
+                    OrderItem orderItem = new OrderItem
+                    {
+                        OrderItemId = 7, // REFERENCE ID
+                        MenuItem = menuItem,
+                        Comment = orderPopup.Comment,
+                        Amount = orderPopup.Amount
+                    };
+
+                    // Add to list
+                    order.OrderedItems.Add(orderItem);
                 };
+
                 orderPopup.ShowDialog();
             }
         }
 
-        private void OrderView_Load(object sender, EventArgs e)
+
+        private MenuItem FindMenuItemById(List<MenuItem> items, int menuId) 
         {
+            foreach (MenuItem item in currentMenuItems)
+            {
+                if (item.MenuItemId == menuId)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public void CreateOrder(Order order)
+        {
+            // First need to create the order, which creates an orderId
+
+            orderItemService.CreateOrder(order);
+        }
+
+        public void AddOrderItem(Order order)
+        {
+            foreach (OrderItem orderItem in order.OrderedItems)
+            {
+                orderItemService.AddOrderItem(orderItem);
+            }
 
         }
     }
