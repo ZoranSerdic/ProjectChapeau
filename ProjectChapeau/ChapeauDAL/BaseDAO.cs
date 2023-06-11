@@ -103,5 +103,37 @@ namespace ChapeauDAL
             }
             return dataTable;
         }
+
+        /* For Scalar Insert Queries*/
+        protected int ExecuteScalarEditQuery(string query, SqlParameter[] sqlParameters)
+        {
+            SqlCommand command = new SqlCommand();
+
+            int result = 0;
+
+            try
+            {
+                command.Connection = OpenConnection();
+                command.CommandText = query;
+
+                // Add each SqlParameter to the SqlCommand
+                foreach (SqlParameter parameter in sqlParameters)
+                {
+                    command.Parameters.Add(new SqlParameter(parameter.ParameterName, parameter.Value));
+                }
+
+                result = Convert.ToInt32(command.ExecuteScalar());
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
+            }
+
+            return result;
+        }
     }
 }

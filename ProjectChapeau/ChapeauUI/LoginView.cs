@@ -31,11 +31,11 @@ namespace ChapeauUI
         {
             // TODO: Bianca's TableOverview needs to provide orderView with TableID & Employee
             Table table = new Table();
-            table.TableId = 12;
+            table.TableId = 9;
             table.Status = TableStatus.Occupied;
 
             Employee employee = new Employee();
-            employee.EmployeeId = 10;
+            employee.EmployeeId = 1;
             employee.Pincode = "pincode";
             employee.FirstName = "Bob";
             employee.LastName = "AlsoBob";

@@ -34,17 +34,13 @@ namespace ChapeauUI
 
         public OrderView(Table table, Employee employee)
         {
-            // Update this when getting tableID and employee
-            order.OrderId = 7;
-            order.Table = table;
-            order.Time = DateTime.Now;
-            order.Employee = employee;
-            order.OrderedItems = new List<OrderItem>();
+            string tableId = table.TableId.ToString();
 
             FillMenuItemList(FoodType.Starter, MenuType.Lunch);
             InitializeComponent();
-            labelTableNumber.Text = $"Table {order.Table.TableId.ToString()}";
+            labelTableNumber.Text = $"Table {tableId}";
             DisplayItems(currentMenuItems);
+            CreateOrder(table, employee);
         }
 
         private void FillMenuItemList(FoodType foodType, MenuType menuType)
@@ -248,11 +244,16 @@ namespace ChapeauUI
             return null;
         }
 
-        public void CreateOrder(Order order)
+        public void CreateOrder(Table table, Employee employee)
         {
-            // First need to create the order, which creates an orderId
+            order.Table = table;
+            order.Time = DateTime.Now;
+            order.Employee = employee;
+            order.IsPaid = false;
+            order.OrderedItems = new List<OrderItem>();
 
-            orderItemService.CreateOrder(order);
+            order.OrderId = orderItemService.CreateOrder(order);
+            labelTableNumber.Text = $"Order {order.OrderId.ToString()}";
         }
 
         public void AddOrderItem(Order order)
@@ -261,7 +262,6 @@ namespace ChapeauUI
             {
                 orderItemService.AddOrderItem(orderItem);
             }
-
         }
     }
 }
