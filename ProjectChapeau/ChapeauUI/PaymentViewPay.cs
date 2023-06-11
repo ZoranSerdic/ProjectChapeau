@@ -65,11 +65,13 @@ namespace ChapeauUI
         {
             try
             {
+                ValidateInputFields();
                 PaymentService paymentService = new PaymentService();
                 //Generate a bill and corresponding payment for non-split payment 
                 //and update all statuses to mark order as complete.
 
-                //paymentService.CreateBill(bill);
+                bill.IsOpen = false;
+                paymentService.CreateBill(bill);
                 //bill.BillId = paymentService.GetCurrentBillId();
 
                 //Payment payment = new Payment(bill.BillId, method, bill.TotalAmount, bill.TotalTip);
@@ -207,6 +209,32 @@ namespace ChapeauUI
         {
             //stop selection from turning blue when clicking on it
             if (e.IsSelected) { e.Item.Selected = false; }
+        }
+        private void ValidateInputFields()
+        {
+            if(method == PaymentMethod.Cash)
+            {
+                return;
+            }
+            if(string.IsNullOrEmpty(txtCardName.Text))
+            {
+                throw new Exception("Please enter a card name");
+            }
+
+            if (string.IsNullOrEmpty(txtCardNumber.Text))
+            {
+                throw new Exception("Please enter a card number");
+            }
+
+            if (string.IsNullOrEmpty(txtCVV.Text))
+            {
+                throw new Exception("Please enter a CVV");
+            }
+
+            if (string.IsNullOrEmpty(txtExpDate.Text))
+            {
+                throw new Exception("Please enter a valid date");
+            }
         }
         private void HideInputFields()
         {

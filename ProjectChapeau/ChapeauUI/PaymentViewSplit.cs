@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,13 +19,13 @@ namespace ChapeauUI
         private List<OrderItem> items;
         private List<Payment> payments;
 
-        private decimal subTotal, amountRemaining;
+        private decimal subTotal;
         private float vat9, vat21;
         private decimal Total
         {
             get
             {
-                return subTotal + (decimal)vat9 + (decimal)vat21 + bill.TotalTip;
+                return subTotal + (decimal)vat9 + (decimal)vat21;
             }
         }
         public PaymentViewSplit(Bill bill, List<OrderItem> items)
@@ -36,12 +37,32 @@ namespace ChapeauUI
 
             InitializeDisplay();
         }
+        public PaymentViewSplit(Bill bill, List<OrderItem> items, List<Payment> payments)
+        {
+            //Overflow constructor for payment recovery to import all payments
+            InitializeComponent();
+            this.bill = bill;
+            this.items = items;
+            this.payments = payments;
+
+            InitializeDisplay();
+            RecoverPayments();
+        }
         private void InitializeDisplay()
         {
             CalculateItems(items);
             UpdateLabels();
             StyleListView();
             DisableInputFields();
+            HideSuccessFields();
+        }
+        private void RecoverPayments()
+        {
+            foreach (Payment payment in payments)
+            {
+                AddPaymentToTable(payment);
+                CalculateAmountRemaining(payment);
+            }
         }
 
         private void CalculateItems(List<OrderItem> items)
@@ -75,25 +96,39 @@ namespace ChapeauUI
         }
         private void btnConfirm_Click(object sender, EventArgs e)
         {
+            DoPayment();
+        }
+        private void DoPayment()
+        {
+            PaymentService paymentService = new PaymentService();
+
             try
             {
-                //Payment payment = new Payment(1, SelectedMethod(), 20, 500);
-                //AddPaymentToTable(payment);
-                //CalculateAmountRemaining(payment);
-                //StyleListView(); //ran again to add gray and white separators to the table
-                //payments.Add(payment);
+                ValidatePayment();
+                CheckOverflow();
 
-                ProcessPayment();
+                if(payments.Count == 0)
+                {
+                    bill.IsOpen = true;
+                    paymentService.CreateBill(bill);
+                    bill.BillId = paymentService.GetCurrentBillId();
+                }
+
+                Payment payment = new Payment(bill.BillId, SelectedMethod(), Convert.ToDecimal(txtTotal.Text), Convert.ToDecimal(txtTip.Text));
+                bill.TotalTip += payment.Tip;
+                paymentService.UpdateBillTipAmount(bill);
+                payments.Add(payment);
+                paymentService.AddPayment(payment);
+
+                AddPaymentToTable(payment);
+                CalculateAmountRemaining(payment);
+                CheckIfComplete();
             }
             catch (Exception ex)
             {
 
                 MessageBox.Show($"ERROR finalizing payment! \nERROR: {ex.Message}!");
             }
-        }
-        private void ProcessPayment()
-        {
-
         }
         private void AddPaymentToTable(Payment payment)
         {
@@ -104,6 +139,8 @@ namespace ChapeauUI
             listviewPayments.Items[index - 1].SubItems.Add(payment.Amount.ToString("€0.00"));
             listviewPayments.Items[index - 1].SubItems.Add(payment.Tip.ToString("€0.00"));
             listviewPayments.Items[index - 1].SubItems.Add(payment.Method.ToString());
+
+            StyleListView();
         }
         private void CalculateAmountRemaining(Payment payment)
         {
@@ -160,6 +197,46 @@ namespace ChapeauUI
             listviewPayments.SmallImageList = imgList;
 
         }
+        private void ValidatePayment()
+        {
+            if (!rdbtnCash.Checked && !rdbtnCredit.Checked && !rdbtnDebit.Checked)
+            {
+                throw new Exception("No payment method selected");
+            }
+
+            if (!rdbtnCash.Checked) 
+            { 
+                ValidateInputFields(); 
+            }
+            if(txtTotal.Text == "0.00")
+            {
+                throw new Exception("Amount paid can't be 0");
+            }
+        }
+        private void CheckOverflow()
+        {
+            if(Convert.ToDecimal(lblTotalLeft.Text) - Convert.ToDecimal(txtTotal.Text) < 0)
+            {
+                decimal overflow = Convert.ToDecimal(txtTotal.Text) - Convert.ToDecimal(lblTotalLeft.Text);
+                txtTip.Text = (Convert.ToDecimal(txtTip.Text) + overflow).ToString();
+                txtTotal.Text = lblTotalLeft.Text;
+            }
+        }
+        private void CheckIfComplete()
+        {
+            PaymentService paymentService = new PaymentService();
+
+            if(lblTotalLeft.Text == "0.00")
+            {
+                HideAllFields();
+                ShowSuccessFields();
+
+                paymentService.CloseBill(bill);
+
+                //paymentService.UpdateOrderPaidStatus(bill.Table);  
+                //paymentService.UpdateTableStatusToFree(bill.Table);
+            }
+        }
         private void listviewPayments_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
             //Change heading background to red and text to white
@@ -190,6 +267,13 @@ namespace ChapeauUI
             this.Hide();
             PaymentView paymentview = new PaymentView(bill.Table);
             paymentview.ShowDialog();
+            this.Close();
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            TableView tableView = new TableView(); //Do I need to pass an employee? Or launch loginview instead?
+            tableView.ShowDialog();
             this.Close();
         }
 
@@ -227,7 +311,28 @@ namespace ChapeauUI
                 return;
             }
         }
+        private void ValidateInputFields()
+        {
+            if (string.IsNullOrEmpty(txtCardName.Text))
+            {
+                throw new Exception("Please enter a card name");
+            }
 
+            if (string.IsNullOrEmpty(txtCardNumber.Text))
+            {
+                throw new Exception("Please enter a card number");
+            }
+
+            if (string.IsNullOrEmpty(txtCVV.Text))
+            {
+                throw new Exception("Please enter a CVV");
+            }
+
+            if (string.IsNullOrEmpty(txtExpDate.Text))
+            {
+                throw new Exception("Please enter a valid date");
+            }
+        }
         private void DisableInputFields()
         {
             txtCardName.Enabled = false;
@@ -245,6 +350,47 @@ namespace ChapeauUI
             txtCardNumber.Enabled = true;
             txtExpDate.Enabled = true;
             txtCVV.Enabled = true;
+        }
+        private void HideAllFields()
+        {
+            txtCardName.Visible = false;
+            lblCardName.Visible = false;
+            txtCardNumber.Visible = false;
+            lblCardNumber.Visible = false;
+            txtExpDate.Visible = false;
+            lblExpDate.Visible = false;
+            txtCVV.Visible = false;
+            lblCVV.Visible = false;
+
+            rdbtnCash.Visible = false;
+            rdbtnCredit.Visible = false;
+            rdbtnDebit.Visible = false;
+
+            lblTotalLeft.Visible = false; 
+            lblAmount.Visible = false;
+            lblTip.Visible = false; 
+            txtTip.Visible = false;
+            txtTotal.Visible = false;
+
+            btnCancel.Visible = false;
+            btnConfirm.Visible = false;
+            
+        }
+
+        private void HideSuccessFields()
+        {
+            pictureCheck.Visible = false;
+            lblSuccess.Visible = false;
+            lblComeAgain.Visible = false;
+            btnClose.Visible = false;
+        }
+
+        private void ShowSuccessFields()
+        {
+            pictureCheck.Visible = true;
+            lblSuccess.Visible = true;
+            lblComeAgain.Visible = true;
+            btnClose.Visible = true;
         }
 
     }

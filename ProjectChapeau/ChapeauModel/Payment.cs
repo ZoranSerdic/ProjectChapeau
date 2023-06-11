@@ -21,5 +21,6 @@ namespace ChapeauModel
             Amount = amount;
             Tip = tip;
         }
+        public Payment() { }
     }
 }

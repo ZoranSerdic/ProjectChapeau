@@ -42,7 +42,6 @@ namespace ChapeauUI
 
             //Get all items, combine, display
             InitializeDisplay();
-
             //TODO - Add some sort of check to make sure the table has orders before checking out
         }
 
@@ -122,6 +121,7 @@ namespace ChapeauUI
         {
             try
             {
+                if(CheckIfTableHasOpenBill()) { return; }
                 ValidatePayment();
                 Bill bill = new Bill();
                 bill = CreateBill(bill);
@@ -141,6 +141,7 @@ namespace ChapeauUI
         {
             try
             {
+                if (CheckIfTableHasOpenBill()) { return; }
                 ValidatePayment();
                 Bill bill = new Bill();
                 bill = CreateBill(bill);
@@ -225,6 +226,36 @@ namespace ChapeauUI
             {
                 return PaymentMethod.Debit;
             }
+        }
+        private bool CheckIfTableHasOpenBill()
+        {
+            DialogResult dialogResult;
+
+            if(paymentService.CheckForOpenBill(table))
+            {
+                dialogResult = MessageBox.Show("Open split bill found on table, recover?", "Recovery", MessageBoxButtons.YesNo);
+            }
+            else { return false; }
+
+            Bill bill;
+            bill = paymentService.GetOpenBill(table);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                List<Payment> payments = paymentService.GetActivePayments(bill);
+                
+                this.Hide();
+                PaymentViewSplit paymentviewsplit = new PaymentViewSplit(bill, items, payments);
+                paymentviewsplit.ShowDialog();
+                this.Close();
+                return true;
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                paymentService.DeleteActivePayments(bill);
+                paymentService.DeleteActiveBill(table);
+            }
+            return false;
         }
         private void UpdateLabels()
         {
@@ -328,14 +359,12 @@ namespace ChapeauUI
                 this.Close();
             }
         }
-
         private void listviewItems_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
             //prevent header from being resized
             e.Cancel = true;
             e.NewWidth = listviewItems.Columns[e.ColumnIndex].Width;
         }
-
         private void listviewItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             //stop selection from turning blue when clicking on it

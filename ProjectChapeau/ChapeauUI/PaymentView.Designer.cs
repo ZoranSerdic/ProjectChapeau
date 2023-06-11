@@ -67,12 +67,12 @@
             this.Qty,
             this.Price,
             this.VAT});
-            this.listviewItems.Location = new System.Drawing.Point(14, 96);
+            this.listviewItems.Location = new System.Drawing.Point(11, 77);
             this.listviewItems.Margin = new System.Windows.Forms.Padding(0);
             this.listviewItems.MultiSelect = false;
             this.listviewItems.Name = "listviewItems";
             this.listviewItems.OwnerDraw = true;
-            this.listviewItems.Size = new System.Drawing.Size(443, 539);
+            this.listviewItems.Size = new System.Drawing.Size(355, 432);
             this.listviewItems.TabIndex = 0;
             this.listviewItems.UseCompatibleStateImageBehavior = false;
             this.listviewItems.View = System.Windows.Forms.View.Details;
@@ -109,19 +109,20 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitle.Location = new System.Drawing.Point(14, 59);
+            this.lblTitle.Location = new System.Drawing.Point(11, 47);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(176, 20);
+            this.lblTitle.Size = new System.Drawing.Size(143, 15);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Table 0 - 1/1/23 - 6:00PM";
             // 
             // chapeauIcon
             // 
             this.chapeauIcon.Image = global::ChapeauUI.Properties.Resources.chapeauIcon;
-            this.chapeauIcon.Location = new System.Drawing.Point(265, -4);
-            this.chapeauIcon.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.chapeauIcon.Location = new System.Drawing.Point(212, -3);
+            this.chapeauIcon.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chapeauIcon.Name = "chapeauIcon";
-            this.chapeauIcon.Size = new System.Drawing.Size(237, 96);
+            this.chapeauIcon.Size = new System.Drawing.Size(190, 77);
             this.chapeauIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.chapeauIcon.TabIndex = 2;
             this.chapeauIcon.TabStop = false;
@@ -131,10 +132,10 @@
             this.btnSplit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(57)))), ((int)(((byte)(67)))), ((int)(((byte)(183)))));
             this.btnSplit.Font = new System.Drawing.Font("Arial Rounded MT Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnSplit.ForeColor = System.Drawing.Color.Transparent;
-            this.btnSplit.Location = new System.Drawing.Point(51, 1093);
-            this.btnSplit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnSplit.Location = new System.Drawing.Point(41, 874);
+            this.btnSplit.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnSplit.Name = "btnSplit";
-            this.btnSplit.Size = new System.Drawing.Size(137, 60);
+            this.btnSplit.Size = new System.Drawing.Size(110, 48);
             this.btnSplit.TabIndex = 3;
             this.btnSplit.Text = "Split";
             this.btnSplit.UseVisualStyleBackColor = false;
@@ -145,10 +146,10 @@
             this.btnPay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(115)))), ((int)(((byte)(26)))));
             this.btnPay.Font = new System.Drawing.Font("Arial Rounded MT Bold", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnPay.ForeColor = System.Drawing.Color.Transparent;
-            this.btnPay.Location = new System.Drawing.Point(265, 1093);
-            this.btnPay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnPay.Location = new System.Drawing.Point(212, 874);
+            this.btnPay.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnPay.Name = "btnPay";
-            this.btnPay.Size = new System.Drawing.Size(137, 60);
+            this.btnPay.Size = new System.Drawing.Size(110, 48);
             this.btnPay.TabIndex = 4;
             this.btnPay.Text = "Pay";
             this.btnPay.UseVisualStyleBackColor = false;
@@ -158,10 +159,10 @@
             // 
             this.rdbtnCash.AutoSize = true;
             this.rdbtnCash.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.rdbtnCash.Location = new System.Drawing.Point(54, 1016);
-            this.rdbtnCash.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.rdbtnCash.Location = new System.Drawing.Point(43, 813);
+            this.rdbtnCash.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rdbtnCash.Name = "rdbtnCash";
-            this.rdbtnCash.Size = new System.Drawing.Size(86, 36);
+            this.rdbtnCash.Size = new System.Drawing.Size(71, 29);
             this.rdbtnCash.TabIndex = 5;
             this.rdbtnCash.TabStop = true;
             this.rdbtnCash.Text = "Cash";
@@ -171,10 +172,10 @@
             // 
             this.rdbtnDebit.AutoSize = true;
             this.rdbtnDebit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.rdbtnDebit.Location = new System.Drawing.Point(189, 1016);
-            this.rdbtnDebit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.rdbtnDebit.Location = new System.Drawing.Point(151, 813);
+            this.rdbtnDebit.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rdbtnDebit.Name = "rdbtnDebit";
-            this.rdbtnDebit.Size = new System.Drawing.Size(93, 36);
+            this.rdbtnDebit.Size = new System.Drawing.Size(75, 29);
             this.rdbtnDebit.TabIndex = 6;
             this.rdbtnDebit.TabStop = true;
             this.rdbtnDebit.Text = "Debit";
@@ -184,10 +185,10 @@
             // 
             this.rdbtnCredit.AutoSize = true;
             this.rdbtnCredit.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.rdbtnCredit.Location = new System.Drawing.Point(312, 1016);
-            this.rdbtnCredit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.rdbtnCredit.Location = new System.Drawing.Point(250, 813);
+            this.rdbtnCredit.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rdbtnCredit.Name = "rdbtnCredit";
-            this.rdbtnCredit.Size = new System.Drawing.Size(99, 36);
+            this.rdbtnCredit.Size = new System.Drawing.Size(81, 29);
             this.rdbtnCredit.TabIndex = 7;
             this.rdbtnCredit.TabStop = true;
             this.rdbtnCredit.Text = "Credit";
@@ -197,9 +198,10 @@
             // 
             this.lblTip.AutoSize = true;
             this.lblTip.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTip.Location = new System.Drawing.Point(27, 967);
+            this.lblTip.Location = new System.Drawing.Point(22, 774);
+            this.lblTip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTip.Name = "lblTip";
-            this.lblTip.Size = new System.Drawing.Size(73, 32);
+            this.lblTip.Size = new System.Drawing.Size(59, 25);
             this.lblTip.TabIndex = 8;
             this.lblTip.Text = "Tip: €";
             // 
@@ -207,9 +209,10 @@
             // 
             this.lblTotal2.AutoSize = true;
             this.lblTotal2.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTotal2.Location = new System.Drawing.Point(221, 967);
+            this.lblTotal2.Location = new System.Drawing.Point(177, 774);
+            this.lblTotal2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotal2.Name = "lblTotal2";
-            this.lblTotal2.Size = new System.Drawing.Size(93, 32);
+            this.lblTotal2.Size = new System.Drawing.Size(74, 25);
             this.lblTotal2.TabIndex = 9;
             this.lblTotal2.Text = "Total: €";
             // 
@@ -217,20 +220,21 @@
             // 
             this.lblLiked.AutoSize = true;
             this.lblLiked.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblLiked.Location = new System.Drawing.Point(14, 859);
+            this.lblLiked.Location = new System.Drawing.Point(11, 687);
+            this.lblLiked.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblLiked.Name = "lblLiked";
-            this.lblLiked.Size = new System.Drawing.Size(338, 32);
+            this.lblLiked.Size = new System.Drawing.Size(266, 25);
             this.lblLiked.TabIndex = 10;
             this.lblLiked.Text = "Was everything to your liking?";
             // 
             // txtComment
             // 
             this.txtComment.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtComment.Location = new System.Drawing.Point(14, 896);
-            this.txtComment.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtComment.Location = new System.Drawing.Point(11, 717);
+            this.txtComment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtComment.MaxLength = 256;
             this.txtComment.Name = "txtComment";
-            this.txtComment.Size = new System.Drawing.Size(435, 34);
+            this.txtComment.Size = new System.Drawing.Size(349, 29);
             this.txtComment.TabIndex = 11;
             // 
             // panel1
@@ -244,19 +248,20 @@
             this.panel1.Controls.Add(this.lblvat1);
             this.panel1.Controls.Add(this.lblvat);
             this.panel1.Controls.Add(this.lblSub);
-            this.panel1.Location = new System.Drawing.Point(14, 661);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panel1.Location = new System.Drawing.Point(11, 529);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(443, 167);
+            this.panel1.Size = new System.Drawing.Size(354, 134);
             this.panel1.TabIndex = 12;
             // 
             // lblvat21
             // 
             this.lblvat21.AutoSize = true;
             this.lblvat21.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblvat21.Location = new System.Drawing.Point(136, 113);
+            this.lblvat21.Location = new System.Drawing.Point(109, 90);
+            this.lblvat21.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblvat21.Name = "lblvat21";
-            this.lblvat21.Size = new System.Drawing.Size(71, 32);
+            this.lblvat21.Size = new System.Drawing.Size(56, 25);
             this.lblvat21.TabIndex = 7;
             this.lblvat21.Text = "€0.00";
             // 
@@ -264,9 +269,10 @@
             // 
             this.lblvat9.AutoSize = true;
             this.lblvat9.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblvat9.Location = new System.Drawing.Point(136, 67);
+            this.lblvat9.Location = new System.Drawing.Point(109, 54);
+            this.lblvat9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblvat9.Name = "lblvat9";
-            this.lblvat9.Size = new System.Drawing.Size(71, 32);
+            this.lblvat9.Size = new System.Drawing.Size(56, 25);
             this.lblvat9.TabIndex = 6;
             this.lblvat9.Text = "€0.00";
             // 
@@ -274,9 +280,10 @@
             // 
             this.lblSubtotal.AutoSize = true;
             this.lblSubtotal.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblSubtotal.Location = new System.Drawing.Point(136, 20);
+            this.lblSubtotal.Location = new System.Drawing.Point(109, 16);
+            this.lblSubtotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSubtotal.Name = "lblSubtotal";
-            this.lblSubtotal.Size = new System.Drawing.Size(71, 32);
+            this.lblSubtotal.Size = new System.Drawing.Size(56, 25);
             this.lblSubtotal.TabIndex = 5;
             this.lblSubtotal.Text = "€0.00";
             // 
@@ -285,9 +292,10 @@
             this.lblTotal.AutoSize = true;
             this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblTotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(67)))), ((int)(((byte)(183)))));
-            this.lblTotal.Location = new System.Drawing.Point(315, 113);
+            this.lblTotal.Location = new System.Drawing.Point(252, 90);
+            this.lblTotal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(77, 32);
+            this.lblTotal.Size = new System.Drawing.Size(61, 25);
             this.lblTotal.TabIndex = 4;
             this.lblTotal.Text = "€0.00";
             // 
@@ -296,9 +304,10 @@
             this.lblTotal1.AutoSize = true;
             this.lblTotal1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblTotal1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(67)))), ((int)(((byte)(183)))));
-            this.lblTotal1.Location = new System.Drawing.Point(225, 113);
+            this.lblTotal1.Location = new System.Drawing.Point(180, 90);
+            this.lblTotal1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotal1.Name = "lblTotal1";
-            this.lblTotal1.Size = new System.Drawing.Size(92, 32);
+            this.lblTotal1.Size = new System.Drawing.Size(73, 25);
             this.lblTotal1.TabIndex = 3;
             this.lblTotal1.Text = "TOTAL:";
             // 
@@ -306,9 +315,10 @@
             // 
             this.lblvat1.AutoSize = true;
             this.lblvat1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblvat1.Location = new System.Drawing.Point(14, 113);
+            this.lblvat1.Location = new System.Drawing.Point(11, 90);
+            this.lblvat1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblvat1.Name = "lblvat1";
-            this.lblvat1.Size = new System.Drawing.Size(126, 32);
+            this.lblvat1.Size = new System.Drawing.Size(101, 25);
             this.lblvat1.TabIndex = 2;
             this.lblvat1.Text = "VAT (21%):";
             // 
@@ -316,9 +326,10 @@
             // 
             this.lblvat.AutoSize = true;
             this.lblvat.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblvat.Location = new System.Drawing.Point(14, 67);
+            this.lblvat.Location = new System.Drawing.Point(11, 54);
+            this.lblvat.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblvat.Name = "lblvat";
-            this.lblvat.Size = new System.Drawing.Size(113, 32);
+            this.lblvat.Size = new System.Drawing.Size(91, 25);
             this.lblvat.TabIndex = 1;
             this.lblvat.Text = "VAT (9%):";
             // 
@@ -326,19 +337,20 @@
             // 
             this.lblSub.AutoSize = true;
             this.lblSub.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblSub.Location = new System.Drawing.Point(14, 20);
+            this.lblSub.Location = new System.Drawing.Point(11, 16);
+            this.lblSub.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblSub.Name = "lblSub";
-            this.lblSub.Size = new System.Drawing.Size(108, 32);
+            this.lblSub.Size = new System.Drawing.Size(86, 25);
             this.lblSub.TabIndex = 0;
             this.lblSub.Text = "Subtotal:";
             // 
             // txtTip
             // 
             this.txtTip.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtTip.Location = new System.Drawing.Point(93, 967);
-            this.txtTip.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTip.Location = new System.Drawing.Point(74, 774);
+            this.txtTip.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtTip.Name = "txtTip";
-            this.txtTip.Size = new System.Drawing.Size(114, 34);
+            this.txtTip.Size = new System.Drawing.Size(92, 29);
             this.txtTip.TabIndex = 13;
             this.txtTip.Text = "0.00";
             this.txtTip.TextChanged += new System.EventHandler(this.txtTip_TextChanged);
@@ -347,10 +359,10 @@
             // txtTotal
             // 
             this.txtTotal.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtTotal.Location = new System.Drawing.Point(309, 967);
-            this.txtTotal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtTotal.Location = new System.Drawing.Point(247, 774);
+            this.txtTotal.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtTotal.Name = "txtTotal";
-            this.txtTotal.Size = new System.Drawing.Size(114, 34);
+            this.txtTotal.Size = new System.Drawing.Size(92, 29);
             this.txtTotal.TabIndex = 14;
             this.txtTotal.Text = "0.00";
             this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
@@ -360,10 +372,10 @@
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
             this.btnCancel.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnCancel.ForeColor = System.Drawing.Color.Transparent;
-            this.btnCancel.Location = new System.Drawing.Point(5, 4);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCancel.Location = new System.Drawing.Point(4, 3);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(129, 39);
+            this.btnCancel.Size = new System.Drawing.Size(103, 31);
             this.btnCancel.TabIndex = 15;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -371,11 +383,11 @@
             // 
             // PaymentView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(229)))), ((int)(((byte)(234)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(471, 1051);
+            this.ClientSize = new System.Drawing.Size(377, 841);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.txtTotal);
             this.Controls.Add(this.txtTip);
@@ -392,7 +404,7 @@
             this.Controls.Add(this.chapeauIcon);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.listviewItems);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PaymentView";
