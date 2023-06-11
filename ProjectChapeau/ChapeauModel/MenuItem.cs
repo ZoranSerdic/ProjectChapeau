@@ -20,13 +20,5 @@ namespace ChapeauModel
         {
             // a constructor without any parameters 
         }
-
-        public MenuItem(int menuItemId, string name, decimal price, float vat)
-        {
-            MenuItemId = menuItemId;
-            Name = name;
-            Price = price;
-            Vat = vat;
-        }
     }
 }

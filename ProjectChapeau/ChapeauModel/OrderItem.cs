@@ -14,16 +14,5 @@ namespace ChapeauModel
         public int Amount { get; set; }
         public OrderedItemStatus Status { get; set; }
         public DateTime? PreparedAt { get; set; }    
-
-        public OrderItem()
-        {
-            
-        }
-        public OrderItem(int orderItemId, MenuItem menuItem, int amount)
-        {
-            OrderItemId = orderItemId;
-            MenuItem = menuItem;
-            Amount = amount;
-        }
     }
 }

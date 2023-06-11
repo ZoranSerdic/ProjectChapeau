@@ -16,19 +16,9 @@ namespace ChapeauService
             orderDAO = new OrderDAO();
         }
 
-        public List<Order> GetUnpreparedOrdersByType(FoodType foodType)
+        public List<Order> GetOrders(FoodType[] foodType, OrderedItemStatus[] status)
         {
-            return orderDAO.GetUnpreparedOrdersByType(foodType);
-        }
-
-        public List<Order> GetReadyDrinks()
-        {
-            return orderDAO.GetReadyDrinks();
-        }
-
-        public List<Order> GetReadyFood()
-        {
-            return orderDAO.GetReadyFood();
+            return orderDAO.GetOrders(foodType, status);
         }
     }
 }

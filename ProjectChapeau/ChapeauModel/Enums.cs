@@ -11,5 +11,5 @@ namespace ChapeauModel
     public enum FoodType { Starter, MainCourse, Dessert, Drink }
     public enum OrderedItemStatus { Sent, Preparing, Ready }
     public enum PaymentMethod { Cash, Debit, Credit }
-    public enum TableStatus { Free, Occupied, Reserved }
+    public enum TableStatus { Free, Occupied }
 }

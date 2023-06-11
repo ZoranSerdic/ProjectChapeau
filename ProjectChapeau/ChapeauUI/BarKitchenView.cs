@@ -5,9 +5,6 @@ using System.Data;
 
 namespace ChapeauUI
 {
-    // перевіркa на статус усіх айтемс одного типу на замовлення
-
-    // code inside constructor?, error handling
     // add code for logged-in user
     // logging out
     public partial class BarKitchenView : Form
@@ -19,12 +16,6 @@ namespace ChapeauUI
         {
             InitializeComponent();
 
-            //? do i need this
-            buttonHistory.Show();
-            buttonLogOut.Show();
-            listViewOrders.Show();
-            labelOrders.Show();
-
             buttonReady.Hide();
             buttonStart.Hide();
             buttonOrders.Hide();
@@ -35,14 +26,14 @@ namespace ChapeauUI
             loggedInEmployee = new Employee();
             orderItemService = new OrderItemService();
 
-            loggedInEmployee.Occupation = Role.Chef; // delete this later
+            loggedInEmployee.Occupation = Role.Barman; // delete this later
             //this.loggedInEmployee = loggedInEmployee;
 
-            DisplayUnpreparedOrders(); // in the main screen the open orders are displayed
+            DisplayUnpreparedOrders(); // in the beginning the open orders are displayed
             timerRefreshDisplay.Start();
         }
 
-        private void DisplayUnpreparedOrders() // depending on the logged in user the orders are shown : bar or kitchen
+        private void DisplayUnpreparedOrders() // depending on the logged in user the orders are shown - bar or kitchen
         {
             labelPrompt.Show();
             try
@@ -61,7 +52,9 @@ namespace ChapeauUI
         private void DisplayUnpreparedDrinks()
         {
             listViewOrders.Items.Clear();
-            List<Order> drinks = orderService.GetUnpreparedOrdersByType(FoodType.Drink);
+  
+            // get drinks with status 'Sent' (from waiter ) or 'Preparing'.
+            List<Order> drinks = orderService.GetOrders(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
 
             foreach (Order order in drinks)
             {
@@ -76,9 +69,10 @@ namespace ChapeauUI
         {
             listViewOrders.Items.Clear();
 
-            List<Order> starters = orderService.GetUnpreparedOrdersByType(FoodType.Starter);
-            List<Order> mains = orderService.GetUnpreparedOrdersByType(FoodType.MainCourse);
-            List<Order> desserts = orderService.GetUnpreparedOrdersByType(FoodType.Dessert);
+            // get starters, mains, desserts with status 'Sent' (from waiter ) or 'Preparing'.
+            List<Order> starters = orderService.GetOrders(new FoodType[1] { FoodType.Starter }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+            List<Order> mains = orderService.GetOrders(new FoodType[1] { FoodType.MainCourse }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+            List<Order> desserts = orderService.GetOrders(new FoodType[1] { FoodType.Dessert }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
 
             List<ListViewGroup> headers = CreateHeadersForKitchen(); // creates groups and headers for kitchen view: "starters" , "main courses" and "desserts"
 
@@ -152,7 +146,7 @@ namespace ChapeauUI
             return headers;
         }
 
-        private ListViewItem DisplayUnpreparedItem(Order order, OrderItem orderItem) // used for both bar and kitchen views
+        private ListViewItem DisplayUnpreparedItem(Order order, OrderItem orderItem)
         {
             ListViewItem item = new ListViewItem(order.Table.TableId.ToString()); // 1st column - table number 
             item.SubItems.Add(orderItem.Amount.ToString()); // 2nd column = number of ordered items
@@ -163,7 +157,8 @@ namespace ChapeauUI
                   : $"{orderItem.MenuItem.Name} {orderItem.MenuItem.Description}: {orderItem.Comment.ToLower()}");
 
             item.SubItems.Add(order.Time.ToString("HH:mm")); // 4th column - time when it was received
-            item.SubItems.Add((DateTime.Now - order.Time).ToString(@"hh\:mm")); // low long the order item has been open
+
+            item.SubItems.Add($"{(int)(DateTime.Now - order.Time).TotalHours:00}:{(DateTime.Now - order.Time).Minutes:00}"); // low long the order item has been open
             item.SubItems.Add(orderItem.Status.ToString()); // status of the order item
 
             item.Tag = orderItem;
@@ -257,10 +252,10 @@ namespace ChapeauUI
             labelPrompt.Hide();
             try
             {
-                if (loggedInEmployee.Occupation == Role.Barman)
-                    DisplayDrinksHistory();
-                else if (loggedInEmployee.Occupation == Role.Chef)
-                    DisplayFoodHistory();
+                if (loggedInEmployee.Occupation == Role.Barman) // get drinks with status 'Ready'.
+                    DisplayOrdersHistory(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[1] { OrderedItemStatus.Ready } );
+                else if (loggedInEmployee.Occupation == Role.Chef) // // get dishes with status 'Ready'.
+                    DisplayOrdersHistory(new FoodType[3] { FoodType.Starter, FoodType.MainCourse, FoodType.Dessert }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
             }
             catch (Exception ex)
             {
@@ -268,23 +263,11 @@ namespace ChapeauUI
             }
         }
 
-        private void DisplayDrinksHistory()
-        {
-            List<Order> drinks = orderService.GetReadyDrinks(); // gets frinks
-
-            DisplayOrdersHistory(drinks);
-        }
-
-        private void DisplayFoodHistory()
-        {
-            List<Order> food = orderService.GetReadyFood(); // gets food
-
-            DisplayOrdersHistory(food);
-        }
-
-        private void DisplayOrdersHistory(List<Order> orders)
+        private void DisplayOrdersHistory(FoodType[] foodType, OrderedItemStatus[] status)
         {
             listViewHistory.Items.Clear();
+
+            List<Order> orders = orderService.GetOrders(foodType, status);
 
             foreach (Order order in orders)
             {

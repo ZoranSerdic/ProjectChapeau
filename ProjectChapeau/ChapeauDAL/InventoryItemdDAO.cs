@@ -14,9 +14,8 @@ namespace ChapeauDAL
         public List<InventoryItem> GetAllInventoryItems()
         {
             //gathering all inventory items from the table
-            string query = "SELECT [inventoryItemId], inStock, [name] FROM InventoryItem;";
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+            string query = "SELECT I.inStock, I.inventoryItemId, I.MenuItemKey, M.[name] FROM InventoryItem AS I JOIN MenuItem AS M ON I.MenuItemKey = menuItemId;";
+            return ReadTables(ExecuteSelectQuery(query));
         }
         public void RemoveItem(InventoryItem item)
         {
@@ -27,21 +26,27 @@ namespace ChapeauDAL
         }
         public void AddItem(InventoryItem item)
         {
-            //this method adds the item into the inventory Item table 
-            string query = "INSERT INTO InventoryItem(inStock, [name]) VALUES (@inStock, @name);";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@name", item.Name.ToString());
-            ExecuteEditQuery(query, sqlParameters);
+            try
+            {
+                //this method adds the item into the inventory Item table 
+                string query = "INSERT INTO InventoryItem(inStock, menuItemKey) VALUES (@inStock, @menuItemKey);";
+                SqlParameter[] sqlParameters = new SqlParameter[2];
+                sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
+                sqlParameters[1] = new SqlParameter("@menuItemKey", item.MenuItemID);
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Invalid Stock Item ID", ex);
+            }
         }
         public void UpdateItem(InventoryItem item)
         {
             //this method updates the existing item 
-            string query = "UPDATE InventoryItem SET inStock = @inStock, [name] = @newName WHERE inventoryItemId = @ItemID;";
-            SqlParameter[] sqlParameters = new SqlParameter[3];
+            string query = "UPDATE InventoryItem SET inStock = @inStock WHERE inventoryItemId = @ItemID;";
+            SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@inStock", item.InStock);
-            sqlParameters[1] = new SqlParameter("@newName", item.Name.ToString());
-            sqlParameters[2] = new SqlParameter("@ItemID", item.InventoryItemId);
+            sqlParameters[1] = new SqlParameter("@ItemID", item.InventoryItemId);
             ExecuteEditQuery(query, sqlParameters);
         }
         private List<InventoryItem> ReadTables(DataTable dataTable)
@@ -56,6 +61,7 @@ namespace ChapeauDAL
                 {
                     InStock = (int)dr["inStock"],
                     InventoryItemId = (int)dr["inventoryItemId"],
+                    MenuItemID = (int)dr["MenuItemKey"],
                     Name = dr["name"].ToString(),
                 };
                 //adds the item to the list of all items 

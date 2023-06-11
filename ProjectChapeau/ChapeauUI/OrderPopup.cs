@@ -42,7 +42,6 @@ namespace ChapeauUI
 
         private void buttonPopupAddOrder_Click(object sender, EventArgs e)
         {
-            // TODO: Add order to a list which contains of all the other orders
             Comment = textBoxPopupComment.Text;
             this.Close();
         }

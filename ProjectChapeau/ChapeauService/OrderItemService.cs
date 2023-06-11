@@ -20,5 +20,15 @@ namespace ChapeauService
         {
             orderItemDAO.UpdateOrderItemStatus(orderItem);
         }
+
+        public void CreateOrder(Order order)
+        {
+            orderItemDAO.CreateOrder(order);
+        }
+
+        public void AddOrderItem(OrderItem orderItem) 
+        { 
+            orderItemDAO.AddOrderItem(orderItem);
+        }
     }
 }

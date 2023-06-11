@@ -33,8 +33,8 @@ namespace ChapeauUI
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MenuOverviewView menuOverviewView = new MenuOverviewView();
-            menuOverviewView.ShowDialog();
+            MenuViewAllItems menu = new MenuViewAllItems();
+            menu.ShowDialog();
             this.Close();
         }
 
@@ -59,6 +59,14 @@ namespace ChapeauUI
             this.Hide();
             LoginView loginView = new LoginView();
             loginView.ShowDialog();
+            this.Close();
+        }
+
+        private void btnBills_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            BillView billsView = new BillView();
+            billsView.ShowDialog();
             this.Close();
         }
     }
