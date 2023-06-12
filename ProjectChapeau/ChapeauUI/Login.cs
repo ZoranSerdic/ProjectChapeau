@@ -19,7 +19,7 @@ namespace ChapeauUI
 
         private void label_login_forgotPincode_Click(object sender, EventArgs e)
         {
-            Console.
+            MessageBox.Show("Please call the manager", "Message", MessageBoxButtons.OKCancel);
         }
     }
 }
