@@ -12,8 +12,8 @@ namespace ChapeauUI
 {
     public partial class OrderPopup : Form
     {
-        public string Comment { get; set; }
-        public int Amount { get; set; }
+        public string Comment { get; private set; }
+        public int Amount { get; private set; }
 
         public OrderPopup(string popupName, string popupDescription)
         {
@@ -43,11 +43,14 @@ namespace ChapeauUI
         private void buttonPopupAddOrder_Click(object sender, EventArgs e)
         {
             Comment = textBoxPopupComment.Text;
+
+            DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void buttonPopupCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             this.Close();
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChapeauModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,47 +13,63 @@ namespace ChapeauUI
 {
     public partial class OrderFinalise : Form
     {
-        public OrderFinalise()
+        public Order Order { get; private set; }
+
+        public DialogResult Result { get; private set; }
+
+        public OrderFinalise(Order order)
         {
             InitializeComponent();
+            
+            Order = order;
+            DisplayOrderedItems();
         }
 
-        private void buttonGoBack_Click(object sender, EventArgs e)
+        private void DisplayOrderedItems()
         {
-            this.Close();
+            // clear the listview items before filling it
+            listViewOrders.Items.Clear();
+
+            foreach (OrderItem orderItem in Order.OrderedItems)
+            {
+                ListViewItem item = new ListViewItem(orderItem.MenuItem.Name);
+                item.SubItems.Add(orderItem.Comment);
+                item.SubItems.Add(orderItem.Amount.ToString());
+
+                listViewOrders.Items.Add(item);
+            }
         }
 
         private void buttonConfirmOrder_Click(object sender, EventArgs e)
         {
-            // TODO: send orders to Kitchen / Bar database
-
-            // Close OrderView
-            // Not working as intended 
-            #region closeForms
-            //Form currentForm = Form.ActiveForm;
-
-            //List<Form> formsToClose = new List<Form>();
-
-            //// Add forms to the list
-            //foreach (Form form in Application.OpenForms)
-            //{
-            //    if (form != currentForm)
-            //    {
-            //        formsToClose.Add(form);
-            //    }
-            //}
-
-            //foreach (Form formToClose in formsToClose)
-            //{
-            //    formToClose.Close();
-            //}
-            #endregion
-
-            // Go to Table View
-            TableView tableView = new TableView();
-            this.Hide();
-            tableView.ShowDialog();
+            Result = DialogResult.OK;
             this.Close();
+        }
+
+        private void buttonGoBack_Click(object sender, EventArgs e)
+        {
+            Result = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void listViewOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewOrders.SelectedItems.Count == 1)
+            {
+                int selectedIndex = listViewOrders.SelectedIndices[0];
+                Order.OrderedItems.RemoveAt(selectedIndex);
+                DisplayOrderedItems();
+            }
+        }
+
+        private void buttonDeleteAll_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDeleteSelected_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -16,9 +16,6 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        // GET RID OF GLOBAL VARIABLES, CREATE A METHOD OR RETURN ?
-
-        // TODO: Bianca's tableview gives Table tableID & Employee for Order order
         Order order = new Order();
 
         private MenuItemService menuItemService = new MenuItemService();
@@ -32,6 +29,7 @@ namespace ChapeauUI
 
         private string currentMenuLabel = "Starters";
 
+        // TODO: Bianca's tableview gives Table tableID & Employee for Order order
         public OrderView(Table table, Employee employee)
         {
             string tableId = table.TableId.ToString();
@@ -40,6 +38,7 @@ namespace ChapeauUI
             InitializeComponent();
             labelTableNumber.Text = $"Table {tableId}";
             DisplayItems(currentMenuItems);
+
             CreateOrder(table, employee);
         }
 
@@ -73,7 +72,6 @@ namespace ChapeauUI
             }
         }
 
-        #region Buttons
         private void buttonCategoryStarters_Click(object sender, EventArgs e)
         {
             buttonSwitchMenu.Show();
@@ -144,13 +142,18 @@ namespace ChapeauUI
 
         private void buttonFinaliseOrder_Click(object sender, EventArgs e)
         {
-            OrderFinalise orderFinalise = new OrderFinalise();
-            this.Hide();
-            orderFinalise.ShowDialog();
-            this.Show();
-        }
-        #endregion
+            OrderFinalise orderFinalise = new OrderFinalise(order);
+            DialogResult dialogResult = orderFinalise.ShowDialog();
 
+            if (dialogResult == DialogResult.OK)
+            {
+
+            }
+            else if (dialogResult == DialogResult.Cancel)
+            {
+
+            }
+        }
 
         private void SwitchMenuType()
         {
@@ -204,33 +207,32 @@ namespace ChapeauUI
                 string description = e.Item.SubItems[1].Text;
                 int menuId = (int)e.Item.Tag;
 
-                MenuItem menuItem = new MenuItem();
-                menuItem.MenuItemId = menuId;
+                //
+                MenuItem menuItem = FindMenuItemById(currentMenuItems, menuId);
 
                 // Create form
                 OrderPopup orderPopup = new OrderPopup(name, description);
-                orderPopup.FormClosed += (s, ev) =>
-                {
-                    // Reattach the event handler after the form is closed
-                    listViewMenuItems.ItemSelectionChanged += listViewMenuItems_ItemSelectionChanged;
+                DialogResult dialogResult = orderPopup.ShowDialog();
 
-                    // Retrieve information from orderPopup and put it in new orderItem
-                    OrderItem orderItem = new OrderItem
-                    {
-                        OrderItemId = 7, // REFERENCE ID
-                        MenuItem = menuItem,
-                        Comment = orderPopup.Comment,
-                        Amount = orderPopup.Amount
-                    };
+                if (dialogResult == DialogResult.OK)
+                {
+                    OrderItem orderItem = new OrderItem();
+
+                    orderItem.OrderItemId = order.OrderId;
+                    orderItem.MenuItem = menuItem;
+                    orderItem.Comment = orderPopup.Comment;
+                    orderItem.Amount = orderPopup.Amount;
+                    orderItem.Status = OrderedItemStatus.Sent;
+                    orderItem.PreparedAt = null;
 
                     // Add to list
                     order.OrderedItems.Add(orderItem);
-                };
+                }
 
-                orderPopup.ShowDialog();
+                // Reattach the event handler after the form is closed
+                listViewMenuItems.ItemSelectionChanged += listViewMenuItems_ItemSelectionChanged;
             }
         }
-
 
         private MenuItem FindMenuItemById(List<MenuItem> items, int menuId) 
         {
@@ -252,8 +254,9 @@ namespace ChapeauUI
             order.IsPaid = false;
             order.OrderedItems = new List<OrderItem>();
 
-            order.OrderId = orderItemService.CreateOrder(order);
-            labelTableNumber.Text = $"Order {order.OrderId.ToString()}";
+            order.OrderId = 200;
+            //order.OrderId = orderItemService.CreateOrder(order);
+            //labelTableNumber.Text = $"Order {order.OrderId.ToString()}";
         }
 
         public void AddOrderItem(Order order)

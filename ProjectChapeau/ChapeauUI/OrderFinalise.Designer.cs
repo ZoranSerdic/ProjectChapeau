@@ -36,11 +36,17 @@
             this.panelGreenSeparatorTwo = new System.Windows.Forms.Panel();
             this.panelGreenSeparatorOne = new System.Windows.Forms.Panel();
             this.listViewOrders = new System.Windows.Forms.ListView();
+            this.columnHeaderName = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderComment = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderAmount = new System.Windows.Forms.ColumnHeader();
             this.labelMenuType = new System.Windows.Forms.Label();
             this.panelMenuBackground = new System.Windows.Forms.Panel();
             this.labelTableNumber = new System.Windows.Forms.Label();
             this.panelWhiteBackground = new System.Windows.Forms.Panel();
             this.labelInformationOrders = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonRemoveSelected = new System.Windows.Forms.Button();
+            this.buttonRemoveAll = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChapeauLogo)).BeginInit();
             this.panelMenuBackground.SuspendLayout();
             this.panelWhiteBackground.SuspendLayout();
@@ -111,11 +117,31 @@
             // 
             // listViewOrders
             // 
+            this.listViewOrders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderName,
+            this.columnHeaderComment,
+            this.columnHeaderAmount});
             this.listViewOrders.Location = new System.Drawing.Point(12, 169);
             this.listViewOrders.Name = "listViewOrders";
-            this.listViewOrders.Size = new System.Drawing.Size(508, 685);
+            this.listViewOrders.Size = new System.Drawing.Size(508, 602);
             this.listViewOrders.TabIndex = 35;
             this.listViewOrders.UseCompatibleStateImageBehavior = false;
+            this.listViewOrders.SelectedIndexChanged += new System.EventHandler(this.listViewOrders_SelectedIndexChanged);
+            // 
+            // columnHeaderName
+            // 
+            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 180;
+            // 
+            // columnHeaderComment
+            // 
+            this.columnHeaderComment.Text = "Comment";
+            this.columnHeaderComment.Width = 280;
+            // 
+            // columnHeaderAmount
+            // 
+            this.columnHeaderAmount.Text = "ColumnHeaderAmount";
+            this.columnHeaderAmount.Width = 20;
             // 
             // labelMenuType
             // 
@@ -168,14 +194,53 @@
             this.labelInformationOrders.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelInformationOrders.Size = new System.Drawing.Size(505, 40);
             this.labelInformationOrders.TabIndex = 37;
-            this.labelInformationOrders.Text = "Select an order to change it";
+            this.labelInformationOrders.Text = "Select an order to remove it";
             this.labelInformationOrders.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(115)))), ((int)(((byte)(26)))));
+            this.panel1.Location = new System.Drawing.Point(1, 763);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(532, 11);
+            this.panel1.TabIndex = 31;
+            // 
+            // buttonRemoveSelected
+            // 
+            this.buttonRemoveSelected.AutoSize = true;
+            this.buttonRemoveSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
+            this.buttonRemoveSelected.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonRemoveSelected.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonRemoveSelected.Location = new System.Drawing.Point(250, 775);
+            this.buttonRemoveSelected.Name = "buttonRemoveSelected";
+            this.buttonRemoveSelected.Size = new System.Drawing.Size(267, 70);
+            this.buttonRemoveSelected.TabIndex = 37;
+            this.buttonRemoveSelected.Text = "Remove Selected";
+            this.buttonRemoveSelected.UseVisualStyleBackColor = false;
+            this.buttonRemoveSelected.Click += new System.EventHandler(this.buttonDeleteSelected_Click);
+            // 
+            // buttonRemoveAll
+            // 
+            this.buttonRemoveAll.AutoSize = true;
+            this.buttonRemoveAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
+            this.buttonRemoveAll.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonRemoveAll.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonRemoveAll.Location = new System.Drawing.Point(33, 775);
+            this.buttonRemoveAll.Name = "buttonRemoveAll";
+            this.buttonRemoveAll.Size = new System.Drawing.Size(187, 70);
+            this.buttonRemoveAll.TabIndex = 38;
+            this.buttonRemoveAll.Text = "Remove All";
+            this.buttonRemoveAll.UseVisualStyleBackColor = false;
+            this.buttonRemoveAll.Click += new System.EventHandler(this.buttonDeleteAll_Click);
             // 
             // OrderFinalise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 953);
+            this.Controls.Add(this.buttonRemoveAll);
+            this.Controls.Add(this.buttonRemoveSelected);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonConfirmOrder);
             this.Controls.Add(this.buttonGoBack);
             this.Controls.Add(this.pictureBoxChapeauLogo);
@@ -210,5 +275,11 @@
         private Label labelTableNumber;
         private Panel panelWhiteBackground;
         private Label labelInformationOrders;
+        private ColumnHeader columnHeaderName;
+        private ColumnHeader columnHeaderComment;
+        private ColumnHeader columnHeaderAmount;
+        private Panel panel1;
+        private Button buttonRemoveSelected;
+        private Button buttonRemoveAll;
     }
 }
