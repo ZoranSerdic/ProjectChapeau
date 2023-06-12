@@ -110,6 +110,7 @@
             button_login.TabIndex = 8;
             button_login.Text = "LOGIN";
             button_login.UseVisualStyleBackColor = false;
+            button_login.Click += button_login_Click;
             // 
             // label_login_name
             // 
@@ -126,6 +127,7 @@
             // 
             textBox_login_pincode.Location = new Point(128, 527);
             textBox_login_pincode.Name = "textBox_login_pincode";
+            textBox_login_pincode.PasswordChar = '*';
             textBox_login_pincode.Size = new Size(201, 27);
             textBox_login_pincode.TabIndex = 10;
             // 

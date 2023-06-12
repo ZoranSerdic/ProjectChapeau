@@ -15,10 +15,12 @@ namespace ChapeauUI
     public partial class TableView : Form
     { 
         private Table table;
-
+        private Employee employee;
+        private TableService tableService;
         public TableView()
         {
             InitializeComponent();
+            //this.employee = employee;
         }
 
         private void TableView_Load(object sender, EventArgs e)
@@ -35,7 +37,7 @@ namespace ChapeauUI
             int numColumns = 2;
             int numRows = 5;
 
-            TableService tableService = new TableService();
+            tableService = new TableService();
             List<Table> tables = tableService.GetAllTables();
 
             int formWidth = numColumns * (buttonSize + spacing) + spacing;
@@ -76,7 +78,6 @@ namespace ChapeauUI
             int buttonY = spacing + row * (buttonSize + spacing);
 
             button.Location = new Point(buttonX, buttonY);
-            this.table = table;
             button.Click += (sender, e) => Button_Click(table);
 
             Controls.Add(button);
@@ -86,8 +87,8 @@ namespace ChapeauUI
         void btnLogOut_Click(object sender, EventArgs e)
         {
             this.Hide();
-            LoginView loginView = new LoginView();
-            loginView.ShowDialog();
+            Login login = new Login();
+            login.ShowDialog();
             this.Close();
         }
         void Button_Click(Table table)
@@ -97,7 +98,6 @@ namespace ChapeauUI
             UpdateButtonAppearance(table);
 
             // Update the table status in the database
-            TableService tableService = new TableService();
             tableService.UpdateTableStatus(table.TableId, table.Status);
             TablePopup TablePopup = new TablePopup(table, this);
             TablePopup.ShowDialog();

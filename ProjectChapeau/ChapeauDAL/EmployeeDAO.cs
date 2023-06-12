@@ -85,7 +85,23 @@ namespace ChapeauDAL
                 return employee;
             }
             throw new Exception($"Employee with the {employeeId} id was not found!");
-    }
+        }
+        public Employee GetEmployeeByPassword(string employeePassword)
+        {
+            string query = @"SELECT employeeId, [hash], firstname, lastname, occupation FROM Employee
+                           WHERE [hash] = @hash";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@hash", employeePassword);
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+            if (dataTable.Rows.Count > 0)
+            {
+                DataRow dataRow = dataTable.Rows[0];
+                Employee employee = ReadEmployee(dataRow);
+                return employee;
+            }
+            throw new Exception($"Employee with the {employeePassword} paswword not found!");
+        }
 
         private Employee ReadEmployee(DataRow dataRow)
         {
