@@ -16,7 +16,7 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        Order order = new Order();
+        private Order order = new Order();
 
         private MenuItemService menuItemService = new MenuItemService();
         private OrderItemService orderItemService = new OrderItemService();
@@ -32,14 +32,13 @@ namespace ChapeauUI
         // TODO: Bianca's tableview gives Table tableID & Employee for Order order
         public OrderView(Table table, Employee employee)
         {
+            CreateOrder(table, employee);
             string tableId = table.TableId.ToString();
 
             FillMenuItemList(FoodType.Starter, MenuType.Lunch);
             InitializeComponent();
             labelTableNumber.Text = $"Table {tableId}";
             DisplayItems(currentMenuItems);
-
-            CreateOrder(table, employee);
         }
 
         private void FillMenuItemList(FoodType foodType, MenuType menuType)
@@ -134,9 +133,6 @@ namespace ChapeauUI
 
         private void buttonCloseOrder_Click(object sender, EventArgs e)
         {
-            TableView tableView = new TableView();
-            this.Hide();
-            tableView.ShowDialog();
             this.Close();
         }
 
@@ -147,11 +143,14 @@ namespace ChapeauUI
 
             if (dialogResult == DialogResult.OK)
             {
-
+                order = orderFinalise.Order;
+                AddOrderItem(order);
+                // call method to reduce stock amount
+                this.Close();
             }
             else if (dialogResult == DialogResult.Cancel)
             {
-
+                order = orderFinalise.Order;
             }
         }
 
@@ -223,7 +222,7 @@ namespace ChapeauUI
                     orderItem.Comment = orderPopup.Comment;
                     orderItem.Amount = orderPopup.Amount;
                     orderItem.Status = OrderedItemStatus.Sent;
-                    orderItem.PreparedAt = null;
+                    orderItem.PreparedAt = DateTime.Now;
 
                     // Add to list
                     order.OrderedItems.Add(orderItem);
@@ -254,9 +253,8 @@ namespace ChapeauUI
             order.IsPaid = false;
             order.OrderedItems = new List<OrderItem>();
 
-            order.OrderId = 200;
-            //order.OrderId = orderItemService.CreateOrder(order);
-            //labelTableNumber.Text = $"Order {order.OrderId.ToString()}";
+            // Creates order in the database
+            order.OrderId = orderItemService.CreateOrder(order);
         }
 
         public void AddOrderItem(Order order)
@@ -265,6 +263,12 @@ namespace ChapeauUI
             {
                 orderItemService.AddOrderItem(orderItem);
             }
+        }
+
+        // Call when order is finalised and done
+        public void ReduceStockQuery(int amount, int inventoryItemId)
+        {
+            // TODO: create query to reduce stock amount
         }
     }
 }

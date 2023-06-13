@@ -15,8 +15,6 @@ namespace ChapeauUI
     {
         public Order Order { get; private set; }
 
-        public DialogResult Result { get; private set; }
-
         public OrderFinalise(Order order)
         {
             InitializeComponent();
@@ -42,13 +40,13 @@ namespace ChapeauUI
 
         private void buttonConfirmOrder_Click(object sender, EventArgs e)
         {
-            Result = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             this.Close();
         }
 
         private void buttonGoBack_Click(object sender, EventArgs e)
         {
-            Result = DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -62,14 +60,10 @@ namespace ChapeauUI
             }
         }
 
-        private void buttonDeleteAll_Click(object sender, EventArgs e)
+        private void buttonRemoveAllOrders_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void buttonDeleteSelected_Click(object sender, EventArgs e)
-        {
-
+            listViewOrders.Clear();
+            Order.OrderedItems.Clear();
         }
     }
 }

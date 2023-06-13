@@ -45,8 +45,7 @@
             this.panelWhiteBackground = new System.Windows.Forms.Panel();
             this.labelInformationOrders = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonRemoveSelected = new System.Windows.Forms.Button();
-            this.buttonRemoveAll = new System.Windows.Forms.Button();
+            this.buttonRemoveAllOrders = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxChapeauLogo)).BeginInit();
             this.panelMenuBackground.SuspendLayout();
             this.panelWhiteBackground.SuspendLayout();
@@ -126,12 +125,13 @@
             this.listViewOrders.Size = new System.Drawing.Size(508, 602);
             this.listViewOrders.TabIndex = 35;
             this.listViewOrders.UseCompatibleStateImageBehavior = false;
+            this.listViewOrders.View = System.Windows.Forms.View.Details;
             this.listViewOrders.SelectedIndexChanged += new System.EventHandler(this.listViewOrders_SelectedIndexChanged);
             // 
             // columnHeaderName
             // 
             this.columnHeaderName.Text = "Name";
-            this.columnHeaderName.Width = 180;
+            this.columnHeaderName.Width = 160;
             // 
             // columnHeaderComment
             // 
@@ -140,8 +140,7 @@
             // 
             // columnHeaderAmount
             // 
-            this.columnHeaderAmount.Text = "ColumnHeaderAmount";
-            this.columnHeaderAmount.Width = 20;
+            this.columnHeaderAmount.Text = "Amount";
             // 
             // labelMenuType
             // 
@@ -205,41 +204,26 @@
             this.panel1.Size = new System.Drawing.Size(532, 11);
             this.panel1.TabIndex = 31;
             // 
-            // buttonRemoveSelected
+            // buttonRemoveAllOrders
             // 
-            this.buttonRemoveSelected.AutoSize = true;
-            this.buttonRemoveSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
-            this.buttonRemoveSelected.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.buttonRemoveSelected.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonRemoveSelected.Location = new System.Drawing.Point(250, 775);
-            this.buttonRemoveSelected.Name = "buttonRemoveSelected";
-            this.buttonRemoveSelected.Size = new System.Drawing.Size(267, 70);
-            this.buttonRemoveSelected.TabIndex = 37;
-            this.buttonRemoveSelected.Text = "Remove Selected";
-            this.buttonRemoveSelected.UseVisualStyleBackColor = false;
-            this.buttonRemoveSelected.Click += new System.EventHandler(this.buttonDeleteSelected_Click);
-            // 
-            // buttonRemoveAll
-            // 
-            this.buttonRemoveAll.AutoSize = true;
-            this.buttonRemoveAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
-            this.buttonRemoveAll.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.buttonRemoveAll.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonRemoveAll.Location = new System.Drawing.Point(33, 775);
-            this.buttonRemoveAll.Name = "buttonRemoveAll";
-            this.buttonRemoveAll.Size = new System.Drawing.Size(187, 70);
-            this.buttonRemoveAll.TabIndex = 38;
-            this.buttonRemoveAll.Text = "Remove All";
-            this.buttonRemoveAll.UseVisualStyleBackColor = false;
-            this.buttonRemoveAll.Click += new System.EventHandler(this.buttonDeleteAll_Click);
+            this.buttonRemoveAllOrders.AutoSize = true;
+            this.buttonRemoveAllOrders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(68)))), ((int)(((byte)(75)))));
+            this.buttonRemoveAllOrders.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonRemoveAllOrders.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.buttonRemoveAllOrders.Location = new System.Drawing.Point(106, 776);
+            this.buttonRemoveAllOrders.Name = "buttonRemoveAllOrders";
+            this.buttonRemoveAllOrders.Size = new System.Drawing.Size(313, 70);
+            this.buttonRemoveAllOrders.TabIndex = 37;
+            this.buttonRemoveAllOrders.Text = "Remove all Orders";
+            this.buttonRemoveAllOrders.UseVisualStyleBackColor = false;
+            this.buttonRemoveAllOrders.Click += new System.EventHandler(this.buttonRemoveAllOrders_Click);
             // 
             // OrderFinalise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 953);
-            this.Controls.Add(this.buttonRemoveAll);
-            this.Controls.Add(this.buttonRemoveSelected);
+            this.Controls.Add(this.buttonRemoveAllOrders);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonConfirmOrder);
             this.Controls.Add(this.buttonGoBack);
@@ -279,7 +263,6 @@
         private ColumnHeader columnHeaderComment;
         private ColumnHeader columnHeaderAmount;
         private Panel panel1;
-        private Button buttonRemoveSelected;
-        private Button buttonRemoveAll;
+        private Button buttonRemoveAllOrders;
     }
 }

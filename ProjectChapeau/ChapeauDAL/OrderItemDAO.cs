@@ -100,12 +100,12 @@ namespace ChapeauDAL
         {
             try
             {
-                // This method adds an OrderItem(ConsistOf) in Order
-                string query = "INSERT INTO ConsistOf (orderId, menuItemId, comment, amount, status, preparedAt) " +
+                // This method adds an OrderItem(ConsistsOf) in Order
+                string query = "INSERT INTO ConsistsOf (orderId, menuItemId, comment, amount, status, preparedAt) " +
                     "VALUES (@orderId, @menuItemId, @comment, @amount, @status, @preparedAt);";
-                SqlParameter[] sqlParameters = new SqlParameter[5];
+                SqlParameter[] sqlParameters = new SqlParameter[6];
                 sqlParameters[0] = new SqlParameter("@orderId", item.OrderItemId);
-                sqlParameters[1] = new SqlParameter("@menuItemId", item.MenuItem);
+                sqlParameters[1] = new SqlParameter("@menuItemId", item.MenuItem.MenuItemId);
                 sqlParameters[2] = new SqlParameter("@comment", item.Comment);
                 sqlParameters[3] = new SqlParameter("@amount", item.Amount);
                 sqlParameters[4] = new SqlParameter("@status", item.Status);
