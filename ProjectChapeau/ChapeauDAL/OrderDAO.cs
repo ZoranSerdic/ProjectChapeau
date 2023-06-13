@@ -58,6 +58,10 @@ namespace ChapeauDAL
 
             return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
         }
+        private List<Order> GetOrdersByTableId(int tableId)
+        {
+            
+        }
         public void UpdateOrderPaidStatus(Table table)
         {
             string query = "UPDATE [Order] SET isPayed = 1 WHERE tableId = @tableId";

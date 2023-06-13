@@ -32,7 +32,7 @@ namespace ChapeauUI
 
         private void button_login_Click(object sender, EventArgs e)
         {
-            if ((this.textBox_login_name.Text) == null || (this.textBox_login_pincode.Text) == null)
+            if ((this.textBox_login_name.Text) == "" || (this.textBox_login_pincode.Text) == "")
             {
                 MessageBox.Show("Log in failed! Please enter your correct name and pin code!", "Message", MessageBoxButtons.OK);
             }
@@ -68,7 +68,7 @@ namespace ChapeauUI
                             break;
                         case ChapeauModel.Role.Waiter:
                             this.Hide();
-                            TableView tableView = new TableView();
+                            TableView tableView = new TableView(employee);
                             tableView.ShowDialog();
                             this.Close();
                             break;

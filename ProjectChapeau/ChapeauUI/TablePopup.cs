@@ -31,15 +31,15 @@ namespace ChapeauUI
         private void buttonGenerateBill_Click(object sender, EventArgs e)
         {
             //if (table.Status == TableStatus.Occupied)
-           // {
+            // {
             //    PaymentView paymentView = new PaymentView(table);
-             //   this.Hide();
-              //  paymentView.ShowDialog();
-              //  this.Close();
-           // }
-           // else
-             //   MessageBox.Show("This table did not ordered anything yet", "Message", MessageBoxButtons.OK);
-           
+            //   this.Hide();
+            //  paymentView.ShowDialog();
+            //  this.Close();
+            // }
+            // else
+            //   MessageBox.Show("This table did not ordered anything yet", "Message", MessageBoxButtons.OK);
+
         }
 
         private void buttonCancelOccupation_Click(object sender, EventArgs e)
@@ -60,7 +60,7 @@ namespace ChapeauUI
 
         private void buttonPlaceOrder_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

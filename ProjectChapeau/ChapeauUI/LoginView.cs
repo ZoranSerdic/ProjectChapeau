@@ -13,6 +13,7 @@ namespace ChapeauUI
 {
     public partial class LoginView : Form
     {
+        private Employee employee;
         public LoginView()
         {
             InitializeComponent();
@@ -20,8 +21,9 @@ namespace ChapeauUI
 
         private void btnTableView_Click(object sender, EventArgs e)
         {
+            this.employee = new Employee();
             //Use this way to open the other forms in this order
-            TableView tableView = new TableView();
+            TableView tableView = new TableView(employee);
             this.Hide();
             tableView.ShowDialog();
             this.Close();
@@ -34,7 +36,7 @@ namespace ChapeauUI
             table.TableId = 9;
             table.Status = TableStatus.Occupied;
 
-            Employee employee = new Employee();
+            employee = new Employee();
             employee.EmployeeId = 1;
             employee.Pincode = "pincode";
             employee.FirstName = "Bob";
@@ -61,7 +63,7 @@ namespace ChapeauUI
             Table table = new Table();
             table.TableId = 2;
             table.Status = TableStatus.Occupied;
-            PaymentView paymentView = new PaymentView(table);
+            PaymentView paymentView = new PaymentView(table, employee);
             this.Hide();
             paymentView.ShowDialog();
             this.Close();
@@ -69,7 +71,7 @@ namespace ChapeauUI
 
         private void btnManagerView_Click(object sender, EventArgs e)
         {
-            ManagerView managerView = new ManagerView();
+            ManagerView managerView = new ManagerView(employee);
             this.Hide();
             managerView.ShowDialog();
             this.Close();

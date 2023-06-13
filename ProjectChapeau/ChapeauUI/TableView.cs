@@ -17,10 +17,10 @@ namespace ChapeauUI
         private Table table;
         private Employee employee;
         private TableService tableService;
-        public TableView()
+        public TableView(Employee employee)
         {
             InitializeComponent();
-            //this.employee = employee;
+            this.employee = employee;
         }
 
         private void TableView_Load(object sender, EventArgs e)
