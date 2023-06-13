@@ -16,9 +16,6 @@ namespace ChapeauModel
         public FoodType? CourseType { get; set; }
         public MenuType? MenuType { get; set; }
 
-        public MenuItem()
-        {
-            // a constructor without any parameters 
-        }
+        
     }
 }

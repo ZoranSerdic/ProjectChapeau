@@ -16,18 +16,5 @@ namespace ChapeauModel
         public string? Comment { get; set; }
         public bool IsOpen { get; set; }
 
-        public Bill() 
-        { 
-
-        }
-        public Bill(Table table, decimal totalAmount, decimal totalTip, DateTime date, string? comment, bool isOpen)
-        {
-            Table = table;
-            TotalAmount = totalAmount;
-            TotalTip = totalTip;
-            Date = date;
-            Comment = comment;
-            IsOpen = isOpen;
-        }
     }
 }

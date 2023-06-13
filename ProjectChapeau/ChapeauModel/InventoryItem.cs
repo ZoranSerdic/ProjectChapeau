@@ -13,15 +13,6 @@ namespace ChapeauModel
         public int InStock { get; set; }
         public int MenuItemID { get; set; } 
 
-        public InventoryItem()
-        {
-             //empty constructor 
-        }
-        public InventoryItem(int inventoryItemId, string name, double price, int inStock)
-        {
-            InventoryItemId = inventoryItemId;
-            Name = name;
-            InStock = inStock;
-        }
+      
     }
 }

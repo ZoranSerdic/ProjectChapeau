@@ -15,9 +15,5 @@ namespace ChapeauModel
         public Employee Employee { get; set; }
         public List<OrderItem> OrderedItems { get; set; }
 
-        public Order()
-        {
-            
-        }
     }
 }
