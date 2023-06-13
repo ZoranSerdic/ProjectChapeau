@@ -87,7 +87,7 @@
             buttonGenerateBill.BackColor = Color.FromArgb(16, 115, 26);
             buttonGenerateBill.Font = new Font("Impact", 22.2F, FontStyle.Regular, GraphicsUnit.Point);
             buttonGenerateBill.ForeColor = Color.White;
-            buttonGenerateBill.Location = new Point(105, 211);
+            buttonGenerateBill.Location = new Point(128, 705);
             buttonGenerateBill.Name = "buttonGenerateBill";
             buttonGenerateBill.Size = new Size(292, 66);
             buttonGenerateBill.TabIndex = 4;
@@ -100,7 +100,7 @@
             buttonGoBack.BackColor = Color.FromArgb(204, 68, 75);
             buttonGoBack.Font = new Font("Impact", 22.2F, FontStyle.Regular, GraphicsUnit.Point);
             buttonGoBack.ForeColor = Color.White;
-            buttonGoBack.Location = new Point(12, 362);
+            buttonGoBack.Location = new Point(12, 879);
             buttonGoBack.Name = "buttonGoBack";
             buttonGoBack.Size = new Size(166, 62);
             buttonGoBack.TabIndex = 5;
@@ -113,7 +113,7 @@
             buttonCancelOccupation.BackColor = Color.FromArgb(204, 68, 75);
             buttonCancelOccupation.Font = new Font("Impact", 22.2F, FontStyle.Regular, GraphicsUnit.Point);
             buttonCancelOccupation.ForeColor = Color.White;
-            buttonCancelOccupation.Location = new Point(193, 362);
+            buttonCancelOccupation.Location = new Point(202, 879);
             buttonCancelOccupation.Name = "buttonCancelOccupation";
             buttonCancelOccupation.Size = new Size(318, 62);
             buttonCancelOccupation.TabIndex = 6;
@@ -125,8 +125,8 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(210, 210, 210);
-            ClientSize = new Size(523, 455);
+            BackColor = Color.FromArgb(229, 234, 250);
+            ClientSize = new Size(532, 953);
             Controls.Add(buttonCancelOccupation);
             Controls.Add(buttonGoBack);
             Controls.Add(buttonGenerateBill);

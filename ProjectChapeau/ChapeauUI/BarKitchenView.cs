@@ -326,11 +326,10 @@ namespace ChapeauUI
         {
             try
             {
-                // add code for logging out the user
-                LoginView loginView = new LoginView();
-                Hide();
-                loginView.ShowDialog();
-                Close();
+                this.Hide();
+                Login login = new Login();
+                login.ShowDialog();
+                this.Close();
             }
             catch (Exception ex)
             {

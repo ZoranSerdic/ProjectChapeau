@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChapeauModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,11 @@ namespace ChapeauUI
 {
     public partial class ManagerView : Form
     {
-        public ManagerView()
+        private Employee employee;
+        public ManagerView(Employee employee)
         {
             InitializeComponent();
+            this.employee = employee;
         }
 
         private void ManagerView_Load(object sender, EventArgs e)
@@ -41,7 +44,7 @@ namespace ChapeauUI
         private void btnTableOverview_Click(object sender, EventArgs e)
         {
             this.Hide();
-            TableView tableView = new TableView();
+            TableView tableView = new TableView(employee);
             tableView.ShowDialog();
             this.Close();
         }
@@ -57,8 +60,8 @@ namespace ChapeauUI
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             this.Hide();
-            LoginView loginView = new LoginView();
-            loginView.ShowDialog();
+            Login login = new Login();
+            login.ShowDialog();
             this.Close();
         }
 
