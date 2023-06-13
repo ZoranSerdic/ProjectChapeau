@@ -55,7 +55,7 @@ namespace ChapeauUI
                     {
                         case ChapeauModel.Role.Manager:
                             this.Hide();
-                            ManagerView managerView = new ManagerView(employee);
+                            ManagerView managerView = new ManagerView();
                             managerView.ShowDialog();
                             this.Close();
                             break;
