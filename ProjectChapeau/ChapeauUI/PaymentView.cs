@@ -308,7 +308,7 @@ namespace ChapeauUI
             {
                 this.Hide();
                 TableView tableview = new TableView(loggedInEmployee);
-                tableview.ShowDialog(); //pass employee?
+                tableview.ShowDialog();
                 this.Close();
             }
         }

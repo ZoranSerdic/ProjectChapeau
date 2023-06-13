@@ -203,8 +203,8 @@ namespace ChapeauUI
 
                 billService.CloseBill(bill);
 
-                //orderService.UpdateOrderPaidStatus(bill.Table);  
-                //tableService.UpdateTableStatus(bill.Table.TableId, TableStatus.Free);
+                orderService.UpdateOrderPaidStatus(bill.Table);  
+                tableService.UpdateTableStatus(bill.Table.TableId, TableStatus.Free);
             }
         }
         private void txtTotal_TextChanged(object sender, EventArgs e)
@@ -259,7 +259,7 @@ namespace ChapeauUI
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Hide();
-            TableView tableView = new TableView(loggedInEmployee); //Do I need to pass an employee? Or launch loginview instead?
+            TableView tableView = new TableView(loggedInEmployee); 
             tableView.ShowDialog();
             this.Close();
         }
