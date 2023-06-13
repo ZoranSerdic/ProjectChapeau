@@ -62,7 +62,7 @@ namespace ChapeauUI
         {
             Employee employee = new Employee();
             Table table = new Table();
-            table.TableId = 2;
+            table.TableId = 9;
             table.Status = TableStatus.Occupied;
             PaymentView paymentView = new PaymentView(table, employee);
             this.Hide();
