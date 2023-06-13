@@ -17,8 +17,9 @@ namespace ChapeauUI
         private MenuItem selectedItem;
         MenuItemService menuItemsService;
         List<MenuItem> items;
+        Employee employee;
 
-        public MenuViewAllItems()
+        public MenuViewAllItems(Employee employee)
         {
             InitializeComponent();
             items = new List<MenuItem>();
@@ -26,6 +27,7 @@ namespace ChapeauUI
             items.AddRange(menuItemsService.GetAllMenuItems());
 
             DisplayMenuItems(items);
+            this.employee = employee;
         }
 
         //fills the listview with all the items 
@@ -92,7 +94,7 @@ namespace ChapeauUI
         private void ChangeToEditEmployee()
         {
             this.Hide();
-            NewMenuItem editMenuItem = new NewMenuItem(this.selectedItem);
+            NewMenuItem editMenuItem = new NewMenuItem(this.selectedItem, employee);
             editMenuItem.ShowDialog();
             this.Close();
         }
@@ -100,7 +102,7 @@ namespace ChapeauUI
         private void btnAdd_Click(object sender, EventArgs e)
         {
             this.Hide();
-            NewMenuItem newEmployee = new NewMenuItem();
+            NewMenuItem newEmployee = new NewMenuItem(this.employee);
             newEmployee.ShowDialog();
             this.Close();
         }
@@ -144,9 +146,9 @@ namespace ChapeauUI
         }
         private void Return()
         {
-            //this.Hide();
-            //ManagerView managerView = new ManagerView();
-            //managerView.ShowDialog();
+            this.Hide();
+            ManagerView managerView = new ManagerView(this.employee);
+            managerView.ShowDialog();
             this.Close();
         }
     }

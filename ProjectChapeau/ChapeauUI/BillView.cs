@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,8 +15,10 @@ namespace ChapeauUI
 {
     public partial class BillView : Form
     {
-        public BillView()
+        Employee employee;
+        public BillView(Employee employee)
         {
+            this.employee = employee;
             InitializeComponent();
             BillService service = new BillService();
             DisplayBills(service.GetAllBills());
@@ -53,9 +56,9 @@ namespace ChapeauUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            //this.Hide();
-            //ManagerView overview = new ManagerView();
-            //overview.ShowDialog();
+            this.Hide();
+            ManagerView overview = new ManagerView(this.employee);
+            overview.ShowDialog();
             this.Close();
         }
     }

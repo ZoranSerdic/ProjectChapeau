@@ -17,21 +17,24 @@ namespace ChapeauUI
 {
     public partial class NewEmployee : Form
     {
+        Employee employee;
         private Employee newEmployee;
         private Employee employeeToUpdate;
         private EmployeeService service;
         private bool update;
-        public NewEmployee()
-        {
-            InitializeComponent();
-            service = new EmployeeService();
-            update = false;
-        }
         public NewEmployee(Employee employee)
         {
             InitializeComponent();
+            this.employee = employee;
             service = new EmployeeService();
-            employeeToUpdate = employee;
+            update = false;
+        }
+        public NewEmployee(Employee employeeToUpdate, Employee employee)
+        {
+            InitializeComponent();
+            this.employee = employee;
+            this.employeeToUpdate = employeeToUpdate;
+            service = new EmployeeService();
             update = true;
             PrefillForm();
         }
@@ -198,7 +201,7 @@ namespace ChapeauUI
         private void ReturnToEmployeeOverview()
         {
             this.Hide();
-            ManagerEmployeeOverview overview = new ManagerEmployeeOverview();
+            ManagerEmployeeOverview overview = new ManagerEmployeeOverview(this.employee);
             overview.ShowDialog();
             this.Close();
         }

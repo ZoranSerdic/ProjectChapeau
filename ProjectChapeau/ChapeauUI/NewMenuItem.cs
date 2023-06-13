@@ -16,16 +16,19 @@ namespace ChapeauUI
     {
         MenuItemService menuItemService;
         MenuItem newItem;
+        Employee employee;
         int idToBeUpdated;
         private bool update;
-        public NewMenuItem()
+        public NewMenuItem(Employee employee)
         {
             InitializeComponent();
             menuItemService = new MenuItemService();
+            this.employee = employee;   
         }
-        public NewMenuItem(MenuItem item)
+        public NewMenuItem(MenuItem item, Employee employee)
         {
             InitializeComponent();
+            this.employee = employee; 
             menuItemService = new MenuItemService();
             update = true;
             idToBeUpdated = item.MenuItemId;
@@ -182,7 +185,7 @@ namespace ChapeauUI
         private void ReturnToMenu()
         {
             this.Hide();
-            MenuViewAllItems menuOverviewView = new MenuViewAllItems();
+            MenuViewAllItems menuOverviewView = new MenuViewAllItems(this.employee);
             menuOverviewView.ShowDialog();
             this.Close();
         }

@@ -14,15 +14,18 @@ namespace ChapeauUI
 {
     public partial class InventoryOverview : Form
     {
+        Employee employee;
         InventoryItemService service;
         InventoryItem selectedItem;
-        bool update = false;
-        public InventoryOverview()
+        bool update;
+        public InventoryOverview(Employee employee)
         {
             service = new InventoryItemService();
             InitializeComponent();
             panelAdd.Hide();
+            update = false;
             DisplayItems(service.GetInventoryItems());
+            this.employee = employee;
         }
         public void DisplayItems(List<InventoryItem> items)
         {
@@ -65,7 +68,7 @@ namespace ChapeauUI
                     }
                     catch (Exception exception)
                     {
-                        MessageBox.Show(exception.Message); 
+                        MessageBox.Show(exception.Message);
                     }
                 }
             }
@@ -84,6 +87,8 @@ namespace ChapeauUI
         {
             btnConfirm.Text = "Add item";
             panelAdd.Show();
+            txtBoxMenuId.Show();
+            lblName.Show();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -121,6 +126,7 @@ namespace ChapeauUI
                 {
                     MessageBox.Show(exception.Message);
                 }
+
                 panelAdd.Hide();
                 ClearTextBoxes();
                 UpdateListView();
@@ -174,7 +180,7 @@ namespace ChapeauUI
                 update = true;
                 btnConfirm.Text = "Update";
                 panelAdd.Show();
-                txtBoxMenuId.Hide();    
+                txtBoxMenuId.Hide();
                 lblName.Hide();
             }
             else
@@ -189,9 +195,9 @@ namespace ChapeauUI
         }
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            //this.Hide();
-            //ManagerView managerView = new ManagerView();
-            //managerView.ShowDialog();
+            this.Hide();
+            ManagerView managerView = new ManagerView(this.employee);
+            managerView.ShowDialog();
             this.Close();
         }
     }

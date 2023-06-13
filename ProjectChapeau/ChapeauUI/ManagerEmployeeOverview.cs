@@ -14,11 +14,13 @@ namespace ChapeauUI
 {
     public partial class ManagerEmployeeOverview : Form
     {
+        Employee employee;
         private Employee selectedEmployee;
         private EmployeeService service;
 
-        public ManagerEmployeeOverview()
+        public ManagerEmployeeOverview(Employee employee)
         {
+            this.employee = employee;
             InitializeComponent();
             service = new EmployeeService();
             DisplayEmployees(service.GetAllEmployees());
@@ -61,16 +63,16 @@ namespace ChapeauUI
         private void btnAddNewEmployee_Click(object sender, EventArgs e)
         {
             this.Hide();
-            NewEmployee newEmployee = new NewEmployee();
+            NewEmployee newEmployee = new NewEmployee(this.employee);
             newEmployee.ShowDialog();
             this.Close();
         }
         private void ReturnToManagerView()
         {
             this.Hide();
-            //ManagerView managerView = new ManagerView();
-            //managerView.ShowDialog();
-            //this.Close();
+            ManagerView managerView = new ManagerView(this.employee);
+            managerView.ShowDialog();
+            this.Close();
         }
 
         private void BtnRemoveEmployee_Click(object sender, EventArgs e)
@@ -140,7 +142,7 @@ namespace ChapeauUI
         private void ChangeToEditEmployee(Employee selectedEmployee)
         {
             this.Hide();
-            NewEmployee editEmployee = new NewEmployee(selectedEmployee);
+            NewEmployee editEmployee = new NewEmployee(selectedEmployee, this.employee);
             editEmployee.ShowDialog();
             this.Close();
         }

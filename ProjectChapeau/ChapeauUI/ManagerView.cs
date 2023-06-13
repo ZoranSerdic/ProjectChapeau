@@ -28,17 +28,17 @@ namespace ChapeauUI
         private void btnStock_Click(object sender, EventArgs e)
         {
             this.Hide();
-            InventoryOverview inventoryOverview = new InventoryOverview();
+            InventoryOverview inventoryOverview = new InventoryOverview(this.employee);
             inventoryOverview.ShowDialog();
-            //this.Close();
+            this.Close();
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MenuViewAllItems menu = new MenuViewAllItems();
+            MenuViewAllItems menu = new MenuViewAllItems(this.employee);
             menu.ShowDialog();
-            //this.Close();
+            this.Close();
         }
 
         private void btnTableOverview_Click(object sender, EventArgs e)
@@ -46,15 +46,15 @@ namespace ChapeauUI
             this.Hide();
             TableView tableView = new TableView(employee);
             tableView.ShowDialog();
-            //this.Close();
+            this.Close();
         }
 
         private void btnEmployees_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview();
+            ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview(this.employee);
             employeeOverview.ShowDialog();
-            //this.Close();
+            this.Close();
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -62,15 +62,15 @@ namespace ChapeauUI
             this.Hide();
             Login login = new Login();
             login.ShowDialog();
-            //this.Close();
+            this.Close();
         }
 
         private void btnBills_Click(object sender, EventArgs e)
         {
-            //this.Hide();
-            BillView billsView = new BillView();
+            this.Hide();
+            BillView billsView = new BillView(this.employee);
             billsView.ShowDialog();
-            this.Refresh();
+            this.Close();
         }
     }
 }
