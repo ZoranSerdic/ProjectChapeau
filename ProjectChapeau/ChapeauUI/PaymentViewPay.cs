@@ -82,8 +82,8 @@ namespace ChapeauUI
                 paymentService.AddPayment(payment);
                 billService.CloseBill(bill);
 
-                //orderService.UpdateOrderPaidStatus(bill.Table);
-                //tableService.UpdateTableStatus(bill.Table.TableId, TableStatus.Free);
+                orderService.UpdateOrderPaidStatus(bill.Table);
+                tableService.UpdateTableStatus(bill.Table.TableId, TableStatus.Free);
 
                 HideInputFields();
                 ShowSuccessFields();
