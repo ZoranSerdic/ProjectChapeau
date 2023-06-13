@@ -68,9 +68,9 @@ namespace ChapeauUI
         private void ReturnToManagerView()
         {
             this.Hide();
-            ManagerView managerView = new ManagerView();
-            managerView.ShowDialog();
-            this.Close();
+            //ManagerView managerView = new ManagerView();
+            //managerView.ShowDialog();
+            //this.Close();
         }
 
         private void BtnRemoveEmployee_Click(object sender, EventArgs e)
