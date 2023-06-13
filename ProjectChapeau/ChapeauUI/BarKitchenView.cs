@@ -12,7 +12,7 @@ namespace ChapeauUI
         private OrderService orderService;
         private Employee loggedInEmployee;
         private OrderItemService orderItemService;
-        public BarKitchenView() // Employee loggedInEmployee
+        public BarKitchenView(Employee loggedInEmployee)
         {
             InitializeComponent();
 
@@ -23,7 +23,7 @@ namespace ChapeauUI
             labelHistory.Hide();
 
             orderService = new OrderService();
-            loggedInEmployee = new Employee();
+            this.loggedInEmployee = loggedInEmployee;
             orderItemService = new OrderItemService();
 
             loggedInEmployee.Occupation = Role.Barman; // delete this later
