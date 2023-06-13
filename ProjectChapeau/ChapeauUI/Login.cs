@@ -60,10 +60,15 @@ namespace ChapeauUI
                             this.Close();
                             break;
                         case ChapeauModel.Role.Chef:
+                            this.Hide();
+                            BarKitchenView kitchenView = new BarKitchenView(employee);
+                            kitchenView.ShowDialog();
+                            this.Close();
+                            break;
                         case ChapeauModel.Role.Barman:
                             this.Hide();
-                            BarKitchenView barKitchenView = new BarKitchenView();
-                            barKitchenView.ShowDialog();
+                            BarKitchenView barView = new BarKitchenView(employee);
+                            barView.ShowDialog();
                             this.Close();
                             break;
                         case ChapeauModel.Role.Waiter:
