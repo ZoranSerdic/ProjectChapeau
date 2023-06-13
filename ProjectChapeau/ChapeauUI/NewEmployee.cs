@@ -18,7 +18,7 @@ namespace ChapeauUI
     public partial class NewEmployee : Form
     {
         private Employee newEmployee;
-        private Employee employeeToUpdate; 
+        private Employee employeeToUpdate;
         private EmployeeService service;
         private bool update;
         public NewEmployee()
@@ -32,8 +32,8 @@ namespace ChapeauUI
             InitializeComponent();
             service = new EmployeeService();
             employeeToUpdate = employee;
-            update = true; 
-            PrefillForm();  
+            update = true;
+            PrefillForm();
         }
         private void PrefillForm()
         {
@@ -51,7 +51,7 @@ namespace ChapeauUI
             else
                 radBtnWaiter.Checked = true;
         }
-        
+
 
         private void btnConfirm_Click(object sender, EventArgs e)
         {
