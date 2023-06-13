@@ -144,9 +144,9 @@ namespace ChapeauUI
         }
         private void Return()
         {
-            this.Hide();
-            ManagerView managerView = new ManagerView();
-            managerView.ShowDialog();
+            //this.Hide();
+            //ManagerView managerView = new ManagerView();
+            //managerView.ShowDialog();
             this.Close();
         }
     }

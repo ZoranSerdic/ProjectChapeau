@@ -189,9 +189,9 @@ namespace ChapeauUI
         }
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ManagerView managerView = new ManagerView();
-            managerView.ShowDialog();
+            //this.Hide();
+            //ManagerView managerView = new ManagerView();
+            //managerView.ShowDialog();
             this.Close();
         }
     }
