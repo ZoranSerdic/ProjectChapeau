@@ -20,8 +20,9 @@ namespace ChapeauUI
 
         private void btnTableView_Click(object sender, EventArgs e)
         {
+            Employee employee = new Employee();
             //Use this way to open the other forms in this order
-            TableView tableView = new TableView();
+            TableView tableView = new TableView(employee);
             this.Hide();
             tableView.ShowDialog();
             this.Close();
@@ -50,7 +51,8 @@ namespace ChapeauUI
 
         private void btnBarKitchenView_Click(object sender, EventArgs e)
         {
-            BarKitchenView barKitchenView = new BarKitchenView();
+            Employee employee = new Employee();
+            BarKitchenView barKitchenView = new BarKitchenView(employee);
             this.Hide();
             barKitchenView.ShowDialog();
             this.Close();
@@ -58,10 +60,11 @@ namespace ChapeauUI
 
         private void btnPaymentView_Click(object sender, EventArgs e)
         {
+            Employee employee = new Employee();
             Table table = new Table();
             table.TableId = 2;
             table.Status = TableStatus.Occupied;
-            PaymentView paymentView = new PaymentView(table);
+            PaymentView paymentView = new PaymentView(table, employee);
             this.Hide();
             paymentView.ShowDialog();
             this.Close();
