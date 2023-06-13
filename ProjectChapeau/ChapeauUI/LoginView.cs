@@ -72,6 +72,7 @@ namespace ChapeauUI
 
         private void btnManagerView_Click(object sender, EventArgs e)
         {
+
             ManagerView managerView = new ManagerView();
             this.Hide();
             managerView.ShowDialog();
