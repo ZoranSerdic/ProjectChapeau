@@ -12,7 +12,7 @@ namespace ChapeauUI
         private OrderService orderService;
         private Employee loggedInEmployee;
         private OrderItemService orderItemService;
-        public BarKitchenView() // Employee loggedInEmployee
+        public BarKitchenView(Employee loggedInEmployee)
         {
             InitializeComponent();
 
@@ -26,8 +26,8 @@ namespace ChapeauUI
             loggedInEmployee = new Employee();
             orderItemService = new OrderItemService();
 
-            loggedInEmployee.Occupation = Role.Barman; // delete this later
-            //this.loggedInEmployee = loggedInEmployee;
+          //  loggedInEmployee.Occupation = Role.Barman; // delete this later
+            this.loggedInEmployee = loggedInEmployee;
 
             DisplayUnpreparedOrders(); // in the beginning the open orders are displayed
             timerRefreshDisplay.Start();
@@ -319,11 +319,6 @@ namespace ChapeauUI
 
         private void buttonLogOut_Click(object sender, EventArgs e)
         {
-            LogOut();
-        }
-
-        private void LogOut()
-        {
             try
             {
                 this.Hide();
@@ -336,7 +331,6 @@ namespace ChapeauUI
                 MessageBox.Show("The error occurred while logging out: " + ex.Message);
             }
         }
-
         private void timerRefreshDisplay_Tick(object sender, EventArgs e)
         {
             buttonStart.Hide();
