@@ -23,7 +23,7 @@ namespace ChapeauUI
             labelHistory.Hide();
 
             orderService = new OrderService();
-            loggedInEmployee = new Employee();
+            this.loggedInEmployee = loggedInEmployee;
             orderItemService = new OrderItemService();
 
           //  loggedInEmployee.Occupation = Role.Barman; // delete this later

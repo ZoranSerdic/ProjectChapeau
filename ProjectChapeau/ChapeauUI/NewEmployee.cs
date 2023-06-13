@@ -197,9 +197,9 @@ namespace ChapeauUI
         }
         private void ReturnToEmployeeOverview()
         {
-            this.Hide();
-            ManagerEmployeeOverview overview = new ManagerEmployeeOverview();
-            overview.ShowDialog();
+            //this.Hide();
+            //ManagerEmployeeOverview overview = new ManagerEmployeeOverview();
+            //overview.ShowDialog();
             this.Close();
         }
     }

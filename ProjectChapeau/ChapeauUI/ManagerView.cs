@@ -19,7 +19,10 @@ namespace ChapeauUI
             InitializeComponent();
             this.employee = employee;
         }
-
+        public ManagerView()
+        {
+                
+        }
         private void ManagerView_Load(object sender, EventArgs e)
         {
 
@@ -30,7 +33,7 @@ namespace ChapeauUI
             this.Hide();
             InventoryOverview inventoryOverview = new InventoryOverview();
             inventoryOverview.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void btnMenu_Click(object sender, EventArgs e)
@@ -38,7 +41,7 @@ namespace ChapeauUI
             this.Hide();
             MenuViewAllItems menu = new MenuViewAllItems();
             menu.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void btnTableOverview_Click(object sender, EventArgs e)
@@ -46,7 +49,7 @@ namespace ChapeauUI
             this.Hide();
             TableView tableView = new TableView(employee);
             tableView.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void btnEmployees_Click(object sender, EventArgs e)
@@ -54,7 +57,7 @@ namespace ChapeauUI
             this.Hide();
             ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview();
             employeeOverview.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void btnLogOut_Click(object sender, EventArgs e)
@@ -62,7 +65,7 @@ namespace ChapeauUI
             this.Hide();
             Login login = new Login();
             login.ShowDialog();
-            this.Close();
+            //this.Close();
         }
 
         private void btnBills_Click(object sender, EventArgs e)
@@ -70,7 +73,7 @@ namespace ChapeauUI
             this.Hide();
             BillView billsView = new BillView();
             billsView.ShowDialog();
-            this.Close();
+            //this.Close();
         }
     }
 }
