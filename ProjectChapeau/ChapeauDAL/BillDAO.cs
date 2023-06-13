@@ -133,7 +133,7 @@ namespace ChapeauDAL
                     TotalTip = (decimal)dr["totalTip"],
                     Date = (DateTime)dr["date"],
                     Comment = dr["comment"].ToString(),
-                    IsOpen = (bool)dr["isOpen"]
+                    //IsOpen = (bool)dr["isOpen"]
                 }; 
             
             return bill;

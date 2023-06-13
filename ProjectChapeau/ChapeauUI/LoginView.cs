@@ -72,8 +72,8 @@ namespace ChapeauUI
 
         private void btnManagerView_Click(object sender, EventArgs e)
         {
-
-            ManagerView managerView = new ManagerView();
+            Employee employee = new Employee();
+            ManagerView managerView = new ManagerView(employee);
             this.Hide();
             managerView.ShowDialog();
             this.Close();

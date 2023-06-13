@@ -53,9 +53,9 @@ namespace ChapeauUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            ManagerView overview = new ManagerView();
-            overview.ShowDialog();
+            //this.Hide();
+            //ManagerView overview = new ManagerView();
+            //overview.ShowDialog();
             this.Close();
         }
     }
