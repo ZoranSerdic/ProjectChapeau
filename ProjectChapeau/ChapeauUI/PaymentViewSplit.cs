@@ -18,6 +18,7 @@ namespace ChapeauUI
         private Bill bill;
         private List<OrderItem> items;
         private List<Payment> payments;
+        private Employee loggedInEmployee;
 
         private decimal subTotal;
         private float vat9, vat21;
@@ -28,22 +29,24 @@ namespace ChapeauUI
                 return subTotal + (decimal)vat9 + (decimal)vat21;
             }
         }
-        public PaymentViewSplit(Bill bill, List<OrderItem> items)
+        public PaymentViewSplit(Bill bill, List<OrderItem> items, Employee loggedInEmployee)
         {
             InitializeComponent();
             this.bill = bill;
             this.items = items;
+            this.loggedInEmployee = loggedInEmployee;
             payments = new List<Payment>();
 
             InitializeDisplay();
         }
-        public PaymentViewSplit(Bill bill, List<OrderItem> items, List<Payment> payments)
+        public PaymentViewSplit(Bill bill, List<OrderItem> items, List<Payment> payments, Employee loggedInEmployee)
         {
             //Overflow constructor for payment recovery to import all payments
             InitializeComponent();
             this.bill = bill;
             this.items = items;
             this.payments = payments;
+            this.loggedInEmployee = loggedInEmployee;
 
             InitializeDisplay();
             RecoverPayments();
@@ -58,6 +61,7 @@ namespace ChapeauUI
         }
         private void RecoverPayments()
         {
+            //Update the view to show recovered payments
             foreach (Payment payment in payments)
             {
                 AddPaymentToTable(payment);
@@ -68,7 +72,6 @@ namespace ChapeauUI
         private void CalculateItems(List<OrderItem> items)
         {
             //Calculate price for each item for display
-
             foreach (OrderItem item in items)
             { 
                 CalculateItemPrice(item);
@@ -94,13 +97,10 @@ namespace ChapeauUI
             { vat21 += vat; }
 
         }
-        private void btnConfirm_Click(object sender, EventArgs e)
-        {
-            DoPayment();
-        }
-        private void DoPayment()
+        private void SubmitPayment()
         {
             PaymentService paymentService = new PaymentService();
+            BillService billService = new BillService();
 
             try
             {
@@ -109,20 +109,19 @@ namespace ChapeauUI
 
                 if(payments.Count == 0)
                 {
-                    bill.IsOpen = true;
-                    paymentService.CreateBill(bill);
-                    bill.BillId = paymentService.GetCurrentBillId();
+                    billService.InsertBill(bill);
+                    bill.BillId = billService.GetCurrentBillId();
                 }
 
                 Payment payment = new Payment(bill.BillId, SelectedMethod(), Convert.ToDecimal(txtTotal.Text), Convert.ToDecimal(txtTip.Text));
                 bill.TotalTip += payment.Tip;
-                paymentService.UpdateBillTipAmount(bill);
+                billService.UpdateBillTipAmount(bill);
                 payments.Add(payment);
                 paymentService.AddPayment(payment);
 
                 AddPaymentToTable(payment);
                 CalculateAmountRemaining(payment);
-                CheckIfComplete();
+                CheckIfPaymentIsComplete();
             }
             catch (Exception ex)
             {
@@ -164,6 +163,113 @@ namespace ChapeauUI
                 return PaymentMethod.Debit;
             }
         }
+        private void ValidatePayment()
+        {
+            if (!rdbtnCash.Checked && !rdbtnCredit.Checked && !rdbtnDebit.Checked)
+            {
+                throw new Exception("No payment method selected");
+            }
+
+            if (!rdbtnCash.Checked)
+            {
+                ValidateInputFields();
+            }
+            if (txtTotal.Text == "0.00")
+            {
+                throw new Exception("Amount paid can't be 0");
+            }
+        }
+        private void CheckOverflow()
+        {
+            //Checks if the total input into the textbox is greater than the amount left, the overflow amount is added to the tip value instead
+            if (Convert.ToDecimal(lblTotalLeft.Text) - Convert.ToDecimal(txtTotal.Text) < 0)
+            {
+                decimal overflow = Convert.ToDecimal(txtTotal.Text) - Convert.ToDecimal(lblTotalLeft.Text);
+                txtTip.Text = (Convert.ToDecimal(txtTip.Text) + overflow).ToString();
+                txtTotal.Text = lblTotalLeft.Text;
+            }
+        }
+        private void CheckIfPaymentIsComplete()
+        {
+            //Checks if the payment total is completed each time a new payment is added
+            BillService billService = new BillService();
+            OrderService orderService = new OrderService();
+            TableService tableService = new TableService();
+
+            if (lblTotalLeft.Text == "0.00")
+            {
+                HideAllFields();
+                ShowSuccessFields();
+
+                billService.CloseBill(bill);
+
+                //orderService.UpdateOrderPaidStatus(bill.Table);  
+                //tableService.UpdateTableStatus(bill.Table.TableId, TableStatus.Free);
+            }
+        }
+        private void txtTotal_TextChanged(object sender, EventArgs e)
+        {
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(txtTotal.Text) && !decimal.TryParse(txtTotal.Text, out value) || value < 0 || value > 99999 || txtTotal.Text.StartsWith("0"))
+            {
+                txtTotal.Text = "0.00";
+                return;
+            }
+        }
+
+        private void txtTip_TextChanged(object sender, EventArgs e)
+        {
+            decimal value = 0;
+            if (!string.IsNullOrEmpty(txtTip.Text) && !decimal.TryParse(txtTip.Text, out value) || value < 0 || value > 99999 || txtTip.Text.StartsWith("0"))
+            {
+                txtTip.Text = "0.00";
+                return;
+            }
+        }
+        private void ValidateInputFields()
+        {
+            //Mostly fluff validation
+            if (string.IsNullOrEmpty(txtCardName.Text))
+            {
+                throw new Exception("Please enter a card name");
+            }
+
+            if (string.IsNullOrEmpty(txtCardNumber.Text))
+            {
+                throw new Exception("Please enter a card number");
+            }
+
+            if (string.IsNullOrEmpty(txtCVV.Text))
+            {
+                throw new Exception("Please enter a CVV");
+            }
+
+            if (string.IsNullOrEmpty(txtExpDate.Text))
+            {
+                throw new Exception("Please enter a valid date");
+            }
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            PaymentView paymentview = new PaymentView(bill.Table, loggedInEmployee);
+            paymentview.ShowDialog();
+            this.Close();
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            TableView tableView = new TableView(); //Do I need to pass an employee? Or launch loginview instead?
+            tableView.ShowDialog();
+            this.Close();
+        }
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            SubmitPayment();
+        }
+        /// <summary>
+        /// Design and Style methods
+        /// </summary>
         private void UpdateLabels()
         {
             lblTitle.Text = $"Table {bill.Table.TableId} - {DateTime.Now.ToString("d/M/yy")} - {DateTime.Now.ToString("h:mm tt")}";
@@ -197,46 +303,6 @@ namespace ChapeauUI
             listviewPayments.SmallImageList = imgList;
 
         }
-        private void ValidatePayment()
-        {
-            if (!rdbtnCash.Checked && !rdbtnCredit.Checked && !rdbtnDebit.Checked)
-            {
-                throw new Exception("No payment method selected");
-            }
-
-            if (!rdbtnCash.Checked) 
-            { 
-                ValidateInputFields(); 
-            }
-            if(txtTotal.Text == "0.00")
-            {
-                throw new Exception("Amount paid can't be 0");
-            }
-        }
-        private void CheckOverflow()
-        {
-            if(Convert.ToDecimal(lblTotalLeft.Text) - Convert.ToDecimal(txtTotal.Text) < 0)
-            {
-                decimal overflow = Convert.ToDecimal(txtTotal.Text) - Convert.ToDecimal(lblTotalLeft.Text);
-                txtTip.Text = (Convert.ToDecimal(txtTip.Text) + overflow).ToString();
-                txtTotal.Text = lblTotalLeft.Text;
-            }
-        }
-        private void CheckIfComplete()
-        {
-            PaymentService paymentService = new PaymentService();
-
-            if(lblTotalLeft.Text == "0.00")
-            {
-                HideAllFields();
-                ShowSuccessFields();
-
-                paymentService.CloseBill(bill);
-
-                //paymentService.UpdateOrderPaidStatus(bill.Table);  
-                //paymentService.UpdateTableStatusToFree(bill.Table);
-            }
-        }
         private void listviewPayments_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
             //Change heading background to red and text to white
@@ -261,22 +327,6 @@ namespace ChapeauUI
             e.Cancel = true;
             e.NewWidth = listviewPayments.Columns[e.ColumnIndex].Width;
         }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            PaymentView paymentview = new PaymentView(bill.Table);
-            paymentview.ShowDialog();
-            this.Close();
-        }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            TableView tableView = new TableView(); //Do I need to pass an employee? Or launch loginview instead?
-            tableView.ShowDialog();
-            this.Close();
-        }
-
         private void rdbtnCash_CheckedChanged(object sender, EventArgs e)
         {
             DisableInputFields();
@@ -290,48 +340,6 @@ namespace ChapeauUI
         private void rdbtnCredit_CheckedChanged(object sender, EventArgs e)
         {
             EnableInputFields();
-        }
-
-        private void txtTotal_TextChanged(object sender, EventArgs e)
-        {
-            decimal value = 0;
-            if (!string.IsNullOrEmpty(txtTotal.Text) && !decimal.TryParse(txtTotal.Text, out value) || value < 0 || value > 99999 || txtTotal.Text.StartsWith("0"))
-            {
-                txtTotal.Text = "0.00";
-                return;
-            }
-        }
-
-        private void txtTip_TextChanged(object sender, EventArgs e)
-        {
-            decimal value = 0; 
-            if (!string.IsNullOrEmpty(txtTip.Text) && !decimal.TryParse(txtTip.Text, out value) || value < 0 || value > 99999 || txtTip.Text.StartsWith("0"))
-            {
-                txtTip.Text = "0.00";
-                return;
-            }
-        }
-        private void ValidateInputFields()
-        {
-            if (string.IsNullOrEmpty(txtCardName.Text))
-            {
-                throw new Exception("Please enter a card name");
-            }
-
-            if (string.IsNullOrEmpty(txtCardNumber.Text))
-            {
-                throw new Exception("Please enter a card number");
-            }
-
-            if (string.IsNullOrEmpty(txtCVV.Text))
-            {
-                throw new Exception("Please enter a CVV");
-            }
-
-            if (string.IsNullOrEmpty(txtExpDate.Text))
-            {
-                throw new Exception("Please enter a valid date");
-            }
         }
         private void DisableInputFields()
         {

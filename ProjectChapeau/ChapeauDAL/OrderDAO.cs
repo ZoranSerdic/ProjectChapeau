@@ -58,7 +58,14 @@ namespace ChapeauDAL
 
             return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
         }
+        public void UpdateOrderPaidStatus(Table table)
+        {
+            string query = "UPDATE [Order] SET isPayed = 1 WHERE tableId = @tableId";
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@tableId", table.TableId);
 
+            ExecuteEditQuery(query, sqlParameters);
+        }
         private List<Order> ReadOrders(DataTable dataTable)
         {
             List<Order> orders = new List<Order>();

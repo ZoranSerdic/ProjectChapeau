@@ -20,5 +20,9 @@ namespace ChapeauService
         {
             return orderDAO.GetOrders(foodType, status);
         }
+        public void UpdateOrderPaidStatus(Table table)
+        {
+            orderDAO.UpdateOrderPaidStatus(table);
+        }
     }
 }

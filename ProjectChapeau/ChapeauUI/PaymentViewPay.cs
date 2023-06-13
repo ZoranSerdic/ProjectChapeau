@@ -18,6 +18,7 @@ namespace ChapeauUI
         private Bill bill;
         private List<OrderItem> items;
         private PaymentMethod method;
+        private Employee loggedInEmployee;
 
         private decimal subTotal;
         private float vat9, vat21;
@@ -28,14 +29,15 @@ namespace ChapeauUI
                 return subTotal + (decimal)vat9 + (decimal)vat21 + bill.TotalTip;
             }
         }
-        public PaymentViewPay(Bill bill, PaymentMethod method, List<OrderItem> items)
+        public PaymentViewPay(Bill bill, PaymentMethod method, List<OrderItem> items, Employee loggedInEmployee)
         {
             InitializeComponent();
             this.bill = bill;
             this.method = method;
             this.items = items;
+            this.loggedInEmployee = loggedInEmployee;
 
-            //Get all items, combine, display
+            //Initiliaze initial display
             InitializeDisplay();
 
             ProcessPayment();
@@ -50,10 +52,10 @@ namespace ChapeauUI
 
         private void ProcessPayment()
         {
+            //If the selected method was cash, instantly submit the payment instead of showing input fields
             if(method == PaymentMethod.Cash)
             {
-                HideInputFields();
-                DoPayment();
+                SubmitPayment();
             }
             else
             {
@@ -61,24 +63,27 @@ namespace ChapeauUI
             }
         }
 
-        private void DoPayment()
+        private void SubmitPayment()
         {
             try
             {
                 ValidateInputFields();
                 PaymentService paymentService = new PaymentService();
+                BillService billService = new BillService();
+                OrderService orderService = new OrderService();
+                TableService tableService = new TableService();
                 //Generate a bill and corresponding payment for non-split payment 
                 //and update all statuses to mark order as complete.
 
-                bill.IsOpen = false;
-                paymentService.CreateBill(bill);
-                //bill.BillId = paymentService.GetCurrentBillId();
+                billService.InsertBill(bill);
+                bill.BillId = billService.GetCurrentBillId();
 
-                //Payment payment = new Payment(bill.BillId, method, bill.TotalAmount, bill.TotalTip);
-                //paymentService.AddPayment(payment);
+                Payment payment = new Payment(bill.BillId, method, bill.TotalAmount, bill.TotalTip);
+                paymentService.AddPayment(payment);
+                billService.CloseBill(bill);
 
-                //paymentService.UpdateOrderPaidStatus(bill.Table);  
-                //paymentService.UpdateTableStatusToFree(bill.Table);
+                //orderService.UpdateOrderPaidStatus(bill.Table);
+                //tableService.UpdateTableStatus(bill.Table.TableId, TableStatus.Free);
 
                 HideInputFields();
                 ShowSuccessFields();
@@ -139,6 +144,55 @@ namespace ChapeauUI
 
             return vat;
         }
+        private void ValidateInputFields()
+        {
+            //Mostly fluff validation, if the method is cash, skip because it doesn't apply
+            if (method == PaymentMethod.Cash)
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(txtCardName.Text))
+            {
+                throw new Exception("Please enter a card name");
+            }
+
+            if (string.IsNullOrEmpty(txtCardNumber.Text))
+            {
+                throw new Exception("Please enter a card number");
+            }
+
+            if (string.IsNullOrEmpty(txtCVV.Text))
+            {
+                throw new Exception("Please enter a CVV");
+            }
+
+            if (string.IsNullOrEmpty(txtExpDate.Text))
+            {
+                throw new Exception("Please enter a valid date");
+            }
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            PaymentView paymentView = new PaymentView(bill.Table, loggedInEmployee);
+            paymentView.ShowDialog();
+            this.Close();
+        }
+
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+            SubmitPayment();
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            TableView tableView = new TableView(); //Do I need to pass an employee? Or launch loginview instead?
+            tableView.ShowDialog();
+            this.Close();
+        }
+        /// <summary>
+        /// Design and Style methods
+        /// </summary>
         private void UpdateLabels()
         {
             lblTitle.Text = $"Table {bill.Table.TableId} - {DateTime.Now.ToString("d/M/yy")} - {DateTime.Now.ToString("h:mm tt")}";
@@ -191,50 +245,10 @@ namespace ChapeauUI
         {
             e.DrawDefault = true;
         }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            PaymentView paymentView = new PaymentView(bill.Table);
-            paymentView.ShowDialog();
-            this.Close();
-        }
-
-        private void btnConfirm_Click(object sender, EventArgs e)
-        {
-            DoPayment();
-        }
-
         private void listviewItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             //stop selection from turning blue when clicking on it
             if (e.IsSelected) { e.Item.Selected = false; }
-        }
-        private void ValidateInputFields()
-        {
-            if(method == PaymentMethod.Cash)
-            {
-                return;
-            }
-            if(string.IsNullOrEmpty(txtCardName.Text))
-            {
-                throw new Exception("Please enter a card name");
-            }
-
-            if (string.IsNullOrEmpty(txtCardNumber.Text))
-            {
-                throw new Exception("Please enter a card number");
-            }
-
-            if (string.IsNullOrEmpty(txtCVV.Text))
-            {
-                throw new Exception("Please enter a CVV");
-            }
-
-            if (string.IsNullOrEmpty(txtExpDate.Text))
-            {
-                throw new Exception("Please enter a valid date");
-            }
         }
         private void HideInputFields()
         {
@@ -272,14 +286,6 @@ namespace ChapeauUI
             //prevent header from being resized
             e.Cancel = true;
             e.NewWidth = listviewItems.Columns[e.ColumnIndex].Width;
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            TableView tableView = new TableView(); //Do I need to pass an employee? Or launch loginview instead?
-            tableView.ShowDialog();
-            this.Close();
         }
     }
 }

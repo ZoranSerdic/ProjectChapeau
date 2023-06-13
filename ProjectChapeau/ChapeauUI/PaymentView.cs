@@ -19,9 +19,9 @@ namespace ChapeauUI
 {
     public partial class PaymentView : Form
     {
-        private PaymentService paymentService;
         private Table table;
         private List<OrderItem> items;
+        private Employee loggedInEmployee;
 
         private decimal subTotal;
         private float vat9, vat21;
@@ -33,11 +33,11 @@ namespace ChapeauUI
             }
         }
 
-        public PaymentView(Table table)
+        public PaymentView(Table table, Employee loggedInEmployee)
         {
             InitializeComponent();
             this.table = table;
-            paymentService = new PaymentService();
+            this.loggedInEmployee = loggedInEmployee;
             items = new List<OrderItem>();
 
             //Get all items, combine, display
@@ -47,6 +47,8 @@ namespace ChapeauUI
 
         private void InitializeDisplay()
         {
+            PaymentService paymentService = new PaymentService();  
+
             items = paymentService.GetAllItemsFromActiveOrders(table);
             items = CombineItems(items);
 
@@ -127,7 +129,7 @@ namespace ChapeauUI
                 bill = CreateBill(bill);
 
                 this.Hide();
-                PaymentViewPay paymentviewpay = new PaymentViewPay(bill, SelectedMethod(), items);
+                PaymentViewPay paymentviewpay = new PaymentViewPay(bill, SelectedMethod(), items, loggedInEmployee);
                 paymentviewpay.ShowDialog();
                 this.Close();
 
@@ -148,7 +150,7 @@ namespace ChapeauUI
                 bill.TotalTip = 0;
 
                 this.Hide();
-                PaymentViewSplit paymentviewsplit = new PaymentViewSplit(bill, items);
+                PaymentViewSplit paymentviewsplit = new PaymentViewSplit(bill, items, loggedInEmployee);
                 paymentviewsplit.ShowDialog();
                 this.Close();
 
@@ -193,6 +195,7 @@ namespace ChapeauUI
             bill.TotalTip = CalculateTip();
             bill.Date = DateTime.Now;
             bill.Comment = txtComment.Text;
+            bill.IsOpen = true;
 
             return bill;
         }
@@ -229,23 +232,26 @@ namespace ChapeauUI
         }
         private bool CheckIfTableHasOpenBill()
         {
+            //Checks if a table has an open split bill, if so initiates recovery
+            PaymentService paymentService = new PaymentService();
+            BillService billService = new BillService();
             DialogResult dialogResult;
 
-            if(paymentService.CheckForOpenBill(table))
+            if(billService.CheckForOpenBill(table))
             {
                 dialogResult = MessageBox.Show("Open split bill found on table, recover?", "Recovery", MessageBoxButtons.YesNo);
             }
             else { return false; }
 
             Bill bill;
-            bill = paymentService.GetOpenBill(table);
+            bill = billService.GetOpenBill(table);
 
             if (dialogResult == DialogResult.Yes)
             {
                 List<Payment> payments = paymentService.GetActivePayments(bill);
                 
                 this.Hide();
-                PaymentViewSplit paymentviewsplit = new PaymentViewSplit(bill, items, payments);
+                PaymentViewSplit paymentviewsplit = new PaymentViewSplit(bill, items, payments, loggedInEmployee);
                 paymentviewsplit.ShowDialog();
                 this.Close();
                 return true;
@@ -253,63 +259,10 @@ namespace ChapeauUI
             else if (dialogResult == DialogResult.No)
             {
                 paymentService.DeleteActivePayments(bill);
-                paymentService.DeleteActiveBill(table);
+                billService.DeleteActiveBill(table);
             }
             return false;
         }
-        private void UpdateLabels()
-        {
-            lblTitle.Text = $"Table {table.TableId} - {DateTime.Now.ToString("d/M/yy")} - {DateTime.Now.ToString("h:mm tt")}";
-
-            lblSubtotal.Text = subTotal.ToString("€0.00");
-            lblvat9.Text = vat9.ToString("€0.00");
-            lblvat21.Text = vat21.ToString("€0.00");
-            lblTotal.Text = Total.ToString("€0.00");
-            txtTotal.Text = Total.ToString("0.00");
-        }
-        private void StyleListView()
-        {
-            foreach (ListViewItem item in listviewItems.Items)
-            {
-                if(item.Index % 2 == 0 )
-                {
-                    item.BackColor = Color.White;
-                }
-                else
-                {
-                    item.BackColor = Color.FromArgb(255, 210, 210, 210);
-                }
-
-            }
-
-            //add padding between each item, don't ask me how it works
-            int itemHeight = 25;
-            ImageList imgList = new ImageList();
-            imgList.ImageSize = new Size(1, itemHeight);
-            listviewItems.SmallImageList = imgList;
-
-        }
-
-        private void listviewItems_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
-        {
-            //Change heading background to red and text to white
-            SolidBrush brush = new SolidBrush(Color.FromArgb(255, 204, 68, 75)); //red background brush
-            Font font = new Font("Segoe UI", 9, FontStyle.Bold); //header text
-            StringFormat format = new StringFormat() 
-            { 
-                Alignment = StringAlignment.Center, 
-                LineAlignment = StringAlignment.Center,
-            };
-
-            e.Graphics.FillRectangle(brush, e.Bounds);
-            e.Graphics.DrawString(e.Header.Text, font, Brushes.White, e.Bounds, format);
-        }
-
-        private void listviewItems_DrawItem(object sender, DrawListViewItemEventArgs e)
-        {
-            e.DrawDefault = true;
-        }
-
         private void txtTotal_TextChanged(object sender, EventArgs e)
         {
             //Various checks to make sure it's a number
@@ -321,7 +274,7 @@ namespace ChapeauUI
             }
 
             //If total amount in box is above Total, set tip to zero. Extra will be calculated to tip later
-            if(!string.IsNullOrEmpty(txtTotal.Text) && Convert.ToDecimal(txtTotal.Text) > Total)
+            if (!string.IsNullOrEmpty(txtTotal.Text) && Convert.ToDecimal(txtTotal.Text) > Total)
             {
                 txtTip.Text = "0.00";
             }
@@ -350,7 +303,7 @@ namespace ChapeauUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you wish to cancel payment?","Confirm", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Are you sure you wish to cancel payment?", "Confirm", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 this.Hide();
@@ -358,6 +311,61 @@ namespace ChapeauUI
                 tableview.ShowDialog(); //pass employee?
                 this.Close();
             }
+        }
+        /// <summary>
+        /// Design and Style methods
+        /// </summary>
+        private void StyleListView()
+        {
+            foreach (ListViewItem item in listviewItems.Items)
+            {
+                if(item.Index % 2 == 0 )
+                {
+                    item.BackColor = Color.White;
+                }
+                else
+                {
+                    item.BackColor = Color.FromArgb(255, 210, 210, 210);
+                }
+
+            }
+
+            //add padding between each item, don't ask me how it works
+            int itemHeight = 25;
+            ImageList imgList = new ImageList();
+            imgList.ImageSize = new Size(1, itemHeight);
+            listviewItems.SmallImageList = imgList;
+
+        }
+        private void UpdateLabels()
+        {
+            lblTitle.Text = $"Table {table.TableId} - {DateTime.Now.ToString("d/M/yy")} - {DateTime.Now.ToString("h:mm tt")}";
+
+            lblSubtotal.Text = subTotal.ToString("€0.00");
+            lblvat9.Text = vat9.ToString("€0.00");
+            lblvat21.Text = vat21.ToString("€0.00");
+            lblTotal.Text = Total.ToString("€0.00");
+            txtTotal.Text = Total.ToString("0.00");
+        }
+
+        private void listviewItems_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            //Change heading background to red and text to white
+            SolidBrush brush = new SolidBrush(Color.FromArgb(255, 204, 68, 75)); //red background brush
+            Font font = new Font("Segoe UI", 9, FontStyle.Bold); //header text
+            StringFormat format = new StringFormat() 
+            { 
+                Alignment = StringAlignment.Center, 
+                LineAlignment = StringAlignment.Center,
+            };
+
+            e.Graphics.FillRectangle(brush, e.Bounds);
+            e.Graphics.DrawString(e.Header.Text, font, Brushes.White, e.Bounds, format);
+        }
+
+        private void listviewItems_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawDefault = true;
         }
         private void listviewItems_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {

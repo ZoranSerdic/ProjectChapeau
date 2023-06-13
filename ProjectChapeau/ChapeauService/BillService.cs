@@ -19,5 +19,33 @@ namespace ChapeauService
         {
             return billDAO.GetAllBills();   
         }
+        public void InsertBill(Bill bill)
+        {
+            billDAO.InsertBill(bill);
+        }
+        public int GetCurrentBillId()
+        {
+            return billDAO.GetCurrentBillId();
+        }
+        public void DeleteActiveBill(Table table)
+        {
+            billDAO.DeleteActiveBill(table);
+        }
+        public void UpdateBillTipAmount(Bill bill)
+        {
+            billDAO.UpdateBillTipAmount(bill);
+        }
+        public void CloseBill(Bill bill)
+        {
+            billDAO.CloseBill(bill);
+        }
+        public bool CheckForOpenBill(Table table)
+        {
+            return billDAO.CheckForOpenBill(table);
+        }
+        public Bill GetOpenBill(Table table)
+        {
+            return billDAO.GetOpenBill(table);
+        }
     }
 }
