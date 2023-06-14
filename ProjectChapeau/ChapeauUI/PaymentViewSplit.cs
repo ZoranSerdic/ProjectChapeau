@@ -90,6 +90,7 @@ namespace ChapeauUI
             //Calculate vat for display and add it to the running total for later
             //maybe simplify below variable..
             float vat = (float)Math.Round((float)item.MenuItem.Price * item.MenuItem.Vat, 2, MidpointRounding.AwayFromZero);
+            vat *= item.Amount;
 
             if (item.MenuItem.Vat == (float)0.09)
             { vat9 += vat; }

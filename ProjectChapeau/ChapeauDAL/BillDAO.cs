@@ -15,7 +15,7 @@ namespace ChapeauDAL
         public List<Bill> GetAllBills()
         {
             //gathering all bills from the table
-            string query = "SELECT billId, tableId, totalAmount, totalTip, comment, [date] FROM bill;";
+            string query = "SELECT billId, tableId, totalAmount, totalTip, comment, [date], isOpen FROM bill;";
             DataTable dataTable = ExecuteSelectQuery(query);
 
             List<Bill> bills = new List<Bill>();
@@ -103,7 +103,7 @@ namespace ChapeauDAL
         {
             try
             {
-                string query = "SELECT billId, tableId, totalAmount, totalTip, date, isOpen FROM [Bill] WHERE tableId = @tableId AND isOpen = 1";
+                string query = "SELECT billId, tableId, totalAmount, totalTip, comment, date, isOpen FROM [Bill] WHERE tableId = @tableId AND isOpen = 1";
                 SqlParameter[] sqlParameters = new SqlParameter[1];
                 sqlParameters[0] = new SqlParameter("@tableId", table.TableId);
 
@@ -133,7 +133,7 @@ namespace ChapeauDAL
                     TotalTip = (decimal)dr["totalTip"],
                     Date = (DateTime)dr["date"],
                     Comment = dr["comment"].ToString(),
-                    //IsOpen = (bool)dr["isOpen"]
+                    IsOpen = (bool)dr["isOpen"]
                 }; 
             
             return bill;
