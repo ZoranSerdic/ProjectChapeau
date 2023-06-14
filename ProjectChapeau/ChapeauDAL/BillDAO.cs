@@ -103,7 +103,7 @@ namespace ChapeauDAL
         {
             try
             {
-                string query = "SELECT billId, tableId, totalAmount, totalTip, date, isOpen FROM [Bill] WHERE tableId = @tableId AND isOpen = 1";
+                string query = "SELECT billId, tableId, totalAmount, totalTip, comment, date, isOpen FROM [Bill] WHERE tableId = @tableId AND isOpen = 1";
                 SqlParameter[] sqlParameters = new SqlParameter[1];
                 sqlParameters[0] = new SqlParameter("@tableId", table.TableId);
 
