@@ -24,13 +24,13 @@ namespace ChapeauDAL
             //gather specific courseType and menuType from the table
             string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] " +
                 $"FROM menuitem AS M " +
-                $"JOIN InventoryItem as I on I.MenuItemKey = M.MenuItemId " +
-                $"WHERE M.courseType = @courseType AND M.menuType = @menuType AND I.inStock > 0;";
+                $"WHERE courseType = @courseType AND menuType = @menuType;";
             SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@courseType", courseType.ToString());
             sqlParameters[1] = new SqlParameter("@menuType", menuType.ToString());
             return ReadTableOrder(ExecuteSelectQuery(query, sqlParameters));
         }
+
         private List<MenuItem> ReadTableOrder(DataTable dataTable)
         {
             //this methods gets specific information from the menuItems in a list from the database 
@@ -54,6 +54,7 @@ namespace ChapeauDAL
                         Name = dr["Name"].ToString(),
                         Description = dr["Description"].ToString(),
                     };
+                    
                     //adds the item to the list of all items 
                     items.Add(item);
                 }
