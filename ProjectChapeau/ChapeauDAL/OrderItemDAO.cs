@@ -14,6 +14,8 @@ namespace ChapeauDAL
         {
             menuItemDAO = new MenuItemDAO();
         }
+
+        #region Mariia
         public OrderItem GetOrderItemById(int orderItemId)
         {
             string query = @"SELECT consistsOfId, menuItemId, comment, amount, status, preparedAt
@@ -67,6 +69,7 @@ namespace ChapeauDAL
 
             ExecuteEditQuery(query, sqlParameters.ToArray());
         }
+        #endregion
 
         public int CreateOrder(Order order)
         {

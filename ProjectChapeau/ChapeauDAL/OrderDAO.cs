@@ -17,6 +17,7 @@ namespace ChapeauDAL
             orderItemDAO = new OrderItemDAO();
         }
 
+        #region Mariia
         public List<Order> GetOrders(FoodType[] foodType, OrderedItemStatus[] status) // gets orders depending on the type and status
         {
             List<Order> orders = new List<Order>();
@@ -58,6 +59,47 @@ namespace ChapeauDAL
 
             return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
         }
+
+        private List<Order> ReadOrders(DataTable dataTable)
+        {
+            List<Order> orders = new List<Order>();
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                Order order = new Order();
+                int orderId = (int)dataRow["orderId"];
+
+                bool orderExists = false;
+
+                foreach (Order existingOrder in orders) // check if the order with the id already exists
+                {
+                    if (existingOrder.OrderId == orderId)
+                    {
+                        orderExists = true;
+                        order = existingOrder;
+                        break;
+                    }
+                }
+
+                if (!orderExists)  // if it doesn't exist , the new order is made
+                {
+                    order = new Order();
+                    order.OrderId = orderId;
+                    order.Table = tableDAO.GetTableById((int)dataRow["tableId"]);
+                    order.Time = (DateTime)dataRow["time"];
+                    order.IsPaid = (bool)dataRow["isPayed"];
+                    order.Employee = employeeDAO.GetEmployeeById((int)dataRow["employeeId"]);
+                    order.OrderedItems = new List<OrderItem>();
+
+                    orders.Add(order); // the order is added to the list with orders
+                };
+
+                OrderItem orderItem = orderItemDAO.GetOrderItemById((int)dataRow["consistsOfId"]);
+                order.OrderedItems.Add(orderItem);  // add the item to the order
+            }
+            return orders;
+        }
+        #endregion
         public List<Order> GetUnpaidOrdersByTableId(int tableId)
         {
             string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oI.consistsOfId, oI.preparedAt
@@ -82,45 +124,7 @@ namespace ChapeauDAL
 
             ExecuteEditQuery(query, sqlParameters);
         }
-        private List<Order> ReadOrders(DataTable dataTable)
-        {
-            List<Order> orders = new List<Order>();
 
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                Order order = new Order();
-                int orderId = (int)dataRow["orderId"];
-               
-                bool orderExists = false;
-
-                foreach (Order existingOrder in orders) // check if the order with the id already exists
-                {
-                    if (existingOrder.OrderId == orderId)
-                    {
-                        orderExists = true;
-                        order = existingOrder;
-                        break;
-                    }
-                }
-
-                if (!orderExists)  // if it doesn't exist , the new order is made
-                {
-                    order = new Order();    
-                    order.OrderId = orderId;
-                    order.Table = tableDAO.GetTableById((int)dataRow["tableId"]);
-                    order.Time = (DateTime)dataRow["time"];
-                    order.IsPaid = (bool)dataRow["isPayed"];
-                    order.Employee = employeeDAO.GetEmployeeById((int)dataRow["employeeId"]);
-                    order.OrderedItems = new List<OrderItem>();
-
-                    orders.Add(order); // the order is added to the list with orders
-                }; 
-
-                OrderItem orderItem = orderItemDAO.GetOrderItemById((int)dataRow["consistsOfId"]);
-                order.OrderedItems.Add(orderItem);  // add the item to the order
-            }
-            return orders;
-        }
         public void UpdateOrderStatus(int orderId, string newStatus)
         {
             string query = "UPDATE ConsistsOf SET status = @newStatus WHERE consistsOfId = @consistsOfId";
