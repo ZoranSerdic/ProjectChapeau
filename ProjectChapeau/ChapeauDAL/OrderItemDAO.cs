@@ -108,8 +108,8 @@ namespace ChapeauDAL
                 sqlParameters[1] = new SqlParameter("@menuItemId", item.MenuItem.MenuItemId);
                 sqlParameters[2] = new SqlParameter("@comment", item.Comment);
                 sqlParameters[3] = new SqlParameter("@amount", item.Amount);
-                sqlParameters[4] = new SqlParameter("@status", item.Status);
-                sqlParameters[5] = new SqlParameter("@preparedAt", item.PreparedAt);
+                sqlParameters[4] = new SqlParameter("@status", item.Status.ToString());
+                sqlParameters[5] = new SqlParameter("@preparedAt", DBNull.Value);
                 ExecuteEditQuery(query, sqlParameters);
             }
             catch (Exception)

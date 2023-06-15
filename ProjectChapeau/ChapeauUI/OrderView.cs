@@ -222,7 +222,7 @@ namespace ChapeauUI
                     orderItem.Comment = orderPopup.Comment;
                     orderItem.Amount = orderPopup.Amount;
                     orderItem.Status = OrderedItemStatus.Sent;
-                    orderItem.PreparedAt = DateTime.Now;
+                    orderItem.PreparedAt = null;
 
                     // Add to list
                     order.OrderedItems.Add(orderItem);
@@ -242,6 +242,7 @@ namespace ChapeauUI
                     return item;
                 }
             }
+
             return null;
         }
 
@@ -253,7 +254,7 @@ namespace ChapeauUI
             order.IsPaid = false;
             order.OrderedItems = new List<OrderItem>();
 
-            // Creates order in the database
+            // Creates order in the database and gets id
             order.OrderId = orderItemService.CreateOrder(order);
         }
 
