@@ -35,5 +35,9 @@ namespace ChapeauService
         {
             inventoryItemdDAO.UpdateItem(inventoryItem);
         }
+        public void DecreaseInventoryItemStock(int menuItemId, int amount)
+        {
+            inventoryItemdDAO.DecreaseInventoryItemStock(menuItemId, amount);
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace ChapeauUI
 
         private MenuItemService menuItemService = new MenuItemService();
         private OrderItemService orderItemService = new OrderItemService();
+        private InventoryItemService inventoryItemService = new InventoryItemService();
 
         private List<MenuItem> currentMenuItems = new List<MenuItem>();
 
@@ -176,18 +177,6 @@ namespace ChapeauUI
 
         private void SwitchMenuLabel(string menuType, string menuTime)
         {
-            switch (currentMenuType)
-            {
-                case MenuType.Lunch:
-                    break;
-                case MenuType.Dinner:
-                    break;
-                case MenuType.AllDay:
-                    break;
-                default:
-                    break;
-            }
-
             labelMenuType.Text = menuType;
             labelMenuTime.Text = menuTime;
         }
@@ -205,7 +194,7 @@ namespace ChapeauUI
                 string description = e.Item.SubItems[1].Text;
                 int menuId = (int)e.Item.Tag;
 
-                //
+                // Set menuItem
                 MenuItem menuItem = FindMenuItemById(currentMenuItems, menuId);
 
                 // Create form
@@ -221,7 +210,7 @@ namespace ChapeauUI
                     orderItem.Comment = orderPopup.Comment;
                     orderItem.Amount = orderPopup.Amount;
                     orderItem.Status = OrderedItemStatus.Sent;
-                    orderItem.PreparedAt = DateTime.Now;
+                    orderItem.PreparedAt = null;
 
                     // Add to list
                     order.OrderedItems.Add(orderItem);
@@ -241,6 +230,7 @@ namespace ChapeauUI
                     return item;
                 }
             }
+
             return null;
         }
 
@@ -252,7 +242,7 @@ namespace ChapeauUI
             order.IsPaid = false;
             order.OrderedItems = new List<OrderItem>();
 
-            // Creates order in the database
+            // Creates order in the database and gets id
             order.OrderId = orderItemService.CreateOrder(order);
         }
 
@@ -261,13 +251,14 @@ namespace ChapeauUI
             foreach (OrderItem orderItem in order.OrderedItems)
             {
                 orderItemService.AddOrderItem(orderItem);
+                ReduceStockQuery(orderItem.MenuItem.MenuItemId, orderItem.Amount);
             }
         }
 
-        // Call when order is finalised and done
-        public void ReduceStockQuery(int amount, int inventoryItemId)
+        // Reduce Stock Amount
+        public void ReduceStockQuery(int menuItemId, int amount)
         {
-            // TODO: create query to reduce stock amount
+            inventoryItemService.DecreaseInventoryItemStock(menuItemId, amount);
         }
     }
 }

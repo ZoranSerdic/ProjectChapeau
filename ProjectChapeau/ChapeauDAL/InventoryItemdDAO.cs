@@ -49,6 +49,24 @@ namespace ChapeauDAL
             sqlParameters[1] = new SqlParameter("@ItemID", item.InventoryItemId);
             ExecuteEditQuery(query, sqlParameters);
         }
+        public void DecreaseInventoryItemStock(int menuItemId, int amount)
+        {
+            try
+            {
+                // Update dbo.InventoryItem to decrease the inStock value
+                string query = "UPDATE dbo.InventoryItem " +
+                    "SET inStock = inStock - @amount " +
+                    "WHERE MenuItemKey = @MenuItemKey;";
+                SqlParameter[] sqlParameters = new SqlParameter[2];
+                sqlParameters[0] = new SqlParameter("@amount", amount);
+                sqlParameters[1] = new SqlParameter("@MenuItemKey", menuItemId);
+                ExecuteEditQuery(query, sqlParameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         private List<InventoryItem> ReadTables(DataTable dataTable)
         {
             //this methods gets all the menuItems in a list from the database 
