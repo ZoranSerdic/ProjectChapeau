@@ -37,7 +37,7 @@ namespace ChapeauUI
             listViewMenuItems.Clear();
 
             //adding the columns
-            listViewMenuItems.Columns.Add("ID", 50);
+            listViewMenuItems.Columns.Add("ID", 40);
             listViewMenuItems.Columns.Add("Name", 190);
             listViewMenuItems.Columns.Add("Description", 360);
             listViewMenuItems.Columns.Add("Price", 60);
@@ -91,21 +91,6 @@ namespace ChapeauUI
             }
         }
 
-        private void ChangeToEditEmployee()
-        {
-            this.Hide();
-            NewMenuItem editMenuItem = new NewMenuItem(this.selectedItem, employee);
-            editMenuItem.ShowDialog();
-            this.Close();
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            NewMenuItem newEmployee = new NewMenuItem(this.employee);
-            newEmployee.ShowDialog();
-            this.Close();
-        }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
@@ -149,6 +134,22 @@ namespace ChapeauUI
             this.Hide();
             ManagerView managerView = new ManagerView(this.employee);
             managerView.ShowDialog();
+            this.Close();
+        }
+
+        private void ChangeToEditEmployee()
+        {
+            this.Hide();
+            NewMenuItem editMenuItem = new NewMenuItem(this.selectedItem, employee);
+            editMenuItem.ShowDialog();
+            this.Close();
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            NewMenuItem newEmployee = new NewMenuItem(this.employee);
+            newEmployee.ShowDialog();
             this.Close();
         }
     }

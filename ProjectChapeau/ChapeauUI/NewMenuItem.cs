@@ -23,16 +23,16 @@ namespace ChapeauUI
         {
             InitializeComponent();
             menuItemService = new MenuItemService();
-            this.employee = employee;   
+            this.employee = employee;
         }
         public NewMenuItem(MenuItem item, Employee employee)
         {
             InitializeComponent();
-            this.employee = employee; 
+            this.employee = employee;
             menuItemService = new MenuItemService();
             update = true;
             idToBeUpdated = item.MenuItemId;
-            newItem = item; 
+            newItem = item;
             FillForm();
         }
         // METHODS FOR PREFILLING THE FORM 
@@ -195,7 +195,7 @@ namespace ChapeauUI
             this.newItem = new MenuItem();
             if (update)
             {
-                newItem.MenuItemId = idToBeUpdated; 
+                newItem.MenuItemId = idToBeUpdated;
             }
             newItem.Name = txtBoxName.Text;
             newItem.Price = numPrice.Value;

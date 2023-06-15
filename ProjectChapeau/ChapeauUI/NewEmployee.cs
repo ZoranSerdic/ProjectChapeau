@@ -17,7 +17,7 @@ namespace ChapeauUI
 {
     public partial class NewEmployee : Form
     {
-        Employee employee;
+        Employee employeeForConstructors;
         private Employee newEmployee;
         private Employee employeeToUpdate;
         private EmployeeService service;
@@ -25,14 +25,14 @@ namespace ChapeauUI
         public NewEmployee(Employee employee)
         {
             InitializeComponent();
-            this.employee = employee;
+            this.employeeForConstructors = employee;
             service = new EmployeeService();
             update = false;
         }
         public NewEmployee(Employee employeeToUpdate, Employee employee)
         {
             InitializeComponent();
-            this.employee = employee;
+            this.employeeForConstructors = employee;
             this.employeeToUpdate = employeeToUpdate;
             service = new EmployeeService();
             update = true;
@@ -84,15 +84,6 @@ namespace ChapeauUI
                 MessageBox.Show(exception.Message);
             }
         }
-        string Hash(string password)
-        {
-            var sha = SHA256.Create();
-
-            var asByteArray = Encoding.Default.GetBytes(password);
-            var hashedPassword = sha.ComputeHash(asByteArray);
-
-            return Convert.ToBase64String(hashedPassword);
-        }
         private void CreateNewEmployee()
         {
             newEmployee = new Employee();
@@ -102,7 +93,7 @@ namespace ChapeauUI
             }
             newEmployee.FirstName = txtBoxFirstName.Text;
             newEmployee.LastName = txtBoxLastName.Text;
-            newEmployee.Pincode = Hash(txtBoxPin2.Text);
+            newEmployee.Pincode = service.Hash(txtBoxPin2.Text);
 
             if (radBtnBartender.Checked)
             {
@@ -201,7 +192,7 @@ namespace ChapeauUI
         private void ReturnToEmployeeOverview()
         {
             this.Hide();
-            ManagerEmployeeOverview overview = new ManagerEmployeeOverview(this.employee);
+            ManagerEmployeeOverview overview = new ManagerEmployeeOverview(this.employeeForConstructors);
             overview.ShowDialog();
             this.Close();
         }

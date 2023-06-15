@@ -172,6 +172,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(836, 1055);
             Controls.Add(btnBills);

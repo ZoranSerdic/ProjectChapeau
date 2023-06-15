@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChapeauDAL;
 using ChapeauModel;
+using System.Security.Cryptography;
 
 namespace ChapeauService
 {
@@ -38,6 +39,14 @@ namespace ChapeauService
         {
             return employeeDao.GetEmployeeByPassword(employeePassword);
         }
+        public string Hash(string password)
+        {
+            var sha = SHA256.Create();
 
+            var asByteArray = Encoding.Default.GetBytes(password);
+            var hashedPassword = sha.ComputeHash(asByteArray);
+
+            return Convert.ToBase64String(hashedPassword);
+        }
     }
 }
