@@ -20,6 +20,7 @@ namespace ChapeauUI
 
         private MenuItemService menuItemService = new MenuItemService();
         private OrderItemService orderItemService = new OrderItemService();
+        private InventoryItemService inventoryItemService = new InventoryItemService();
 
         private List<MenuItem> currentMenuItems = new List<MenuItem>();
 
@@ -177,18 +178,6 @@ namespace ChapeauUI
 
         private void SwitchMenuLabel(string menuType, string menuTime)
         {
-            switch (currentMenuType)
-            {
-                case MenuType.Lunch:
-                    break;
-                case MenuType.Dinner:
-                    break;
-                case MenuType.AllDay:
-                    break;
-                default:
-                    break;
-            }
-
             labelMenuType.Text = menuType;
             labelMenuTime.Text = menuTime;
         }
@@ -206,7 +195,7 @@ namespace ChapeauUI
                 string description = e.Item.SubItems[1].Text;
                 int menuId = (int)e.Item.Tag;
 
-                //
+                // Set menuItem
                 MenuItem menuItem = FindMenuItemById(currentMenuItems, menuId);
 
                 // Create form
@@ -263,13 +252,14 @@ namespace ChapeauUI
             foreach (OrderItem orderItem in order.OrderedItems)
             {
                 orderItemService.AddOrderItem(orderItem);
+                ReduceStockQuery(orderItem.MenuItem.MenuItemId, orderItem.Amount);
             }
         }
 
-        // Call when order is finalised and done
-        public void ReduceStockQuery(int amount, int inventoryItemId)
+        // Reduce Stock Amount
+        public void ReduceStockQuery(int menuItemId, int amount)
         {
-            // TODO: create query to reduce stock amount
+            inventoryItemService.DecreaseInventoryItemStock(menuItemId, amount);
         }
     }
 }
