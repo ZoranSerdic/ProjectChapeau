@@ -126,7 +126,7 @@
             this.listViewOrders.TabIndex = 35;
             this.listViewOrders.UseCompatibleStateImageBehavior = false;
             this.listViewOrders.View = System.Windows.Forms.View.Details;
-            this.listViewOrders.SelectedIndexChanged += new System.EventHandler(this.listViewOrders_SelectedIndexChanged);
+            this.listViewOrders.ItemSelectionChanged += listViewOrders_SelectedIndexChanged;
             // 
             // columnHeaderName
             // 

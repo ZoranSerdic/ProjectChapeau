@@ -16,37 +16,47 @@ namespace ChapeauUI
 {
     public partial class OrderView : Form
     {
-        private Order order = new Order();
+        private Order order;
 
-        private OrderItemService orderItemService = new OrderItemService();
-        private InventoryItemService inventoryItemService = new InventoryItemService();
+        private OrderItemService orderItemService;
+        private InventoryItemService inventoryItemService;
+        private MenuItemService menuItemService;
 
-        private List<MenuItem> currentMenuItems = new List<MenuItem>();
-        private List<InventoryItem> currentInventoryItems = new List<InventoryItem>();
+        private List<MenuItem> currentMenuItems;
+        private List<InventoryItem> currentInventoryItems;
 
-        private FoodType currentCourseType = FoodType.Starter;
-        private MenuType currentMenuType = MenuType.Lunch;
-        private MenuType otherMenuType = MenuType.Dinner;
+        private FoodType currentCourseType;
+        private MenuType currentMenuType;
+        private MenuType otherMenuType;
 
-        private string currentMenuLabel = "Starters";
+        private string currentMenuLabel;
 
         public OrderView(Table table, Employee employee)
         {
-            CreateOrder(table, employee);
+            InitializeComponent();
+
             string tableId = table.TableId.ToString();
 
-            FillMenuItemList(FoodType.Starter, MenuType.Lunch);
-            InitializeComponent();
+            currentCourseType = FoodType.Starter;
+            currentMenuType = MenuType.Lunch;
+            otherMenuType = MenuType.Dinner;
+
+            currentMenuLabel = "Starters";
+
+            orderItemService = new OrderItemService();
+            inventoryItemService = new InventoryItemService();
+            menuItemService = new MenuItemService();
+
             labelTableNumber.Text = $"Table {tableId}";
-            DisplayItems(currentMenuItems);
+
+            FillMenuItemList(currentCourseType, currentMenuType);
+            order = CreateOrder(table, employee);
         }
 
         private void FillMenuItemList(FoodType foodType, MenuType menuType)
         {
-            MenuItemService menuItemService = new MenuItemService();
-
-            currentMenuItems.Clear();
-            currentInventoryItems.Clear();
+            currentMenuItems = new List<MenuItem>();
+            currentInventoryItems = new List<InventoryItem>();
 
             try
             { 
@@ -57,39 +67,33 @@ namespace ChapeauUI
             {
                 MessageBox.Show("An error occurred.\n" + e.Message);
             }
+
+            DisplayItems(currentMenuItems, currentInventoryItems);
         }
 
         // Displays items in listViewMenuItems
-        private void DisplayItems(List<MenuItem> items)
+        private void DisplayItems(List<MenuItem> menuItems, List<InventoryItem> inventoryItems)
         {
             // clear the listview items before filling it
             listViewMenuItems.Items.Clear();
 
-            foreach (MenuItem item in items)
+            foreach (MenuItem item in menuItems)
             {
                 ListViewItem listViewItem = new ListViewItem(item.Name);
                 listViewItem.SubItems.Add(item.Description);
                 listViewItem.Tag = item.MenuItemId;
 
                 // Find the corresponding InventoryItem for the current MenuItem
-                InventoryItem inventoryItem = FindInventorytemById(currentInventoryItems, item.MenuItemId);
+                InventoryItem inventoryItem = FindInventorytemById(inventoryItems, item.MenuItemId);
 
                 // Set the text colour based on the inStock value
-                if (inventoryItem != null)
+                if (inventoryItem.InStock > 0)
                 {
-                    if (inventoryItem.InStock > 0)
-                    {
-                        listViewItem.ForeColor = Color.Black;
-                    }
-                    else
-                    {
-                        listViewItem.ForeColor = Color.Red;
-                    }
+                    listViewItem.ForeColor = Color.Black;
                 }
                 else
                 {
-                    // InventoryItem not found, default text colour
-                    listViewMenuItems.ForeColor = Color.Turquoise;
+                    listViewItem.ForeColor = Color.Red;
                 }
 
                 listViewMenuItems.Items.Add(listViewItem);
@@ -103,8 +107,6 @@ namespace ChapeauUI
             currentMenuLabel = "Starters";
 
             FillMenuItemList(currentCourseType, currentMenuType);
-            DisplayItems(currentMenuItems);
-
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
@@ -115,8 +117,6 @@ namespace ChapeauUI
             currentMenuLabel = "Main Dish";
 
             FillMenuItemList(currentCourseType, currentMenuType);
-            DisplayItems(currentMenuItems);
-
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
@@ -127,8 +127,6 @@ namespace ChapeauUI
             currentMenuLabel = "Desserts";
 
             FillMenuItemList(currentCourseType, currentMenuType);
-            DisplayItems(currentMenuItems);
-
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
@@ -139,8 +137,6 @@ namespace ChapeauUI
             currentMenuLabel = "Drinks";
 
             FillMenuItemList(currentCourseType, MenuType.AllDay);
-            DisplayItems(currentMenuItems);
-
             SwitchMenuLabel(currentMenuLabel, "All Day");
         }
 
@@ -149,16 +145,9 @@ namespace ChapeauUI
             SwitchMenuType();
         }
 
-        private void buttonGoBackDrinksMenu_Click(object sender, EventArgs e)
-        {
-            currentMenuLabel = "Drinks";
-
-            SwitchMenuLabel(currentMenuLabel, "Category");
-        }
-
         private void buttonCloseOrder_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void buttonFinaliseOrder_Click(object sender, EventArgs e)
@@ -169,9 +158,9 @@ namespace ChapeauUI
             if (dialogResult == DialogResult.OK)
             {
                 order = orderFinalise.Order;
+
                 AddOrderItem(order);
-                // call method to reduce stock amount
-                this.Close();
+                Close();
             }
             else if (dialogResult == DialogResult.Cancel)
             {
@@ -195,8 +184,6 @@ namespace ChapeauUI
             buttonSwitchMenu.Text = $"Switch To {otherMenuType.ToString()} Menu";
 
             FillMenuItemList(currentCourseType, currentMenuType);
-            DisplayItems(currentMenuItems);
-
             SwitchMenuLabel(currentMenuLabel, currentMenuType.ToString());
         }
 
@@ -211,15 +198,14 @@ namespace ChapeauUI
         {
             if (e.IsSelected && listViewMenuItems.SelectedItems.Count == 1)
             {
+                int selectedIndex = e.Item.Index;
+
                 if (e.Item.ForeColor == Color.Red)
                 {
                     MessageBox.Show("This item is out of stock.", "Out of Stock");
                 }
                 else
                 {
-                    // Detach the event handler temporarily
-                    listViewMenuItems.ItemSelectionChanged -= listViewMenuItems_ItemSelectionChanged;
-
                     // Retrieve information from item
                     string name = e.Item.SubItems[0].Text;
                     string description = e.Item.SubItems[1].Text;
@@ -246,10 +232,10 @@ namespace ChapeauUI
                         // Add to list
                         order.OrderedItems.Add(orderItem);
                     }
+                }
 
-                    // Reattach the event handler after the form is closed
-                    listViewMenuItems.ItemSelectionChanged += listViewMenuItems_ItemSelectionChanged;
-                }                
+                // Restore selection
+                listViewMenuItems.Items[selectedIndex].Selected = true;
             }
         }
 
@@ -279,8 +265,9 @@ namespace ChapeauUI
             return null;
         }
 
-        public void CreateOrder(Table table, Employee employee)
+        public Order CreateOrder(Table table, Employee employee)
         {
+            Order order = new Order();
             order.Table = table;
             order.Time = DateTime.Now;
             order.Employee = employee;
@@ -289,6 +276,8 @@ namespace ChapeauUI
 
             // Creates order in the database and gets id
             order.OrderId = orderItemService.CreateOrder(order);
+
+            return order;
         }
 
         // Add Orders to database & Calls method ReduceStockQuery

@@ -12,6 +12,9 @@ namespace ChapeauUI
 {
     public partial class OrderPopup : Form
     {
+        const int minimumQuantityAmount = 1;
+        const int maximumQuantityAmount = 99;
+
         public string Comment { get; private set; }
         public int Amount { get; private set; }
 
@@ -20,29 +23,27 @@ namespace ChapeauUI
             InitializeComponent();
             Amount = 1;
 
+            UpdateQuantity();
             labelPopupName.Text = popupName;
             labelPopupDescription.Text = popupDescription;
-            labelQuantityAmount.Text = Amount.ToString();
         }
 
         private void buttonQuantityMinus_Click(object sender, EventArgs e)
         {
-            if (Amount > 1)
+            if (Amount > minimumQuantityAmount)
             {
                 Amount--;
+                UpdateQuantity();
             }
-
-            UpdateQuantity();
         }
 
         private void buttonQuantityPlus_Click(object sender, EventArgs e)
         {
-            if (Amount < 99) 
+            if (Amount < maximumQuantityAmount) 
             { 
                 Amount++;
+                UpdateQuantity();
             }
-
-            UpdateQuantity();
         }
 
         private void buttonPopupAddOrder_Click(object sender, EventArgs e)
@@ -50,13 +51,13 @@ namespace ChapeauUI
             Comment = textBoxPopupComment.Text;
 
             DialogResult = DialogResult.OK;
-            this.Close();
+            Close();
         }
 
         private void buttonPopupCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
         void UpdateQuantity()

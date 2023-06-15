@@ -41,22 +41,34 @@ namespace ChapeauUI
         private void buttonConfirmOrder_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            this.Close();
+            Close();
         }
 
         private void buttonGoBack_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            this.Close();
+            Close();
         }
 
-        private void listViewOrders_SelectedIndexChanged(object sender, EventArgs e)
+        private void listViewOrders_SelectedIndexChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (listViewOrders.SelectedItems.Count == 1)
+            if (e.IsSelected && listViewOrders.SelectedItems.Count == 1)
             {
-                int selectedIndex = listViewOrders.SelectedIndices[0];
-                Order.OrderedItems.RemoveAt(selectedIndex);
-                DisplayOrderedItems();
+                int selectedIndex = e.Item.Index;
+                string name = e.Item.SubItems[0].Text;
+
+                DialogResult result = MessageBox.Show($"Are you sure you want to delete {name}?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes) 
+                {
+                    Order.OrderedItems.RemoveAt(selectedIndex);
+                    DisplayOrderedItems();
+                }
+                else
+                {
+                    // Restore selection
+                    listViewOrders.Items[selectedIndex].Selected = true;
+                }
             }
         }
 
