@@ -94,19 +94,20 @@
             // 
             // btnAddItem
             // 
+            btnAddItem.BackColor = Color.FromArgb(135, 227, 78);
             btnAddItem.Location = new Point(87, 639);
             btnAddItem.Name = "btnAddItem";
-            btnAddItem.Size = new Size(118, 29);
+            btnAddItem.Size = new Size(146, 85);
             btnAddItem.TabIndex = 42;
             btnAddItem.Text = "Add item";
-            btnAddItem.UseVisualStyleBackColor = true;
+            btnAddItem.UseVisualStyleBackColor = false;
             btnAddItem.Click += btnAddItem_Click;
             // 
             // btnEditItem
             // 
             btnEditItem.Location = new Point(369, 639);
             btnEditItem.Name = "btnEditItem";
-            btnEditItem.Size = new Size(112, 29);
+            btnEditItem.Size = new Size(129, 85);
             btnEditItem.TabIndex = 43;
             btnEditItem.Text = "Edit Item";
             btnEditItem.UseVisualStyleBackColor = true;
@@ -114,12 +115,13 @@
             // 
             // btnRemoveItem
             // 
-            btnRemoveItem.Location = new Point(630, 639);
+            btnRemoveItem.BackColor = Color.FromArgb(237, 122, 122);
+            btnRemoveItem.Location = new Point(613, 639);
             btnRemoveItem.Name = "btnRemoveItem";
-            btnRemoveItem.Size = new Size(117, 29);
+            btnRemoveItem.Size = new Size(134, 85);
             btnRemoveItem.TabIndex = 44;
             btnRemoveItem.Text = "Remove Item";
-            btnRemoveItem.UseVisualStyleBackColor = true;
+            btnRemoveItem.UseVisualStyleBackColor = false;
             btnRemoveItem.Click += btnRemoveItem_Click;
             // 
             // panelAdd
@@ -168,7 +170,7 @@
             // 
             // txtBoxCount
             // 
-            txtBoxCount.Location = new Point(360, 103);
+            txtBoxCount.Location = new Point(44, 105);
             txtBoxCount.Name = "txtBoxCount";
             txtBoxCount.Size = new Size(125, 27);
             txtBoxCount.TabIndex = 3;
@@ -176,7 +178,7 @@
             // 
             // txtBoxMenuId
             // 
-            txtBoxMenuId.Location = new Point(44, 103);
+            txtBoxMenuId.Location = new Point(323, 105);
             txtBoxMenuId.Name = "txtBoxMenuId";
             txtBoxMenuId.Size = new Size(125, 27);
             txtBoxMenuId.TabIndex = 2;
@@ -185,7 +187,7 @@
             // lblCount
             // 
             lblCount.AutoSize = true;
-            lblCount.Location = new Point(360, 63);
+            lblCount.Location = new Point(44, 65);
             lblCount.Name = "lblCount";
             lblCount.Size = new Size(51, 20);
             lblCount.TabIndex = 1;
@@ -194,7 +196,7 @@
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Location = new Point(44, 63);
+            lblName.Location = new Point(323, 65);
             lblName.Name = "lblName";
             lblName.Size = new Size(102, 20);
             lblName.TabIndex = 0;

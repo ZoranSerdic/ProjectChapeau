@@ -128,22 +128,25 @@
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = Color.FromArgb(135, 227, 78);
+            btnAdd.ForeColor = SystemColors.ActiveCaptionText;
             btnAdd.Location = new Point(44, 755);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(146, 89);
             btnAdd.TabIndex = 57;
             btnAdd.Text = "Add new item ";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnRemove
             // 
+            btnRemove.BackColor = Color.FromArgb(237, 122, 122);
             btnRemove.Location = new Point(633, 751);
             btnRemove.Name = "btnRemove";
             btnRemove.Size = new Size(174, 97);
             btnRemove.TabIndex = 58;
             btnRemove.Text = "Remove Item";
-            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.UseVisualStyleBackColor = false;
             btnRemove.Click += btnRemove_Click;
             // 
             // MenuViewAllItems
