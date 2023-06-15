@@ -18,6 +18,7 @@ namespace ChapeauUI
         public OrderPopup(string popupName, string popupDescription)
         {
             InitializeComponent();
+            Amount = 1;
 
             labelPopupName.Text = popupName;
             labelPopupDescription.Text = popupDescription;
@@ -26,7 +27,7 @@ namespace ChapeauUI
 
         private void buttonQuantityMinus_Click(object sender, EventArgs e)
         {
-            if (Amount > 0)
+            if (Amount > 1)
             {
                 Amount--;
             }
@@ -36,7 +37,11 @@ namespace ChapeauUI
 
         private void buttonQuantityPlus_Click(object sender, EventArgs e)
         {
-            Amount++;
+            if (Amount < 99) 
+            { 
+                Amount++;
+            }
+
             UpdateQuantity();
         }
 

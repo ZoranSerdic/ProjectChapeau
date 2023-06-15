@@ -22,7 +22,10 @@ namespace ChapeauDAL
         public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
         {
             //gather specific courseType and menuType from the table
-            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] FROM menuitem AS M WHERE courseType = @courseType AND menuType = @menuType;";
+            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] " +
+                $"FROM menuitem AS M " +
+                $"JOIN InventoryItem as I on I.MenuItemKey = M.MenuItemId " +
+                $"WHERE M.courseType = @courseType AND M.menuType = @menuType AND I.inStock > 0;";
             SqlParameter[] sqlParameters = new SqlParameter[2];
             sqlParameters[0] = new SqlParameter("@courseType", courseType.ToString());
             sqlParameters[1] = new SqlParameter("@menuType", menuType.ToString());

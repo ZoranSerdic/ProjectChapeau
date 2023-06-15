@@ -46,7 +46,7 @@ namespace ChapeauUI
             currentMenuItems.Clear();
 
             try
-            {
+            { 
                 currentMenuItems.AddRange(menuItemService.GetCourseMenuType(foodType, menuType));
             }
             catch (Exception e)
@@ -116,7 +116,7 @@ namespace ChapeauUI
             FillMenuItemList(currentCourseType, MenuType.AllDay);
             DisplayItems(currentMenuItems);
 
-            SwitchMenuLabel(currentMenuLabel, "Category");
+            SwitchMenuLabel(currentMenuLabel, "All Day");
         }
 
         private void buttonSwitchMenu_Click(object sender, EventArgs e)
