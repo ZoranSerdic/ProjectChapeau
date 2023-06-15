@@ -29,7 +29,6 @@ namespace ChapeauUI
 
         private string currentMenuLabel = "Starters";
 
-        // TODO: Bianca's tableview gives Table tableID & Employee for Order order
         public OrderView(Table table, Employee employee)
         {
             CreateOrder(table, employee);

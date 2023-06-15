@@ -38,7 +38,7 @@ namespace ChapeauUI
             }
             else
             {
-                string hashedPincode = Hash(this.textBox_login_pincode.Text);
+                string hashedPincode = employeeService.Hash(this.textBox_login_pincode.Text);
                 try
                 {
                     employee = employeeService.GetEmployeeByPassword(hashedPincode);
@@ -60,15 +60,10 @@ namespace ChapeauUI
                             this.Close();
                             break;
                         case ChapeauModel.Role.Chef:
-                            this.Hide();
-                            BarKitchenView kitchenView = new BarKitchenView(employee);
-                            kitchenView.ShowDialog();
-                            this.Close();
-                            break;
                         case ChapeauModel.Role.Barman:
                             this.Hide();
-                            BarKitchenView barView = new BarKitchenView(employee);
-                            barView.ShowDialog();
+                            BarKitchenView barKitchenView = new BarKitchenView(employee);
+                            barKitchenView.ShowDialog();
                             this.Close();
                             break;
                         case ChapeauModel.Role.Waiter:
@@ -82,15 +77,6 @@ namespace ChapeauUI
 
                 
             }
-        }
-        string Hash(string password)
-        {
-            var sha = SHA256.Create();
-
-            var asByteArray = Encoding.Default.GetBytes(password);
-            var hashedPassword = sha.ComputeHash(asByteArray);
-
-            return Convert.ToBase64String(hashedPassword);
         }
     }
 }

@@ -58,7 +58,22 @@ namespace ChapeauDAL
 
             return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
         }
-        
+        public List<Order> GetUnpaidOrdersByTableId(int tableId)
+        {
+            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oI.consistsOfId, oI.preparedAt
+                    FROM [Order] AS o
+                    INNER JOIN ConsistsOf AS oI ON o.orderId = oI.orderId
+                    WHERE o.tableId = @tableId AND o.isPayed = 0";
+
+            List<SqlParameter> sqlParameters = new List<SqlParameter>
+            {
+                new SqlParameter("@tableId", tableId)
+            };
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters.ToArray());
+            return ReadOrders(dataTable);
+        }
+
         public void UpdateOrderPaidStatus(Table table)
         {
             string query = "UPDATE [Order] SET isPayed = 1 WHERE tableId = @tableId";
@@ -105,6 +120,15 @@ namespace ChapeauDAL
                 order.OrderedItems.Add(orderItem);  // add the item to the order
             }
             return orders;
+        }
+        public void UpdateOrderStatus(int orderId, string newStatus)
+        {
+            string query = "UPDATE ConsistsOf SET status = @newStatus WHERE consistsOfId = @consistsOfId";
+            SqlParameter[] sqlParameters = new SqlParameter[2];
+            sqlParameters[0] = new SqlParameter("@newStatus", newStatus);
+            sqlParameters[1] = new SqlParameter("@consistsOfId", orderId);
+
+            ExecuteEditQuery(query, sqlParameters);
         }
     }
 }

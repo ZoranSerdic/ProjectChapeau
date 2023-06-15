@@ -21,6 +21,7 @@ namespace ChapeauUI
         {
             InitializeComponent();
             this.employee = employee;
+            tableService = new TableService();
         }
 
         private void TableView_Load(object sender, EventArgs e)
@@ -37,7 +38,6 @@ namespace ChapeauUI
             int numColumns = 2;
             int numRows = 5;
 
-            tableService = new TableService();
             List<Table> tables = tableService.GetAllTables();
 
             int formWidth = numColumns * (buttonSize + spacing) + spacing;
@@ -99,7 +99,7 @@ namespace ChapeauUI
 
             // Update the table status in the database
             tableService.UpdateTableStatus(table.TableId, table.Status);
-            TablePopup TablePopup = new TablePopup(table, this);
+            TablePopup TablePopup = new TablePopup(table, this, employee);
             TablePopup.ShowDialog();
             this.Refresh();
         }

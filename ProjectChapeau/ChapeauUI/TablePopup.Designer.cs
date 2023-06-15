@@ -35,6 +35,11 @@
             buttonGenerateBill = new Button();
             buttonGoBack = new Button();
             buttonCancelOccupation = new Button();
+            listViewOrders = new ListView();
+            itemName = new ColumnHeader();
+            waitingTime = new ColumnHeader();
+            orderStatus = new ColumnHeader();
+            label_noOrder = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBoxRedSeparator).BeginInit();
             SuspendLayout();
             // 
@@ -74,7 +79,7 @@
             buttonPlaceOrder.BackColor = Color.FromArgb(57, 67, 183);
             buttonPlaceOrder.Font = new Font("Impact", 22.2F, FontStyle.Regular, GraphicsUnit.Point);
             buttonPlaceOrder.ForeColor = Color.White;
-            buttonPlaceOrder.Location = new Point(128, 139);
+            buttonPlaceOrder.Location = new Point(151, 717);
             buttonPlaceOrder.Name = "buttonPlaceOrder";
             buttonPlaceOrder.Size = new Size(244, 66);
             buttonPlaceOrder.TabIndex = 3;
@@ -87,7 +92,7 @@
             buttonGenerateBill.BackColor = Color.FromArgb(16, 115, 26);
             buttonGenerateBill.Font = new Font("Impact", 22.2F, FontStyle.Regular, GraphicsUnit.Point);
             buttonGenerateBill.ForeColor = Color.White;
-            buttonGenerateBill.Location = new Point(128, 705);
+            buttonGenerateBill.Location = new Point(126, 798);
             buttonGenerateBill.Name = "buttonGenerateBill";
             buttonGenerateBill.Size = new Size(292, 66);
             buttonGenerateBill.TabIndex = 4;
@@ -121,12 +126,50 @@
             buttonCancelOccupation.UseVisualStyleBackColor = false;
             buttonCancelOccupation.Click += buttonCancelOccupation_Click;
             // 
+            // listViewOrders
+            // 
+            listViewOrders.Columns.AddRange(new ColumnHeader[] { itemName, waitingTime, orderStatus });
+            listViewOrders.FullRowSelect = true;
+            listViewOrders.Location = new Point(46, 129);
+            listViewOrders.Name = "listViewOrders";
+            listViewOrders.Size = new Size(437, 509);
+            listViewOrders.TabIndex = 7;
+            listViewOrders.UseCompatibleStateImageBehavior = false;
+            listViewOrders.View = View.Details;
+            // 
+            // itemName
+            // 
+            itemName.Text = "Name";
+            itemName.Width = 150;
+            // 
+            // waitingTime
+            // 
+            waitingTime.Text = "Waiting time";
+            waitingTime.Width = 150;
+            // 
+            // orderStatus
+            // 
+            orderStatus.Text = "Status";
+            orderStatus.Width = 150;
+            // 
+            // label_noOrder
+            // 
+            label_noOrder.AutoSize = true;
+            label_noOrder.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            label_noOrder.Location = new Point(47, 241);
+            label_noOrder.Name = "label_noOrder";
+            label_noOrder.Size = new Size(436, 46);
+            label_noOrder.TabIndex = 8;
+            label_noOrder.Text = "This table did not order yet!";
+            // 
             // TablePopup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(229, 234, 250);
             ClientSize = new Size(532, 953);
+            Controls.Add(label_noOrder);
+            Controls.Add(listViewOrders);
             Controls.Add(buttonCancelOccupation);
             Controls.Add(buttonGoBack);
             Controls.Add(buttonGenerateBill);
@@ -150,5 +193,10 @@
         private Button buttonGenerateBill;
         private Button buttonGoBack;
         private Button buttonCancelOccupation;
+        private ListView listViewOrders;
+        private ColumnHeader itemName;
+        private ColumnHeader waitingTime;
+        private ColumnHeader orderStatus;
+        private Label label_noOrder;
     }
 }

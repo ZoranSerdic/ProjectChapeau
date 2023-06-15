@@ -2,6 +2,7 @@
 using ChapeauModel;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,14 @@ namespace ChapeauService
         public void UpdateOrderPaidStatus(Table table)
         {
             orderDAO.UpdateOrderPaidStatus(table);
+        }
+        public List<Order> GetUnpaidOrdersByTableId(int tableId)
+        {
+           return orderDAO.GetUnpaidOrdersByTableId(tableId);
+        }
+        public void UpdateOrderStatus(int orderId, string newStatus)
+        {
+            orderDAO.UpdateOrderStatus(orderId, newStatus);
         }
     }
 }
