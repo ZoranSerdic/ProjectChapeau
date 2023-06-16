@@ -34,23 +34,21 @@ namespace ChapeauUI
         {
             if ((this.textBox_login_name.Text) == "" || (this.textBox_login_pincode.Text) == "")
             {
-                MessageBox.Show("Log in failed! Please enter your name and pin code!", "Message", MessageBoxButtons.OK);
+                MessageBox.Show("Log in failed! Please enter your correct name and pin code!", "Message", MessageBoxButtons.OK);
             }
             else
             {
-                string username = employeeService.GetEmployeeUsername(employee);
                 string hashedPincode = employeeService.Hash(this.textBox_login_pincode.Text);
                 try
                 {
                     employee = employeeService.GetEmployeeByPassword(hashedPincode);
-                    username = this.textBox_login_name.Text;
                 }
                 catch
                 {
-                    MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
+                    MessageBox.Show("Incorrect pin code or name. Please try again!", "Message", MessageBoxButtons.OK);
                     return;
                 }
-
+                string username = $"{employee.FirstName.ToLower()}{employee.LastName.Substring(0, 1)}";
                 if ((employee.Pincode == hashedPincode) && (username == this.textBox_login_name.Text))
                 {
                     switch (employee.Occupation)
