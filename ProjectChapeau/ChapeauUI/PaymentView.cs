@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Globalization;
 
 namespace ChapeauUI
 {
@@ -47,6 +48,10 @@ namespace ChapeauUI
 
         private void InitializeDisplay()
         {
+            CultureInfo ci = new CultureInfo("nl");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+
             PaymentService paymentService = new PaymentService();  
 
             items = paymentService.GetAllItemsFromActiveOrders(table);
@@ -185,7 +190,7 @@ namespace ChapeauUI
             //Edge case to make sure tip is never returned as null
             if(string.IsNullOrEmpty(txtTip.Text))
             {
-                txtTip.Text = "0.00";
+                txtTip.Text = "0,00";
             }
 
         }
@@ -277,14 +282,14 @@ namespace ChapeauUI
             //If total amount in box is above Total, set tip to zero. Extra will be calculated to tip later
             if (!string.IsNullOrEmpty(txtTotal.Text) && Convert.ToDecimal(txtTotal.Text) > Total)
             {
-                txtTip.Text = "0.00";
+                txtTip.Text = CalculateTip().ToString("0.00");
             }
         }
 
         private void txtTip_Enter(object sender, EventArgs e)
         {
             //If the user wants to add a tip, make it nicer to use, and if a tip is added set total back to original total
-            if (txtTip.Text == "0.00")
+            if (txtTip.Text == "0,00")
             {
                 txtTip.Text = "";
             }
@@ -298,7 +303,7 @@ namespace ChapeauUI
             decimal value = 0;
             if (!string.IsNullOrEmpty(txtTip.Text) && !decimal.TryParse(txtTip.Text, out value) || value < 0 || value > 99999 || txtTip.Text.StartsWith("0"))
             {
-                txtTip.Text = "0.00";
+                txtTip.Text = "0,00";
             }
         }
 

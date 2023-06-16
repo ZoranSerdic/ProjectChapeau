@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -53,6 +54,10 @@ namespace ChapeauUI
         }
         private void InitializeDisplay()
         {
+            CultureInfo ci = new CultureInfo("nl");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+
             CalculateItems(items);
             UpdateLabels();
             StyleListView();
@@ -175,7 +180,7 @@ namespace ChapeauUI
             {
                 ValidateInputFields();
             }
-            if (txtTotal.Text == "0.00")
+            if (txtTotal.Text == "0,00")
             {
                 throw new Exception("Amount paid can't be 0");
             }
@@ -197,7 +202,7 @@ namespace ChapeauUI
             OrderService orderService = new OrderService();
             TableService tableService = new TableService();
 
-            if (lblTotalLeft.Text == "0.00")
+            if (lblTotalLeft.Text == "0,00")
             {
                 HideAllFields();
                 ShowSuccessFields();
@@ -213,7 +218,7 @@ namespace ChapeauUI
             decimal value = 0;
             if (!string.IsNullOrEmpty(txtTotal.Text) && !decimal.TryParse(txtTotal.Text, out value) || value < 0 || value > 99999 || txtTotal.Text.StartsWith("0"))
             {
-                txtTotal.Text = "0.00";
+                txtTotal.Text = "0,00";
                 return;
             }
         }
@@ -223,8 +228,23 @@ namespace ChapeauUI
             decimal value = 0;
             if (!string.IsNullOrEmpty(txtTip.Text) && !decimal.TryParse(txtTip.Text, out value) || value < 0 || value > 99999 || txtTip.Text.StartsWith("0"))
             {
-                txtTip.Text = "0.00";
+                txtTip.Text = "0,00";
                 return;
+            }
+        }
+        private void txtTip_Enter(object sender, EventArgs e)
+        {
+            if (txtTip.Text == "0,00")
+            {
+                txtTip.Text = "";
+            }
+        }
+
+        private void txtTotal_Enter(object sender, EventArgs e)
+        {
+            if (txtTotal.Text == "0,00")
+            {
+                txtTotal.Text = "";
             }
         }
         private void ValidateInputFields()

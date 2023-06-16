@@ -120,7 +120,7 @@
             this.lblvat21.Name = "lblvat21";
             this.lblvat21.Size = new System.Drawing.Size(56, 25);
             this.lblvat21.TabIndex = 7;
-            this.lblvat21.Text = "€0.00";
+            this.lblvat21.Text = "€0,00";
             // 
             // lblvat9
             // 
@@ -131,7 +131,7 @@
             this.lblvat9.Name = "lblvat9";
             this.lblvat9.Size = new System.Drawing.Size(56, 25);
             this.lblvat9.TabIndex = 6;
-            this.lblvat9.Text = "€0.00";
+            this.lblvat9.Text = "€0,00";
             // 
             // lblSubtotal
             // 
@@ -357,8 +357,9 @@
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Size = new System.Drawing.Size(92, 29);
             this.txtTotal.TabIndex = 41;
-            this.txtTotal.Text = "0.00";
+            this.txtTotal.Text = "0,00";
             this.txtTotal.TextChanged += new System.EventHandler(this.txtTotal_TextChanged);
+            this.txtTotal.Enter += new System.EventHandler(this.txtTotal_Enter);
             // 
             // txtTip
             // 
@@ -368,8 +369,9 @@
             this.txtTip.Name = "txtTip";
             this.txtTip.Size = new System.Drawing.Size(92, 29);
             this.txtTip.TabIndex = 40;
-            this.txtTip.Text = "0.00";
+            this.txtTip.Text = "0,00";
             this.txtTip.TextChanged += new System.EventHandler(this.txtTip_TextChanged);
+            this.txtTip.Enter += new System.EventHandler(this.txtTip_Enter);
             // 
             // lblTotal2
             // 

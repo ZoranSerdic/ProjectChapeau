@@ -59,12 +59,12 @@ namespace ChapeauDAL
             try
             {
                 //This takes all the active orders (IsPaid = false) from the table and returns all the items to process the payment
-                string query = @"SELECT m.name, m.price, c.amount, v.vat
+                string query = @"SELECT m.name, m.price, c.amount, v.vat, c.status
                 FROM [Order] 
                 JOIN ConsistsOf AS c on [Order].orderId = c.orderId 
                 JOIN MenuItem AS m ON c.menuItemId = m.menuItemId
                 JOIN VAT AS v ON m.vatId = v.vatId
-                WHERE [Order].tableId = @tableId AND [Order].IsPayed = 0";
+                WHERE [Order].tableId = @tableId AND [Order].IsPayed = 0 AND c.status = 'Served'";
 
                 SqlParameter[] sqlParameters = new SqlParameter[1];
                 sqlParameters[0] = new SqlParameter("@tableId", table.TableId);

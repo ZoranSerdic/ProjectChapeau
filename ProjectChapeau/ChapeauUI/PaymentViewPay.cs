@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,10 @@ namespace ChapeauUI
         }
         private void InitializeDisplay()
         {
+            CultureInfo ci = new CultureInfo("nl");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+
             DisplayItems(items);
             UpdateLabels();
             StyleListView();
@@ -115,12 +120,12 @@ namespace ChapeauUI
                 index++;
             }
 
-            if(bill.TotalTip.ToString() != "0.00")
+            if(bill.TotalTip.ToString() != "0,00")
             {
                 listviewItems.Items.Add("Customer tip");
                 listviewItems.Items[index].SubItems.Add("-");
                 listviewItems.Items[index].SubItems.Add(bill.TotalTip.ToString("€0.00"));
-                listviewItems.Items[index].SubItems.Add("€0.00");
+                listviewItems.Items[index].SubItems.Add("€0,00");
             }
         }
 
