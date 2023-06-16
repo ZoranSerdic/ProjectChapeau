@@ -20,44 +20,45 @@ namespace ChapeauDAL
         #region Mariia
         public List<Order> GetOrders(FoodType[] foodType, OrderedItemStatus[] status) // gets orders depending on the type and status
         {
-            List<Order> orders = new List<Order>();
-
-            string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oI.consistsOfId, oI.preparedAt
+            try
+            {
+                string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oI.consistsOfId, oI.preparedAt
                             FROM [Order] AS o
                             INNER JOIN ConsistsOf AS oI ON o.orderId = oI.orderId
-                            INNER JOIN MenuItem AS mI ON oI.menuItemId = mI.menuItemId ";
+                            INNER JOIN MenuItem AS mI ON oI.menuItemId = mI.menuItemId 
+                            WHERE CONVERT(date, o.time) = CONVERT(date, DATEADD(hour, 2, GETUTCDATE()))";  //shows today's orders only             
 
-            List<SqlParameter> sqlParameters = new List<SqlParameter>();
-            if(foodType.Length == 1)
-            {
-                query += @"WHERE mI.courseType = @courseType
-                           AND ";
-                sqlParameters.Add(new SqlParameter("@courseType", foodType[0].ToString()));
+                List<SqlParameter> sqlParameters = new List<SqlParameter>();
+                if (foodType.Length == 1) // used for drinks/starters/mains/desserts (for bar and kitchen view and for bar history view)
+                {
+                    query += @" AND mI.courseType = @courseType ";
+                    sqlParameters.Add(new SqlParameter("@courseType", foodType[0].ToString()));
+                }
+                else if (foodType.Length == 3) // used for starters and mains and desserts at the same time (for kitchen history)
+                {
+                    query += @"AND mI.courseType IN (@courseTypeStarters, @courseTypeMains, @courseTypeDesserts) ";
+                    sqlParameters.Add(new SqlParameter("@courseTypeStarters", foodType[0].ToString()));
+                    sqlParameters.Add(new SqlParameter("@courseTypeMains", foodType[1].ToString()));
+                    sqlParameters.Add(new SqlParameter("@courseTypeDesserts", foodType[2].ToString()));
+                }
+                if (status.Length == 1) // used for ready items - display history
+                {
+                    query += @"AND oI.status = @statusReady
+                            ORDER BY oI.preparedAt DESC";// time when the items were prepared is in descending order
+                    sqlParameters.Add(new SqlParameter("@statusReady", status[0].ToString()));
+                }
+                else if (status.Length == 2) // used for items which were sent from the waiter and in process of preparation
+                {
+                    query += "AND (oI.status = @statusSent OR oI.status = @statusPreparing)";
+                    sqlParameters.Add(new SqlParameter("@statusSent", status[0].ToString()));
+                    sqlParameters.Add(new SqlParameter("@statusPreparing", status[1].ToString()));
+                }
+                return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
             }
-            else if(foodType.Length == 3)
+            catch (Exception ex)
             {
-                query += @"WHERE mI.courseType IN (@courseTypeStarters, @courseTypeMains, @courseTypeDesserts)
-                           AND ";
-                sqlParameters.Add(new SqlParameter("@courseTypeStarters", foodType[0].ToString()));
-                sqlParameters.Add(new SqlParameter("@courseTypeMains", foodType[1].ToString()));
-                sqlParameters.Add(new SqlParameter("@courseTypeDesserts", foodType[2].ToString()));
-            }
-            if (status.Length == 1)
-            {
-                query += "oI.status = @statusReady";
-                sqlParameters.Add(new SqlParameter("@statusReady", status[0].ToString()));
-            }
-            else if (status.Length == 2)
-            {
-                query += "(oI.status = @statusSent OR oI.status = @statusPreparing)";
-                sqlParameters.Add(new SqlParameter("@statusSent", status[0].ToString()));
-                sqlParameters.Add(new SqlParameter("@statusPreparing", status[1].ToString()));
-            }
-            query += " AND CONVERT(date, o.time) = CONVERT(date, DATEADD(hour, 2, GETUTCDATE()))";// -- shows today's orders only
-            if (status.Length == 1)
-                query += " ORDER BY oI.preparedAt DESC";
-
-            return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
+                throw;
+            }     
         }
 
         private List<Order> ReadOrders(DataTable dataTable)
@@ -70,7 +71,6 @@ namespace ChapeauDAL
                 int orderId = (int)dataRow["orderId"];
 
                 bool orderExists = false;
-
                 foreach (Order existingOrder in orders) // check if the order with the id already exists
                 {
                     if (existingOrder.OrderId == orderId)
@@ -80,10 +80,8 @@ namespace ChapeauDAL
                         break;
                     }
                 }
-
-                if (!orderExists)  // if it doesn't exist , the new order is made
+                if (!orderExists)  // if it doesn't exist , the new order is made, else - the orderedItem is added to the list of orderedItem to the existing order
                 {
-                    order = new Order();
                     order.OrderId = orderId;
                     order.Table = tableDAO.GetTableById((int)dataRow["tableId"]);
                     order.Time = (DateTime)dataRow["time"];
@@ -94,7 +92,7 @@ namespace ChapeauDAL
                     orders.Add(order); // the order is added to the list with orders
                 };
 
-                OrderItem orderItem = orderItemDAO.GetOrderItemById((int)dataRow["consistsOfId"]);
+                OrderItem orderItem = orderItemDAO.GetOrderItemById((int)dataRow["consistsOfId"]); // gets the ordered item
                 order.OrderedItems.Add(orderItem);  // add the item to the order
             }
             return orders;

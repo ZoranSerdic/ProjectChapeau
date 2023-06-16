@@ -5,17 +5,18 @@ using System.Data;
 
 namespace ChapeauUI
 {
-    // add code for logged-in user
-    // logging out
+    #region Mariia
     public partial class BarKitchenView : Form
     {
-        private OrderService orderService;
         private Employee loggedInEmployee;
+
+        private OrderService orderService;
         private OrderItemService orderItemService;
         public BarKitchenView(Employee loggedInEmployee)
         {
             InitializeComponent();
-
+            
+            // hidesbuttons and history
             buttonReady.Hide();
             buttonStart.Hide();
             buttonOrders.Hide();
@@ -23,14 +24,12 @@ namespace ChapeauUI
             labelHistory.Hide();
 
             orderService = new OrderService();
-           // loggedInEmployee = new Employee();
             orderItemService = new OrderItemService();
 
-          //  loggedInEmployee.Occupation = Role.Barman; // delete this later
             this.loggedInEmployee = loggedInEmployee;
 
             DisplayUnpreparedOrders(); // in the beginning the open orders are displayed
-            timerRefreshDisplay.Start();
+            timerRefreshDisplay.Start(); // timer starts
         }
 
         private void DisplayUnpreparedOrders() // depending on the logged in user the orders are shown - bar or kitchen
@@ -51,10 +50,11 @@ namespace ChapeauUI
 
         private void DisplayUnpreparedDrinks()
         {
-            listViewOrders.Items.Clear();
-  
-            // get drinks with status 'Sent' (from waiter ) or 'Preparing'.
+
+            // get drinks with status 'Sent' (from waiter to the bar) or 'Preparing'.
             List<Order> drinks = orderService.GetOrders(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+
+            listViewOrders.Items.Clear();
 
             foreach (Order order in drinks)
             {
@@ -198,7 +198,6 @@ namespace ChapeauUI
                 orderItem.Status = OrderedItemStatus.Preparing; // changes the status 
 
                 orderItemService.UpdateOrderItemStatus(orderItem); // updates the status in the database
-
             }
             catch (Exception ex)
             {
@@ -253,7 +252,7 @@ namespace ChapeauUI
             try
             {
                 if (loggedInEmployee.Occupation == Role.Barman) // get drinks with status 'Ready'.
-                    DisplayOrdersHistory(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[1] { OrderedItemStatus.Ready } );
+                    DisplayOrdersHistory(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
                 else if (loggedInEmployee.Occupation == Role.Chef) // // get dishes with status 'Ready'.
                     DisplayOrdersHistory(new FoodType[3] { FoodType.Starter, FoodType.MainCourse, FoodType.Dessert }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
             }
@@ -341,4 +340,5 @@ namespace ChapeauUI
                 DisplayUnpreparedOrders();
         }
     }
+    #endregion
 }

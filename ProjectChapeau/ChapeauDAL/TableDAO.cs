@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,20 +14,27 @@ namespace ChapeauDAL
     {
         public Table GetTableById(int tableId)
         {
-            string query = @"SELECT tableId, status 
+            try
+            {
+                string query = @"SELECT tableId, status 
                                 FROM [Table]
                                 WHERE tableId = @TableId";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@TableId", tableId);
+                SqlParameter[] sqlParameters = new SqlParameter[1];
+                sqlParameters[0] = new SqlParameter("@TableId", tableId);
 
-            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0)
-            {
-                DataRow dataRow = dataTable.Rows[0];
-                Table table = ReadTable(dataRow);
-                return table;
+                DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow dataRow = dataTable.Rows[0];
+                    Table table = ReadTable(dataRow);
+                    return table;
+                }
+                throw new Exception($"Table with the {tableId} id was not found!");
             }
-            return null; // Table not found
+            catch (Exception)
+            {
+                throw;
+            }
         }
         
         public List<Table> GetAllTables()

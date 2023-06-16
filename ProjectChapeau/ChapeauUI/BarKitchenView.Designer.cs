@@ -51,8 +51,8 @@
             buttonOrders = new Button();
             labelHistory = new Label();
             timerRefreshDisplay = new System.Windows.Forms.Timer(components);
-            pictureBox1 = new PictureBox();
             labelPrompt = new Label();
+            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -252,17 +252,6 @@
             timerRefreshDisplay.Interval = 30000;
             timerRefreshDisplay.Tick += timerRefreshDisplay_Tick;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(46, 13);
-            pictureBox1.Margin = new Padding(4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(176, 108);
-            pictureBox1.TabIndex = 18;
-            pictureBox1.TabStop = false;
-            // 
             // labelPrompt
             // 
             labelPrompt.AutoSize = true;
@@ -273,14 +262,23 @@
             labelPrompt.TabIndex = 19;
             labelPrompt.Text = "Press on an item to start/finish preparation";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(46, 44);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(204, 87);
+            pictureBox1.TabIndex = 20;
+            pictureBox1.TabStop = false;
+            // 
             // BarKitchenView
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1418, 968);
-            Controls.Add(labelPrompt);
             Controls.Add(pictureBox1);
+            Controls.Add(labelPrompt);
             Controls.Add(labelHistory);
             Controls.Add(buttonOrders);
             Controls.Add(listViewHistory);
@@ -320,7 +318,7 @@
         private Button buttonOrders;
         private Label labelHistory;
         private System.Windows.Forms.Timer timerRefreshDisplay;
-        private PictureBox pictureBox1;
         private Label labelPrompt;
+        private PictureBox pictureBox1;
     }
 }

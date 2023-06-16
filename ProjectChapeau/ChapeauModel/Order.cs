@@ -14,6 +14,5 @@ namespace ChapeauModel
         public bool IsPaid { get; set; }
         public Employee Employee { get; set; }
         public List<OrderItem> OrderedItems { get; set; }
-
     }
 }

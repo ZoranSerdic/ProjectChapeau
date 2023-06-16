@@ -13,6 +13,5 @@ namespace ChapeauModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Role Occupation { get; set; }
-
     }
 }

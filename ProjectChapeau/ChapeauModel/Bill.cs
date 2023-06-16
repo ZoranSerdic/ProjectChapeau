@@ -15,6 +15,5 @@ namespace ChapeauModel
         public DateTime Date { get; set; }
         public string? Comment { get; set; }
         public bool IsOpen { get; set; }
-
     }
 }

@@ -141,22 +141,30 @@ namespace ChapeauDAL
             ExecuteEditQuery(query, sqlParameters);
         }
 
+        #region Mariia
         public MenuItem GetMenuItemById(int menuItemId)
         {
-            string query = @"SELECT M.menuItemId, M.[name], M.[price], V.vat, M.courseType, M.menuType, M.description
-                                FROM menuItem AS M JOIN Vat AS V on M.vatId = V.vatId
-                                WHERE menuItemId = @MenuItemId"; 
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@MenuItemId", menuItemId);
-
-            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item
+            try
             {
-                DataRow dataRow = dataTable.Rows[0];
-                MenuItem menuItem = ReadMenuItem(dataRow);
-                return menuItem;
+                string query = @"SELECT M.menuItemId, M.[name], M.[price], V.vat, M.courseType, M.menuType, M.description
+                                FROM menuItem AS M JOIN Vat AS V on M.vatId = V.vatId
+                                WHERE menuItemId = @MenuItemId";
+                SqlParameter[] sqlParameters = new SqlParameter[1];
+                sqlParameters[0] = new SqlParameter("@MenuItemId", menuItemId);
+
+                DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+                if (dataTable.Rows.Count > 0) // check if there are any rows returned, then reads the menu item
+                {
+                    DataRow dataRow = dataTable.Rows[0];
+                    MenuItem menuItem = ReadMenuItem(dataRow);
+                    return menuItem;
+                }
+                throw new Exception($"Menu item with the {menuItemId} id was not found!");
             }
-            throw new Exception($"Menu item with the {menuItemId} id was not found!");
+            catch (Exception)
+            {
+                throw;
+            }
     }
 
         private MenuItem ReadMenuItem(DataRow dataRow)
@@ -173,5 +181,6 @@ namespace ChapeauDAL
             };
             return menuItem;
         }
+        #endregion
     }
 }

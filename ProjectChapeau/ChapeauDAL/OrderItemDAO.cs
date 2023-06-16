@@ -18,24 +18,32 @@ namespace ChapeauDAL
         #region Mariia
         public OrderItem GetOrderItemById(int orderItemId)
         {
-            string query = @"SELECT consistsOfId, menuItemId, comment, amount, status, preparedAt
+            try
+            {
+                string query = @"SELECT consistsOfId, menuItemId, comment, amount, status, preparedAt
                             FROM ConsistsOf
                             WHERE consistsOfId = @OrderItemId";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@OrderItemId", orderItemId);
+                SqlParameter[] sqlParameters = new SqlParameter[1];
+                sqlParameters[0] = new SqlParameter("@OrderItemId", orderItemId);
 
-            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
-            if (dataTable.Rows.Count > 0) 
-            {
-                DataRow dataRow = dataTable.Rows[0];
-                OrderItem orderItem = ReadOrderItem(dataRow);
-                return orderItem;
+                DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+                if (dataTable.Rows.Count > 0)
+                {
+                    DataRow dataRow = dataTable.Rows[0];
+                    OrderItem orderItem = ReadOrderItem(dataRow);
+                    return orderItem;
+                }
+                throw new Exception($"Order item with the {orderItemId} id was not found!");
             }
-            throw new Exception($"Order item with the {orderItemId} id was not found!");
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private OrderItem ReadOrderItem(DataRow dataRow)
         {
+
             OrderItem orderItem = new OrderItem()
             {
                 OrderItemId = (int)dataRow["consistsOfId"],
@@ -50,24 +58,31 @@ namespace ChapeauDAL
 
         public void UpdateOrderItemStatus(OrderItem orderItem)
         {
-            string query = @"UPDATE ConsistsOf
+            try
+            {
+                string query = @"UPDATE ConsistsOf
                             SET status = @Status";
 
-            List<SqlParameter> sqlParameters = new List<SqlParameter>
+                List<SqlParameter> sqlParameters = new List<SqlParameter>
             {
-                new SqlParameter("@Status", orderItem.Status.ToString()), 
+                new SqlParameter("@Status", orderItem.Status.ToString()),
                 new SqlParameter("@Id", orderItem.OrderItemId)
             };
 
-            // if the item is ready then the preparedAt time is added as well
-            if (orderItem.Status == OrderedItemStatus.Ready)
-            {
-                query += ", preparedAt = @PreparedAt";
-                sqlParameters.Add(new SqlParameter("@PreparedAt", orderItem.PreparedAt));
-            };
-            query += " WHERE consistsOfId = @Id";  // add the query
+                // if the item is ready then the preparedAt time is added as well
+                if (orderItem.Status == OrderedItemStatus.Ready)
+                {
+                    query += ", preparedAt = @PreparedAt";
+                    sqlParameters.Add(new SqlParameter("@PreparedAt", orderItem.PreparedAt));
+                };
+                query += " WHERE consistsOfId = @Id";  // continue the query
 
-            ExecuteEditQuery(query, sqlParameters.ToArray());
+                ExecuteEditQuery(query, sqlParameters.ToArray());
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
         #endregion
 
