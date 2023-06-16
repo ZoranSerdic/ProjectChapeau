@@ -76,21 +76,37 @@ namespace ChapeauUI
         private List<Order>? GetOrders(Table table)
         {
             List<Order> unpaidOrders = orderService.GetUnpaidOrdersByTableId(table.TableId);
-            if (unpaidOrders.Count > 0) { return unpaidOrders; }
+            if (unpaidOrders.Count > 0)
+            {
+                List<Order> filteredOrders = unpaidOrders.Where(order =>
+                    order.OrderedItems.Any(orderItem =>
+                        orderItem.Status == OrderedItemStatus.Ready ||
+                        orderItem.Status == OrderedItemStatus.Sent ||
+                        orderItem.Status == OrderedItemStatus.Preparing
+                    )
+                ).ToList();
+
+                return filteredOrders;
+            }
             else return null;
         }
         private void DisplayOrderedItems(Order order)
         {
             foreach (OrderItem orderItem in order.OrderedItems)
             {
-                DateTime currentTime = DateTime.Now;
-                TimeSpan timeSinceOrder = currentTime - order.Time;
-                ListViewItem item = new ListViewItem(orderItem.MenuItem.Name);
-                item.SubItems.Add(timeSinceOrder.ToString(@"hh\:mm"));
-                item.SubItems.Add(orderItem.Status.ToString());
+                if (orderItem.Status == OrderedItemStatus.Ready ||
+                    orderItem.Status == OrderedItemStatus.Sent ||
+                    orderItem.Status == OrderedItemStatus.Preparing)
+                {
+                    DateTime currentTime = DateTime.Now;
+                    TimeSpan timeSinceOrder = currentTime - order.Time;
+                    ListViewItem item = new ListViewItem(orderItem.MenuItem.Name);
+                    item.SubItems.Add(timeSinceOrder.ToString(@"hh\:mm"));
+                    item.SubItems.Add(orderItem.Status.ToString());
 
-                item.Tag = orderItem.OrderItemId;
-                listViewOrders.Items.Add(item);
+                    item.Tag = orderItem.OrderItemId;
+                    listViewOrders.Items.Add(item);
+                }
             }
         }
 
@@ -151,13 +167,21 @@ namespace ChapeauUI
 
             if (listViewOrders.Controls.Contains(comboBox) && listViewOrders.SelectedItems.Count > 0)
             {
-                int orderItemId = (int)listViewOrders.SelectedItems[0].Tag;
+                ListViewItem selectedItem = listViewOrders.SelectedItems[0];
+                int orderItemId = (int)selectedItem.Tag;
+                string currentStatus = selectedItem.SubItems[2].Text;
                 int selectedIndex = comboBox.SelectedIndex;
-                string newStatus = comboBox.Items[selectedIndex].ToString();
 
-                orderService.UpdateOrderStatus(orderItemId, newStatus); // Update the order item status in the database
-
-                editingSubItem.Text = newStatus; // Update the status in the ListViewItem
+                if (currentStatus == OrderedItemStatus.Ready.ToString() && selectedIndex >= 0)
+                {
+                    string newStatus = comboBox.Items[selectedIndex].ToString();
+                    orderService.UpdateOrderStatus(orderItemId, newStatus); // Update the order item status in the database
+                    editingSubItem.Text = newStatus; // Update the status in the ListViewItem
+                }
+                else
+                {
+                    MessageBox.Show("Only orders marked as 'Ready' can be modified.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 listViewOrders.Controls.Remove(comboBox);
                 comboBox.Dispose();
