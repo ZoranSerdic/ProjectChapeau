@@ -14,13 +14,13 @@ namespace ChapeauUI
 {
     public partial class ManagerEmployeeOverview : Form
     {
-        Employee employee;
+        Employee loggedInemployee;
         private Employee selectedEmployee;
         private EmployeeService service;
 
         public ManagerEmployeeOverview(Employee employee)
         {
-            this.employee = employee;
+            this.loggedInemployee = employee;
             InitializeComponent();
             service = new EmployeeService();
             DisplayEmployees(service.GetAllEmployees());
@@ -63,14 +63,14 @@ namespace ChapeauUI
         private void btnAddNewEmployee_Click(object sender, EventArgs e)
         {
             this.Hide();
-            NewEmployee newEmployee = new NewEmployee(this.employee);
+            NewEmployee newEmployee = new NewEmployee(this.loggedInemployee);
             newEmployee.ShowDialog();
             this.Close();
         }
         private void ReturnToManagerView()
         {
             this.Hide();
-            ManagerView managerView = new ManagerView(this.employee);
+            ManagerView managerView = new ManagerView(this.loggedInemployee);
             managerView.ShowDialog();
             this.Close();
         }
@@ -99,7 +99,7 @@ namespace ChapeauUI
                 }
                 else
                 {
-                    DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
+                    MessageBox.Show("No Employee was selected", "Error");
                 }
             }
             catch (Exception exception)
@@ -136,13 +136,13 @@ namespace ChapeauUI
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
+                MessageBox.Show("No Employee was selected", "Error");
             }
         }
         private void ChangeToEditEmployee(Employee selectedEmployee)
         {
             this.Hide();
-            NewEmployee editEmployee = new NewEmployee(selectedEmployee, this.employee);
+            NewEmployee editEmployee = new NewEmployee(selectedEmployee, this.loggedInemployee);
             editEmployee.ShowDialog();
             this.Close();
         }

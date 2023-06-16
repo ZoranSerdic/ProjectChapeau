@@ -14,7 +14,7 @@ namespace ChapeauUI
 {
     public partial class InventoryOverview : Form
     {
-        Employee employee;
+        Employee loggedInEmployee;
         InventoryItemService service;
         InventoryItem selectedItem;
         bool update;
@@ -25,7 +25,7 @@ namespace ChapeauUI
             panelAdd.Hide();
             update = false;
             DisplayItems(service.GetInventoryItems());
-            this.employee = employee;
+            this.loggedInEmployee = employee;
         }
         public void DisplayItems(List<InventoryItem> items)
         {
@@ -196,7 +196,7 @@ namespace ChapeauUI
         private void btnReturn_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ManagerView managerView = new ManagerView(this.employee);
+            ManagerView managerView = new ManagerView(this.loggedInEmployee);
             managerView.ShowDialog();
             this.Close();
         }

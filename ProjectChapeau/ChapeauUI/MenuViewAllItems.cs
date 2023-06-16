@@ -17,7 +17,7 @@ namespace ChapeauUI
         private MenuItem selectedItem;
         MenuItemService menuItemsService;
         List<MenuItem> items;
-        Employee employee;
+        Employee loggedInEmployee;
 
         public MenuViewAllItems(Employee employee)
         {
@@ -27,7 +27,7 @@ namespace ChapeauUI
             items.AddRange(menuItemsService.GetAllMenuItems());
 
             DisplayMenuItems(items);
-            this.employee = employee;
+            this.loggedInEmployee = employee;
         }
 
         //fills the listview with all the items 
@@ -83,11 +83,11 @@ namespace ChapeauUI
                 //to get the correct enum, first get it as a string, then convert and assign
                 string type = selectedMenuItemRow.SubItems[5].Text;
                 selectedItem.CourseType = (FoodType)Enum.Parse(typeof(FoodType), type);
-                ChangeToEditEmployee();
+                ChangeToEditItem();
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("No Menu Item was selected", "Error");
+                MessageBox.Show("No Menu Item was selected", "Error");
             }
         }
 
@@ -122,7 +122,7 @@ namespace ChapeauUI
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("No Menu Item was selected", "Error");
+                MessageBox.Show("No Menu Item was selected", "Error");
             }
         }
         private void btnReturn_Click(object sender, EventArgs e)
@@ -132,15 +132,15 @@ namespace ChapeauUI
         private void Return()
         {
             this.Hide();
-            ManagerView managerView = new ManagerView(this.employee);
+            ManagerView managerView = new ManagerView(this.loggedInEmployee);
             managerView.ShowDialog();
             this.Close();
         }
 
-        private void ChangeToEditEmployee()
+        private void ChangeToEditItem()
         {
             this.Hide();
-            NewMenuItem editMenuItem = new NewMenuItem(this.selectedItem, employee);
+            NewMenuItem editMenuItem = new NewMenuItem(this.selectedItem, loggedInEmployee);
             editMenuItem.ShowDialog();
             this.Close();
         }
@@ -148,7 +148,7 @@ namespace ChapeauUI
         private void btnAdd_Click(object sender, EventArgs e)
         {
             this.Hide();
-            NewMenuItem newEmployee = new NewMenuItem(this.employee);
+            NewMenuItem newEmployee = new NewMenuItem(this.loggedInEmployee);
             newEmployee.ShowDialog();
             this.Close();
         }

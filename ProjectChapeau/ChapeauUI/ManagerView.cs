@@ -13,22 +13,17 @@ namespace ChapeauUI
 {
     public partial class ManagerView : Form
     {
-        private Employee employee;
+        private Employee loggedInEmployee;
         public ManagerView(Employee employee)
         {
             InitializeComponent();
-            this.employee = employee;
-        }
-
-        private void ManagerView_Load(object sender, EventArgs e)
-        {
-
+            this.loggedInEmployee = employee;
         }
 
         private void btnStock_Click(object sender, EventArgs e)
         {
             this.Hide();
-            InventoryOverview inventoryOverview = new InventoryOverview(this.employee);
+            InventoryOverview inventoryOverview = new InventoryOverview(this.loggedInEmployee);
             inventoryOverview.ShowDialog();
             this.Close();
         }
@@ -36,7 +31,7 @@ namespace ChapeauUI
         private void btnMenu_Click(object sender, EventArgs e)
         {
             this.Hide();
-            MenuViewAllItems menu = new MenuViewAllItems(this.employee);
+            MenuViewAllItems menu = new MenuViewAllItems(this.loggedInEmployee);
             menu.ShowDialog();
             this.Close();
         }
@@ -44,7 +39,7 @@ namespace ChapeauUI
         private void btnTableOverview_Click(object sender, EventArgs e)
         {
             this.Hide();
-            TableView tableView = new TableView(employee);
+            TableView tableView = new TableView(loggedInEmployee);
             tableView.ShowDialog();
             this.Close();
         }
@@ -52,7 +47,7 @@ namespace ChapeauUI
         private void btnEmployees_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview(this.employee);
+            ManagerEmployeeOverview employeeOverview = new ManagerEmployeeOverview(this.loggedInEmployee);
             employeeOverview.ShowDialog();
             this.Close();
         }
@@ -68,7 +63,7 @@ namespace ChapeauUI
         private void btnBills_Click(object sender, EventArgs e)
         {
             this.Hide();
-            BillView billsView = new BillView(this.employee);
+            BillView billsView = new BillView(this.loggedInEmployee);
             billsView.ShowDialog();
             this.Close();
         }

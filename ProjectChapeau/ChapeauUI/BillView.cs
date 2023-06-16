@@ -15,10 +15,10 @@ namespace ChapeauUI
 {
     public partial class BillView : Form
     {
-        Employee employee;
+        Employee loggedInEmployee;
         public BillView(Employee employee)
         {
-            this.employee = employee;
+            this.loggedInEmployee = employee;
             InitializeComponent();
             BillService service = new BillService();
             DisplayBills(service.GetAllBills());
@@ -57,7 +57,7 @@ namespace ChapeauUI
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ManagerView overview = new ManagerView(this.employee);
+            ManagerView overview = new ManagerView(this.loggedInEmployee);
             overview.ShowDialog();
             this.Close();
         }
