@@ -17,10 +17,12 @@ namespace ChapeauUI
 {
     public partial class NewEmployee : Form
     {
+        //needed for the login 
         Employee employeeForConstructors;
-        private Employee newEmployee;
+        //employee passed on which will be updated 
         private Employee employeeToUpdate;
         private EmployeeService service;
+        //form used for updating or adding an employee 
         private bool update;
         public NewEmployee(Employee employee)
         {
@@ -65,56 +67,64 @@ namespace ChapeauUI
                     DialogResult dialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation needed", MessageBoxButtons.OKCancel);
                     if (dialogResult == DialogResult.OK)
                     {
-                        CreateNewEmployee();
+                        Employee employee = new Employee();
+                        CreateEmployee(employee);
                         if (!update)
                         {
-                            service.AddEmployee(newEmployee);
+                            //uses the service to add an employee to the database
+                            service.AddEmployee(employee);
                         }
                         else
                         {
-                            service.UpdateEmployee(newEmployee);
+                            //uses the service layer to update an existing employee in the database 
+                            service.UpdateEmployee(employee);
                         }
-                        dialogResult = MessageBox.Show("Action performed successfully", "success");
                         ReturnToEmployeeOverview();
                     }
                 }
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                DisplayErrorMessageBox(exception.Message);
             }
         }
-        private void CreateNewEmployee()
+        private Employee CreateEmployee(Employee employee)
         {
-            newEmployee = new Employee();
             if (update)
             {
-                newEmployee.EmployeeId = employeeToUpdate.EmployeeId;
+                //if you are updating an employee, pass on the ID 
+                employee.EmployeeId = employeeToUpdate.EmployeeId;
             }
-            newEmployee.FirstName = txtBoxFirstName.Text;
-            newEmployee.LastName = txtBoxLastName.Text;
-            newEmployee.Pincode = service.Hash(txtBoxPin2.Text);
-
+            //adding all the information 
+            employee.FirstName = txtBoxFirstName.Text;
+            employee.LastName = txtBoxLastName.Text;
+            //Hashing the password via the service layer 
+            employee.Pincode = service.Hash(txtBoxPin2.Text);
+            //checking the radioButtons, and adding the role accordingly 
             if (radBtnBartender.Checked)
             {
-                newEmployee.Occupation = Role.Barman;
+                employee.Occupation = Role.Barman;
             }
             else if (radBtnChef.Checked)
             {
-                newEmployee.Occupation = Role.Chef;
+                employee.Occupation = Role.Chef;
             }
             else
             {
-                newEmployee.Occupation = Role.Waiter;
+                employee.Occupation = Role.Waiter;
             }
+            return employee;
         }
-        private void DisplayMessageBox(string message)
+
+        private void DisplayErrorMessageBox(string message)
         {
-            DialogResult dialogResult = MessageBox.Show(message, "Error");
+            //displays the message with the Error heading
+            MessageBox.Show(message, "Error");
         }
         private bool CheckForm()
         {
-            if (CheckNames() && CheckRadButons() && CheckPins())
+            //checks if the entire form is correct
+            if (CheckNames() && CheckRadButons() && CheckPins() && CheckPinLength())
             {
                 return true;
             }
@@ -122,47 +132,45 @@ namespace ChapeauUI
         }
         private bool CheckPins()
         {
-            if ((txtBoxPin1.Text == txtBoxPin2.Text) && CheckPinLength())
+            //checks if pins are the same 
+            if ((txtBoxPin1.Text == txtBoxPin2.Text))
             {
                 return true;
             }
-            DisplayMessageBox("the pins were not the same");
-            txtBoxPin1.Text = string.Empty;
-            txtBoxPin2.Text = string.Empty;
+            DisplayErrorMessageBox("Pins do not match");
+            ClearPins();
             return false;
         }
         private bool CheckPinLength()
         {
-            if (txtBoxPin1.Text.Length == 4 && txtBoxPin2.Text.Length == 4)
+            //check that the pins are 4 numbers long
+            if (txtBoxPin1.Text.Length == 4)
             {
                 return true;
             }
-            DisplayMessageBox("pins have to be four digits");
+            DisplayErrorMessageBox("Pins have to be four digits");
+            ClearPins();
             return false;
         }
         private bool CheckNames()
         {
+            //checks if name boxes are filled in 
             if (txtBoxFirstName.Text != "" && txtBoxLastName.Text != "")
             {
                 return true;
             }
-            else
-            {
-                DisplayMessageBox("error with the names");
-                return false;
-            }
+            DisplayErrorMessageBox("Text boxes not filled in");
+            return false;
         }
         private bool CheckRadButons()
         {
+            //checks if at least one radiobutton is selected
             if (radBtnBartender.Checked || radBtnChef.Checked || radBtnWaiter.Checked)
             {
                 return true;
             }
-            else
-            {
-                DisplayMessageBox("error with the occupaion");
-                return false;
-            }
+            DisplayErrorMessageBox("No occupation selected");
+            return false;
         }
 
         //making sure that the pins are only numbers 
@@ -181,6 +189,12 @@ namespace ChapeauUI
             {
                 txtBoxPin2.Text = string.Empty;
             }
+        }
+        private void ClearPins()
+        {
+            //clears the pin sections for ease of use 
+            txtBoxPin1.Text = string.Empty;
+            txtBoxPin2.Text = string.Empty;
         }
 
 

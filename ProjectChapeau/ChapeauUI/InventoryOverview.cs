@@ -74,7 +74,7 @@ namespace ChapeauUI
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("No Employee was selected", "Error");
+                DisplayMessageBox("No Stock item was selected");
             }
         }
         private void UpdateListView()
@@ -185,7 +185,7 @@ namespace ChapeauUI
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("No Item was selected", "Error");
+                DisplayMessageBox("No Item was selected");
             }
         }
         private void ClearTextBoxes()

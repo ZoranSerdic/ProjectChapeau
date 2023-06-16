@@ -128,14 +128,14 @@ namespace ChapeauUI
                         MessageBox.Show(exception.Message);
                         ReturnToMenu();
                     }
-                    dialogResult = MessageBox.Show("Menu item was successfully added to the database", "Success!");
+                    MessageBox.Show("Action was performed successfuly", "Success!");
                     ReturnToMenu();
                 }
             }
             else
             {
                 //shows message that the fields are inccorect 
-                DialogResult dialogResult = MessageBox.Show("Fields not filled in correctly", "Error");
+                MessageBox.Show("Fields not filled in correctly", "Error");
             }
 
         }
