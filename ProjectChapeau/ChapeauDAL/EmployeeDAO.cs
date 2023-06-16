@@ -109,12 +109,7 @@ namespace ChapeauDAL
             }
             throw new Exception($"Employee with the {employeePassword} paswword not found!");
         }
-        public string GetEmployeeUsername(Employee employee)
-        {
-            string username;
-            username = $"{employee.FirstName.ToLower()}{employee.EmployeeId.ToString()}";
-            return username;
-        }
+       
 
         private Employee ReadEmployee(DataRow dataRow)
         {

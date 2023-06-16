@@ -48,9 +48,5 @@ namespace ChapeauService
 
             return Convert.ToBase64String(hashedPassword);
         }
-        public string GetEmployeeUsername(Employee employee)
-        {
-            return employeeDao.GetEmployeeUsername(employee);
-        }
     }
 }
