@@ -18,7 +18,7 @@ namespace ChapeauUI
     public partial class NewEmployee : Form
     {
         //needed for the login 
-        Employee employeeForConstructors;
+        Employee loggedInEmployee;
         //employee passed on which will be updated 
         private Employee employeeToUpdate;
         private EmployeeService service;
@@ -27,14 +27,14 @@ namespace ChapeauUI
         public NewEmployee(Employee employee)
         {
             InitializeComponent();
-            this.employeeForConstructors = employee;
+            this.loggedInEmployee = employee;
             service = new EmployeeService();
             update = false;
         }
         public NewEmployee(Employee employeeToUpdate, Employee employee)
         {
             InitializeComponent();
-            this.employeeForConstructors = employee;
+            this.loggedInEmployee = employee;
             this.employeeToUpdate = employeeToUpdate;
             service = new EmployeeService();
             update = true;
@@ -206,7 +206,7 @@ namespace ChapeauUI
         private void ReturnToEmployeeOverview()
         {
             this.Hide();
-            ManagerEmployeeOverview overview = new ManagerEmployeeOverview(this.employeeForConstructors);
+            ManagerEmployeeOverview overview = new ManagerEmployeeOverview(this.loggedInEmployee);
             overview.ShowDialog();
             this.Close();
         }

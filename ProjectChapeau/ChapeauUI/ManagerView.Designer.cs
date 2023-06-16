@@ -188,7 +188,7 @@
             Controls.Add(btnStock);
             Name = "ManagerView";
             Text = "ManagerView";
-            Load += ManagerView_Load;
+            //Load += ManagerView_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel3.ResumeLayout(false);
             ResumeLayout(false);
