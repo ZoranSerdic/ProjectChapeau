@@ -1,7 +1,5 @@
 ﻿using ChapeauModel;
 using ChapeauService;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace ChapeauUI
 {
@@ -15,7 +13,7 @@ namespace ChapeauUI
         public BarKitchenView(Employee loggedInEmployee)
         {
             InitializeComponent();
-            
+
             // hidesbuttons and history
             buttonReady.Hide();
             buttonStart.Hide();
@@ -32,8 +30,9 @@ namespace ChapeauUI
             timerRefreshDisplay.Start(); // timer starts
         }
 
-        private void DisplayUnpreparedOrders() // depending on the logged in user the orders are shown - bar or kitchen
+        private void DisplayUnpreparedOrders()
         {
+            // depending on the logged in user the orders are shown - bar or kitchen
             labelPrompt.Show();
             try
             {
@@ -50,11 +49,9 @@ namespace ChapeauUI
 
         private void DisplayUnpreparedDrinks()
         {
-
+            listViewOrders.Items.Clear();
             // get drinks with status 'Sent' (from waiter to the bar) or 'Preparing'.
             List<Order> drinks = orderService.GetOrders(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
-
-            listViewOrders.Items.Clear();
 
             foreach (Order order in drinks)
             {
@@ -67,12 +64,12 @@ namespace ChapeauUI
 
         private void DisplayUnpreparedFood()
         {
-            listViewOrders.Items.Clear();
 
-            // get starters, mains, desserts with status 'Sent' (from waiter ) or 'Preparing'.
             List<Order> starters = orderService.GetOrders(new FoodType[1] { FoodType.Starter }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
             List<Order> mains = orderService.GetOrders(new FoodType[1] { FoodType.MainCourse }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
             List<Order> desserts = orderService.GetOrders(new FoodType[1] { FoodType.Dessert }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+
+            listViewOrders.Items.Clear();
 
             List<ListViewGroup> headers = CreateHeadersForKitchen(); // creates groups and headers for kitchen view: "starters" , "main courses" and "desserts"
 
@@ -148,6 +145,7 @@ namespace ChapeauUI
 
         private ListViewItem DisplayUnpreparedItem(Order order, OrderItem orderItem)
         {
+
             ListViewItem item = new ListViewItem(order.Table.TableId.ToString()); // 1st column - table number 
             item.SubItems.Add(orderItem.Amount.ToString()); // 2nd column = number of ordered items
 
@@ -194,10 +192,16 @@ namespace ChapeauUI
         {
             try
             {
-                OrderItem orderItem = (OrderItem)listViewOrders.SelectedItems[0].Tag; // gets the selected item 
-                orderItem.Status = OrderedItemStatus.Preparing; // changes the status 
-
-                orderItemService.UpdateOrderItemStatus(orderItem); // updates the status in the database
+                if (listViewOrders.SelectedItems.Count > 0)
+                {
+                    OrderItem orderItem = (OrderItem)listViewOrders.SelectedItems[0].Tag; // gets the selected item 
+                    orderItem.Status = OrderedItemStatus.Preparing; // changes the status 
+                    orderItemService.UpdateOrderItemStatus(orderItem); // updates the status in the database
+                }
+                else
+                {
+                    MessageBox.Show("Please select an item to start preparation.");
+                }
             }
             catch (Exception ex)
             {
@@ -214,15 +218,21 @@ namespace ChapeauUI
         {
             try
             {
-                OrderItem orderItem = (OrderItem)listViewOrders.SelectedItems[0].Tag;
-                orderItem.Status = OrderedItemStatus.Ready; // changes the status to "ready" 
-                orderItem.PreparedAt = DateTime.Now; // and sets the time when it was prepared to the current time
-
-                orderItemService.UpdateOrderItemStatus(orderItem); // updates status in the database
+                if (listViewOrders.SelectedItems.Count > 0)
+                {
+                    OrderItem orderItem = (OrderItem)listViewOrders.SelectedItems[0].Tag;
+                    orderItem.Status = OrderedItemStatus.Ready; // changes the status to "ready" 
+                    orderItem.PreparedAt = DateTime.Now; // and sets the time when it was prepared to the current time
+                    orderItemService.UpdateOrderItemStatus(orderItem); // updates status in the database
+                }
+                else
+                {
+                    MessageBox.Show("Please select an item to mark as ready.");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while finishing the order: " + ex.Message);
+                MessageBox.Show("An error occurred while changing the status of the order: " + ex.Message);
             }
             finally
             {
@@ -243,18 +253,9 @@ namespace ChapeauUI
             listViewHistory.Show();
             buttonOrders.Show();
 
-            DisplayPreparedOrders();
-        }
-
-        private void DisplayPreparedOrders() // depending on the logged-in user
-        {
-            labelPrompt.Hide();
             try
             {
-                if (loggedInEmployee.Occupation == Role.Barman) // get drinks with status 'Ready'.
-                    DisplayOrdersHistory(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
-                else if (loggedInEmployee.Occupation == Role.Chef) // // get dishes with status 'Ready'.
-                    DisplayOrdersHistory(new FoodType[3] { FoodType.Starter, FoodType.MainCourse, FoodType.Dessert }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
+                DisplayPreparedOrders();
             }
             catch (Exception ex)
             {
@@ -262,11 +263,20 @@ namespace ChapeauUI
             }
         }
 
+        private void DisplayPreparedOrders() // depending on the logged-in user
+        {
+            labelPrompt.Hide();
+            if (loggedInEmployee.Occupation == Role.Barman) // get drinks with status 'Ready'.
+                DisplayOrdersHistory(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
+            else if (loggedInEmployee.Occupation == Role.Chef) // // get dishes with status 'Ready'.
+                DisplayOrdersHistory(new FoodType[3] { FoodType.Starter, FoodType.MainCourse, FoodType.Dessert }, new OrderedItemStatus[1] { OrderedItemStatus.Ready });
+
+        }
+
         private void DisplayOrdersHistory(FoodType[] foodType, OrderedItemStatus[] status)
         {
-            listViewHistory.Items.Clear();
-
             List<Order> orders = orderService.GetOrders(foodType, status);
+            listViewHistory.Items.Clear();
 
             foreach (Order order in orders)
             {
@@ -279,6 +289,7 @@ namespace ChapeauUI
 
         private ListViewItem DisplayPreparedItem(Order order, OrderItem orderItem)
         {
+
             ListViewItem item = new ListViewItem(order.Table.TableId.ToString()); // table id
             item.SubItems.Add(orderItem.Amount.ToString()); // amount
 
@@ -313,7 +324,14 @@ namespace ChapeauUI
             labelOrders.Show();
             listViewOrders.Show();
 
-            DisplayUnpreparedOrders();
+            try
+            {
+                DisplayUnpreparedOrders();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while displaying open orders: " + ex.Message);
+            }
         }
 
         private void buttonLogOut_Click(object sender, EventArgs e)
@@ -330,14 +348,33 @@ namespace ChapeauUI
                 MessageBox.Show("The error occurred while logging out: " + ex.Message);
             }
         }
+
         private void timerRefreshDisplay_Tick(object sender, EventArgs e)
         {
             buttonStart.Hide();
             buttonReady.Hide();
             if (listViewHistory.Visible)
-                DisplayPreparedOrders();
+            {
+                try
+                {
+                    DisplayPreparedOrders();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred while refreshing the order history: " + ex.Message);
+                }
+            }
             else if (listViewOrders.Visible)
-                DisplayUnpreparedOrders();
+            {
+                try
+                {
+                    DisplayUnpreparedFood();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred while refreshing open orders: " + ex.Message);
+                }
+            }
         }
     }
     #endregion

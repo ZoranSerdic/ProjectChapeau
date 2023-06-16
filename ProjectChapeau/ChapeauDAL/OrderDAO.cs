@@ -55,7 +55,7 @@ namespace ChapeauDAL
                 }
                 return ReadOrders(ExecuteSelectQuery(query, sqlParameters.ToArray()));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }     
