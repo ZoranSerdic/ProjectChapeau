@@ -102,8 +102,6 @@ namespace ChapeauDAL
                 sqlParameters[1] = new SqlParameter("@time", order.Time);
                 sqlParameters[2] = new SqlParameter("@employeeId", order.Employee.EmployeeId);
                 sqlParameters[3] = new SqlParameter("@isPayed", order.IsPaid);
-                ExecuteEditQuery(query, sqlParameters);
-
                 orderId = ExecuteScalarEditQuery(query, sqlParameters);
             }
             catch (Exception)

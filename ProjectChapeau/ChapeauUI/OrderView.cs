@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ChapeauUI
 {
@@ -59,7 +60,7 @@ namespace ChapeauUI
             currentInventoryItems = new List<InventoryItem>();
 
             try
-            { 
+            {
                 currentMenuItems.AddRange(menuItemService.GetCourseMenuType(foodType, menuType));
                 currentInventoryItems.AddRange(inventoryItemService.GetInventoryItems());
             }
@@ -74,29 +75,39 @@ namespace ChapeauUI
         // Displays items in listViewMenuItems
         private void DisplayItems(List<MenuItem> menuItems, List<InventoryItem> inventoryItems)
         {
-            // clear the listview items before filling it
-            listViewMenuItems.Items.Clear();
-
-            foreach (MenuItem item in menuItems)
+            try
             {
-                ListViewItem listViewItem = new ListViewItem(item.Name);
-                listViewItem.SubItems.Add(item.Description);
-                listViewItem.Tag = item.MenuItemId;
+                // clear the listview items before filling it
+                listViewMenuItems.Items.Clear();
 
-                // Find the corresponding InventoryItem for the current MenuItem
-                InventoryItem inventoryItem = FindInventorytemById(inventoryItems, item.MenuItemId);
-
-                // Set the text colour based on the inStock value
-                if (inventoryItem.InStock > 0)
+                foreach (MenuItem menuItem in menuItems)
                 {
-                    listViewItem.ForeColor = Color.Black;
-                }
-                else
-                {
-                    listViewItem.ForeColor = Color.Red;
-                }
+                    ListViewItem listViewItem = new ListViewItem(menuItem.Name);
+                    listViewItem.SubItems.Add(menuItem.Description);
+                    listViewItem.Tag = menuItem;
 
-                listViewMenuItems.Items.Add(listViewItem);
+                    // Find the corresponding InventoryItem for the current MenuItem
+                    InventoryItem inventoryItem = FindInventorytemById(inventoryItems, menuItem.MenuItemId);
+
+                    // Set the text colour based on the inStock value
+                    if (inventoryItem != null)
+                    {
+                        if (inventoryItem.InStock > 0)
+                        {
+                            listViewItem.ForeColor = Color.Black;
+                        }
+                        else
+                        {
+                            listViewItem.ForeColor = Color.Red;
+                        }
+
+                        listViewMenuItems.Items.Add(listViewItem);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Something went wrong when trying to display the MenuItems \n {e}.", "Error message");
             }
         }
 
@@ -198,7 +209,7 @@ namespace ChapeauUI
         {
             if (e.IsSelected && listViewMenuItems.SelectedItems.Count == 1)
             {
-                int selectedIndex = e.Item.Index;
+                ListViewItem selectedItem = e.Item;
 
                 if (e.Item.ForeColor == Color.Red)
                 {
@@ -206,37 +217,64 @@ namespace ChapeauUI
                 }
                 else
                 {
-                    // Retrieve information from item
-                    string name = e.Item.SubItems[0].Text;
-                    string description = e.Item.SubItems[1].Text;
-                    int menuId = (int)e.Item.Tag;
+                    // Retrieve the MenuItem object from the Tag property
+                    MenuItem menuItem = selectedItem.Tag as MenuItem;
 
-                    // Set menuItem
-                    MenuItem menuItem = FindMenuItemById(currentMenuItems, menuId);
-
-                    // Create form
-                    OrderPopup orderPopup = new OrderPopup(name, description);
-                    DialogResult dialogResult = orderPopup.ShowDialog();
-
-                    if (dialogResult == DialogResult.OK)
+                    if (menuItem != null)
                     {
-                        OrderItem orderItem = new OrderItem();
+                        // Create form
+                        OrderPopup orderPopup = new OrderPopup(menuItem.Name, menuItem.Description);
+                        DialogResult dialogResult = orderPopup.ShowDialog();
 
-                        orderItem.OrderItemId = order.OrderId;
-                        orderItem.MenuItem = menuItem;
-                        orderItem.Comment = orderPopup.Comment;
-                        orderItem.Amount = orderPopup.Amount;
-                        orderItem.Status = OrderedItemStatus.Sent;
-                        orderItem.PreparedAt = null;
-
-                        // Add to list
-                        order.OrderedItems.Add(orderItem);
+                        if (dialogResult == DialogResult.OK)
+                        {
+                            CreateOrderItem(menuItem, orderPopup.Comment, orderPopup.Amount);
+                        }
                     }
                 }
 
-                // Restore selection
-                listViewMenuItems.Items[selectedIndex].Selected = true;
+                // Prevent double selection
+                selectedItem.Selected = true;
             }
+        }
+
+        private void CreateOrderItem(MenuItem menuItem, string comment, int amount)
+        {
+            bool existingOrderItem = CheckIfOrderItemExists(menuItem, comment, amount);
+
+            if (!existingOrderItem)
+            {
+                OrderItem orderItem = new OrderItem();
+
+                orderItem.OrderItemId = order.OrderId;
+                orderItem.MenuItem = menuItem;
+                orderItem.Comment = comment;
+                orderItem.Amount = amount;
+                orderItem.Status = OrderedItemStatus.Sent;
+                orderItem.PreparedAt = null;
+
+                // Add to list
+                order.OrderedItems.Add(orderItem);
+                MessageBox.Show($"{orderItem.MenuItem.Name} has been added to the ordering list {orderItem.Amount} times.", "Order added");
+            }
+        }
+
+        private bool CheckIfOrderItemExists(MenuItem menuItem, string comment, int increaseAmount)
+        {
+            foreach (OrderItem orderItem in order.OrderedItems)
+            {
+                if (orderItem.MenuItem.MenuItemId == menuItem.MenuItemId)
+                {
+                    orderItem.Amount += increaseAmount;
+                    orderItem.Comment += $" {comment}";
+
+                    MessageBox.Show($"Increased {orderItem.MenuItem.Name} amount by {increaseAmount}", "Order amount increased");
+                    
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private MenuItem FindMenuItemById(List<MenuItem> menuItems, int menuId)
@@ -252,7 +290,7 @@ namespace ChapeauUI
             return null;
         }
 
-        private InventoryItem FindInventorytemById(List<InventoryItem> inventoryItems, int menuItemId) 
+        private InventoryItem FindInventorytemById(List<InventoryItem> inventoryItems, int menuItemId)
         {
             foreach (InventoryItem item in inventoryItems)
             {
@@ -288,6 +326,7 @@ namespace ChapeauUI
                 orderItemService.AddOrderItem(orderItem);
                 ReduceStockQuery(orderItem.MenuItem.MenuItemId, orderItem.Amount);
             }
+            MessageBox.Show("Orders have been sent to the Kitchen / Bar", "Order sent");
         }
 
         // Reduce Stock Amount
