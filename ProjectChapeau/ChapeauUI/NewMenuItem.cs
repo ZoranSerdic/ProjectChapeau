@@ -29,8 +29,6 @@ namespace ChapeauUI
             InitializeComponent();
             menuItemService = new MenuItemService();
             this.employee = employee;
-            numPrice.DecimalPlaces = 2;
-            numPrice.Minimum = 0.00m;
         }
         public NewMenuItem(MenuItem item, Employee employee)
         {
@@ -41,8 +39,6 @@ namespace ChapeauUI
             idToBeUpdated = item.MenuItemId;
             itemToBeUpdated = item;
             FillForm();
-            numPrice.DecimalPlaces = 2;
-            numPrice.Minimum = 0.00m;
         }
         // METHODS FOR PREFILLING THE FORM 
         private void FillForm()
