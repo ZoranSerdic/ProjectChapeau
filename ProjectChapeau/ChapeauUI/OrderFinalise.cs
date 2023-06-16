@@ -30,11 +30,12 @@ namespace ChapeauUI
 
             foreach (OrderItem orderItem in Order.OrderedItems)
             {
-                ListViewItem item = new ListViewItem(orderItem.MenuItem.Name);
-                item.SubItems.Add(orderItem.Comment);
-                item.SubItems.Add(orderItem.Amount.ToString());
+                ListViewItem listViewItem = new ListViewItem(orderItem.MenuItem.Name);
+                listViewItem.SubItems.Add(orderItem.Comment);
+                listViewItem.SubItems.Add(orderItem.Amount.ToString()); 
+                listViewItem.Tag = orderItem;
 
-                listViewOrders.Items.Add(item);
+                listViewOrders.Items.Add(listViewItem);
             }
         }
 
@@ -50,32 +51,40 @@ namespace ChapeauUI
             Close();
         }
 
+        private void buttonRemoveAllOrders_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show($"Are you sure you want to remove all Orders from the Order list?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            
+            if (result == DialogResult.Yes)
+            {
+                listViewOrders.Clear();
+                Order.OrderedItems.Clear();
+            }
+        }
+
         private void listViewOrders_SelectedIndexChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (e.IsSelected && listViewOrders.SelectedItems.Count == 1)
             {
-                int selectedIndex = e.Item.Index;
-                string name = e.Item.SubItems[0].Text;
 
-                DialogResult result = MessageBox.Show($"Are you sure you want to delete {name}?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                ListViewItem selectedItem = e.Item;
 
-                if (result == DialogResult.Yes) 
+                // Retrieve the MenuItem object from the Tag property
+                OrderItem orderItem = selectedItem.Tag as OrderItem;
+
+                DialogResult result = MessageBox.Show($"Are you sure you want to remove {orderItem.MenuItem.Name} from the Order list?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
                 {
-                    Order.OrderedItems.RemoveAt(selectedIndex);
+                    Order.OrderedItems.RemoveAt(selectedItem.Index);
                     DisplayOrderedItems();
                 }
                 else
                 {
-                    // Restore selection
-                    listViewOrders.Items[selectedIndex].Selected = true;
+                    // Prevent double selection
+                    selectedItem.Selected = true;
                 }
             }
-        }
-
-        private void buttonRemoveAllOrders_Click(object sender, EventArgs e)
-        {
-            listViewOrders.Clear();
-            Order.OrderedItems.Clear();
         }
     }
 }

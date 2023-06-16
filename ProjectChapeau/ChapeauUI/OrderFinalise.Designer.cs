@@ -120,7 +120,9 @@
             this.columnHeaderName,
             this.columnHeaderComment,
             this.columnHeaderAmount});
+            this.listViewOrders.FullRowSelect = true;
             this.listViewOrders.Location = new System.Drawing.Point(12, 169);
+            this.listViewOrders.MultiSelect = false;
             this.listViewOrders.Name = "listViewOrders";
             this.listViewOrders.Size = new System.Drawing.Size(508, 602);
             this.listViewOrders.TabIndex = 35;
@@ -188,12 +190,12 @@
             this.labelInformationOrders.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelInformationOrders.Font = new System.Drawing.Font("Segoe UI", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.labelInformationOrders.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelInformationOrders.Location = new System.Drawing.Point(12, -6);
+            this.labelInformationOrders.Location = new System.Drawing.Point(-6, -6);
             this.labelInformationOrders.Name = "labelInformationOrders";
             this.labelInformationOrders.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelInformationOrders.Size = new System.Drawing.Size(505, 40);
+            this.labelInformationOrders.Size = new System.Drawing.Size(526, 40);
             this.labelInformationOrders.TabIndex = 37;
-            this.labelInformationOrders.Text = "Select an order to remove it";
+            this.labelInformationOrders.Text = "Select an Order to remove it";
             this.labelInformationOrders.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1

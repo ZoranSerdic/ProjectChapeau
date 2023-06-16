@@ -209,7 +209,7 @@ namespace ChapeauUI
         {
             if (e.IsSelected && listViewMenuItems.SelectedItems.Count == 1)
             {
-                int selectedIndex = e.Item.Index;
+                ListViewItem selectedItem = e.Item;
 
                 if (e.Item.ForeColor == Color.Red)
                 {
@@ -217,14 +217,8 @@ namespace ChapeauUI
                 }
                 else
                 {
-                    //// Retrieve the MenuItem object from the Tag property
-                    //string name = e.Item.SubItems[0].Text;
-                    //string description = e.Item.SubItems[1].Text;
-                    //int menuId = (int)e.Item.Tag;
-
-                    //// Set menuItem
-                    //MenuItem menuItem = FindMenuItemById(currentMenuItems, menuId);
-                    MenuItem menuItem = e.Item.Tag as MenuItem;
+                    // Retrieve the MenuItem object from the Tag property
+                    MenuItem menuItem = selectedItem.Tag as MenuItem;
 
                     if (menuItem != null)
                     {
@@ -239,8 +233,8 @@ namespace ChapeauUI
                     }
                 }
 
-                // Restore selection
-                listViewMenuItems.Items[selectedIndex].Selected = true;
+                // Prevent double selection
+                selectedItem.Selected = true;
             }
         }
 
