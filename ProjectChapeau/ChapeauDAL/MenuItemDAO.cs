@@ -14,8 +14,8 @@ namespace ChapeauDAL
     {
         public List<MenuItem> GetAllMenuItems()
         {
-            //gathering all menu items from the table
-            string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId;";
+            //gathering all menu items from the table ordered by Coursetype for ease of use 
+            string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId ORDER BY M.CourseType;";
             return ReadTables(ExecuteSelectQuery(query));
         }
         #region OrderMethods
