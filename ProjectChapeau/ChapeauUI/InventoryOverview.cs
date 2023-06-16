@@ -33,7 +33,7 @@ namespace ChapeauUI
             listViewInventory.Columns.Add("Stock item ID", 110);
             listViewInventory.Columns.Add("Name", 230);
             listViewInventory.Columns.Add("Count in stock", 120);
-            listViewInventory.Columns.Add("Menu item ID", 100);
+            listViewInventory.Columns.Add("Menu item ID", 120);
 
             //adding the rows to the listview
             foreach (InventoryItem item in items)
