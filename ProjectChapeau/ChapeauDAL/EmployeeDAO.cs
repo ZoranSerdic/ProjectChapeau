@@ -109,6 +109,7 @@ namespace ChapeauDAL
             }
             throw new Exception($"Employee with the {employeePassword} paswword not found!");
         }
+       
 
         private Employee ReadEmployee(DataRow dataRow)
         {

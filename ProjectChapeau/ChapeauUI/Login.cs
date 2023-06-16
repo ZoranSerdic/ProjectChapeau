@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using ChapeauModel;
 using ChapeauService;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChapeauUI
 {
@@ -34,7 +35,7 @@ namespace ChapeauUI
         {
             if ((this.textBox_login_name.Text) == "" || (this.textBox_login_pincode.Text) == "")
             {
-                MessageBox.Show("Log in failed! Please enter your correct name and pin code!", "Message", MessageBoxButtons.OK);
+                MessageBox.Show("Log in failed! Please enter your name and pin code!", "Message", MessageBoxButtons.OK);
             }
             else
             {
@@ -45,10 +46,11 @@ namespace ChapeauUI
                 }
                 catch
                 {
-                    MessageBox.Show("Incorrect pin code or name. Please try again!", "Message", MessageBoxButtons.OK);
+                    MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
                     return;
                 }
-                string username = $"{employee.FirstName.ToLower()}{employee.LastName.Substring(0, 1)}";
+                string username = $"{employee.FirstName.ToLower()}{employee.EmployeeId.ToString()}";
+
                 if ((employee.Pincode == hashedPincode) && (username == this.textBox_login_name.Text))
                 {
                     switch (employee.Occupation)
@@ -74,8 +76,11 @@ namespace ChapeauUI
                             break;
                     }
                 }
+                else
+                    MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
 
-                
+
+
             }
         }
     }
