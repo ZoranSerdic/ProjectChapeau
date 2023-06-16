@@ -230,6 +230,7 @@
             // 
             numPrice.DecimalPlaces = 2;
             numPrice.Location = new Point(463, 304);
+            numPrice.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numPrice.Name = "numPrice";
             numPrice.Size = new Size(150, 27);
             numPrice.TabIndex = 34;
