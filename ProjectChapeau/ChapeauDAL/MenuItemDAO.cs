@@ -18,17 +18,24 @@ namespace ChapeauDAL
             string query = "SELECT M.menuItemid,M.[Description], M.[menuType], M.[name], M.[price], V.vat, M.CourseType FROM menuitem AS M JOIN Vat AS V on M.vatId = V.vatId ORDER BY M.CourseType;";
             return ReadTables(ExecuteSelectQuery(query));
         }
-        #region OrderMethods
+        #region Zoran
         public List<MenuItem> GetCourseMenuType(FoodType courseType, MenuType menuType)
         {
-            //gather specific courseType and menuType from the table
-            string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] " +
-                $"FROM menuitem AS M " +
-                $"WHERE courseType = @courseType AND menuType = @menuType;";
-            SqlParameter[] sqlParameters = new SqlParameter[2];
-            sqlParameters[0] = new SqlParameter("@courseType", courseType.ToString());
-            sqlParameters[1] = new SqlParameter("@menuType", menuType.ToString());
-            return ReadTableOrder(ExecuteSelectQuery(query, sqlParameters));
+            try
+            {
+                //gather specific courseType and menuType from the table
+                string query = $"SELECT M.menuItemid, M.[name], M.[Description], M.CourseType, M.[menuType] " +
+                    $"FROM menuitem AS M " +
+                    $"WHERE courseType = @courseType AND menuType = @menuType;";
+                SqlParameter[] sqlParameters = new SqlParameter[2];
+                sqlParameters[0] = new SqlParameter("@courseType", courseType.ToString());
+                sqlParameters[1] = new SqlParameter("@menuType", menuType.ToString());
+                return ReadTableOrder(ExecuteSelectQuery(query, sqlParameters));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         private List<MenuItem> ReadTableOrder(DataTable dataTable)

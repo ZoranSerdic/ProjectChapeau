@@ -192,8 +192,8 @@ namespace ChapeauUI
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Hide();
-            TableView tableView = new TableView(loggedInEmployee); 
-            tableView.ShowDialog();
+            //TableView tableView = new TableView(loggedInEmployee); 
+            //tableView.ShowDialog();
             this.Close();
         }
         /// <summary>

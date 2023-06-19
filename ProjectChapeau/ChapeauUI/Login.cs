@@ -39,49 +39,53 @@ namespace ChapeauUI
             }
             else
             {
-                string hashedPincode = employeeService.Hash(this.textBox_login_pincode.Text);
-                try
-                {
-                    employee = employeeService.GetEmployeeByPassword(hashedPincode);
-                }
-                catch
-                {
-                    MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
-                    return;
-                }
+                employee = GetEmployee(employeeService);
                 string username = $"{employee.FirstName.ToLower()}{employee.EmployeeId.ToString()}";
-
-                if ((employee.Pincode == hashedPincode) && (username == this.textBox_login_name.Text))
-                {
-                    switch (employee.Occupation)
-                    {
-                        case ChapeauModel.Role.Manager:
-                            this.Hide();
-                            ManagerView managerView = new ManagerView(employee);
-                            managerView.ShowDialog();
-                            this.Close();
-                            break;
-                        case ChapeauModel.Role.Chef:
-                        case ChapeauModel.Role.Barman:
-                            this.Hide();
-                            BarKitchenView barKitchenView = new BarKitchenView(employee);
-                            barKitchenView.ShowDialog();
-                            this.Close();
-                            break;
-                        case ChapeauModel.Role.Waiter:
-                            this.Hide();
-                            TableView tableView = new TableView(employee);
-                            tableView.ShowDialog();
-                            this.Close();
-                            break;
-                    }
-                }
-                else
-                    MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
-
-
-
+                DisplayInterface(username);
             }
         }
+        Employee? GetEmployee(EmployeeService employeeService)
+        {
+            try
+            {
+                return  employeeService.GetEmployeeByPassword(employeeService.Hash(this.textBox_login_pincode.Text));
+            }
+            catch
+            {
+                MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
+                return null ;
+            }
+        }
+        void DisplayInterface(string username)
+        {
+            if (username == this.textBox_login_name.Text)
+            {
+                switch (employee.Occupation)
+                {
+                    case ChapeauModel.Role.Manager:
+                        this.Hide();
+                        ManagerView managerView = new ManagerView(employee);
+                        managerView.ShowDialog();
+                        this.Close();
+                        break;
+                    case ChapeauModel.Role.Chef:
+                    case ChapeauModel.Role.Barman:
+                        this.Hide();
+                        BarKitchenView barKitchenView = new BarKitchenView(employee);
+                        barKitchenView.ShowDialog();
+                        this.Close();
+                        break;
+                    case ChapeauModel.Role.Waiter:
+                        this.Hide();
+                        TableView tableView = new TableView(employee);
+                        tableView.ShowDialog();
+                        this.Close();
+                        break;
+                }
+            }
+            else
+                MessageBox.Show("Incorrect pin code or username. Please try again!", "Message", MessageBoxButtons.OK);
+        }
+
     }
 }

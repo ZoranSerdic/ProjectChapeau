@@ -21,6 +21,11 @@ namespace ChapeauService
         {
             return orderDAO.GetOrders(foodType, status);
         }
+        public int CreateOrder(Order order)
+        {
+            int orderId = orderDAO.CreateOrder(order);
+            return orderId;
+        }
         public void UpdateOrderPaidStatus(Table table)
         {
             orderDAO.UpdateOrderPaidStatus(table);

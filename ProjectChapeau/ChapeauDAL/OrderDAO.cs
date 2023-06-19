@@ -98,6 +98,34 @@ namespace ChapeauDAL
             return orders;
         }
         #endregion
+        #region Zoran
+        public int CreateOrder(Order order)
+        {
+            int orderId = 0;
+
+            try
+            {
+                // This method creates the Order in the database
+                string query = "INSERT INTO [Order] (tableId, time, employeeId, isPayed)" +
+                    "VALUES (@tableId, @time, @employeeId, @isPayed);" +
+                    "SELECT SCOPE_IDENTITY();";
+
+                SqlParameter[] sqlParameters = new SqlParameter[4];
+                sqlParameters[0] = new SqlParameter("@tableId", order.Table.TableId);
+                sqlParameters[1] = new SqlParameter("@time", order.Time);
+                sqlParameters[2] = new SqlParameter("@employeeId", order.Employee.EmployeeId);
+                sqlParameters[3] = new SqlParameter("@isPayed", order.IsPaid);
+                orderId = ExecuteScalarEditQuery(query, sqlParameters);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return orderId;
+        }
+        #endregion
+
         public List<Order> GetUnpaidOrdersByTableId(int tableId)
         {
             string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oI.consistsOfId, oI.preparedAt

@@ -313,8 +313,8 @@ namespace ChapeauUI
             if (result == DialogResult.Yes)
             {
                 this.Hide();
-                TableView tableview = new TableView(loggedInEmployee);
-                tableview.ShowDialog();
+               // TableView tableview = new TableView(loggedInEmployee);
+                //tableview.ShowDialog();
                 this.Close();
             }
         }
