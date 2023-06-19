@@ -31,14 +31,15 @@ namespace ChapeauUI
             whiteBackground.SendToBack();
             labelDateTime.Text = DateTime.Now.ToString("dd/MM/yy-HH:mm");
         }
+
         private void GenerateTables()
         {
+            List<Table> tables = tableService.GetAllTables();
             int buttonSize = 90;
             int spacing = 112;
-            int numColumns = 2;
             int numRows = 5;
+            int numColumns = ((tables.Count-1) / numRows) + 1;
 
-            List<Table> tables = tableService.GetAllTables();
 
             int formWidth = numColumns * (buttonSize + spacing) + spacing;
             int formHeight = numRows * (buttonSize + spacing) + spacing;
@@ -54,15 +55,15 @@ namespace ChapeauUI
                     {
                         break;
                     }
-                    tableIndex = CreateButtonForTable(buttonSize, spacing, tables, tableIndex, col, row);
+                    CreateButtonForTable(buttonSize, spacing, tables, tableIndex, col, row);
+                    tableIndex++;
                 }
             }
         }
 
-        private int CreateButtonForTable(int buttonSize, int spacing, List<Table> tables, int tableIndex, int col, int row)
+        private void CreateButtonForTable(int buttonSize, int spacing, List<Table> tables, int tableIndex, int col, int row)
         {
             Table table = tables[tableIndex];
-            tableIndex++;
 
             Button button = new Button();
             button.Name = "buttonTable" + table.TableId;
@@ -74,6 +75,7 @@ namespace ChapeauUI
             else
                 button.BackColor = Color.Red;
 
+            //position of the button
             int buttonX = spacing + col * (buttonSize + spacing);
             int buttonY = spacing + row * (buttonSize + spacing);
 
@@ -81,7 +83,6 @@ namespace ChapeauUI
             button.Click += (sender, e) => Button_Click(table);
 
             Controls.Add(button);
-            return tableIndex;
         }
 
         void btnLogOut_Click(object sender, EventArgs e)

@@ -20,7 +20,7 @@ namespace ChapeauUI
         public event EventHandler TableStatusUpdated;
         private TableService tableService;
         private OrderService orderService;
-        TableView tableView;
+        private TableView tableView;
         private Order order;
         public Table table;
         private Employee employee;
@@ -94,10 +94,6 @@ namespace ChapeauUI
         {
             foreach (OrderItem orderItem in order.OrderedItems)
             {
-                if (orderItem.Status == OrderedItemStatus.Ready ||
-                    orderItem.Status == OrderedItemStatus.Sent ||
-                    orderItem.Status == OrderedItemStatus.Preparing)
-                {
                     DateTime currentTime = DateTime.Now;
                     TimeSpan timeSinceOrder = currentTime - order.Time;
                     ListViewItem item = new ListViewItem(orderItem.MenuItem.Name);
@@ -106,7 +102,6 @@ namespace ChapeauUI
 
                     item.Tag = orderItem.OrderItemId;
                     listViewOrders.Items.Add(item);
-                }
             }
         }
 
@@ -177,6 +172,7 @@ namespace ChapeauUI
                     string newStatus = comboBox.Items[selectedIndex].ToString();
                     orderService.UpdateOrderStatus(orderItemId, newStatus); // Update the order item status in the database
                     editingSubItem.Text = newStatus; // Update the status in the ListViewItem
+                    MessageBox.Show("Order status changed successfully!", "Message", MessageBoxButtons.OK);
                 }
                 else
                 {
