@@ -17,6 +17,9 @@ namespace ChapeauUI
         private Table table;
         private Employee employee;
         private TableService tableService;
+        const int buttonSize = 90;
+        const int spacing = 112;
+        const int numRows = 5;
         public TableView(Employee employee)
         {
             InitializeComponent();
@@ -27,17 +30,15 @@ namespace ChapeauUI
         private void TableView_Load(object sender, EventArgs e)
         {
             SuspendLayout();
-            GenerateTables();
+            GenerateTables( numRows,  buttonSize,  spacing);
             whiteBackground.SendToBack();
             labelDateTime.Text = DateTime.Now.ToString("dd/MM/yy-HH:mm");
         }
 
-        private void GenerateTables()
+        private void GenerateTables(int numRows, int buttonSize, int spacing)
         {
             List<Table> tables = tableService.GetAllTables();
-            int buttonSize = 90;
-            int spacing = 112;
-            int numRows = 5;
+            
             int numColumns = ((tables.Count-1) / numRows) + 1;
 
 
