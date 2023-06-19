@@ -16,7 +16,8 @@ namespace ChapeauUI
     {
         //employee needed for the login 
         Employee employee;
-
+        const int NonAcloholicId = 1;
+        const int AlcoholicID = 2;
         MenuItemService menuItemService;
         MenuItem itemToBeUpdated;
 
@@ -247,11 +248,11 @@ namespace ChapeauUI
             //sets the correct vatID type for the new item according to the database 
             if (radBtnAlcoholic.Checked)
             {
-                itemToBeUpdated.Vat = 2;
+                itemToBeUpdated.Vat = AlcoholicID;
             }
             else
             {
-                itemToBeUpdated.Vat = 1;
+                itemToBeUpdated.Vat = NonAcloholicId;
             }
         }
 
