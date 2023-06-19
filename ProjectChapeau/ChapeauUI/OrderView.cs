@@ -19,6 +19,7 @@ namespace ChapeauUI
     {
         private Order order;
 
+        private OrderService orderService;
         private OrderItemService orderItemService;
         private InventoryItemService inventoryItemService;
         private MenuItemService menuItemService;
@@ -44,6 +45,7 @@ namespace ChapeauUI
 
             currentMenuLabel = "Starters";
 
+            orderService = new OrderService();
             orderItemService = new OrderItemService();
             inventoryItemService = new InventoryItemService();
             menuItemService = new MenuItemService();
@@ -313,7 +315,7 @@ namespace ChapeauUI
             order.OrderedItems = new List<OrderItem>();
 
             // Creates order in the database and gets id
-            order.OrderId = orderItemService.CreateOrder(order);
+            order.OrderId = orderService.CreateOrder(order);
 
             return order;
         }

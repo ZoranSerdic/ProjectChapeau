@@ -21,12 +21,6 @@ namespace ChapeauService
             orderItemDAO.UpdateOrderItemStatus(orderItem);
         }
 
-        public int CreateOrder(Order order)
-        {
-            int orderId = orderItemDAO.CreateOrder(order);
-            return orderId;
-        }
-
         public void AddOrderItem(OrderItem orderItem) 
         { 
             orderItemDAO.AddOrderItem(orderItem);
