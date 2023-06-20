@@ -1,5 +1,6 @@
 ﻿using ChapeauModel;
 using ChapeauService;
+using System.Drawing.Printing;
 
 namespace ChapeauUI
 {
@@ -51,7 +52,7 @@ namespace ChapeauUI
         {
             listViewOrders.Items.Clear();
             // get drinks with status 'Sent' (from waiter to the bar) or 'Preparing'.
-            List<Order> drinks = orderService.GetOrders(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+            List<Order> drinks = orderService.GetOrdersByTypeAndStatus(new FoodType[1] { FoodType.Drink }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
 
             foreach (Order order in drinks)
             {
@@ -65,38 +66,27 @@ namespace ChapeauUI
         private void DisplayUnpreparedFood()
         {
 
-            List<Order> starters = orderService.GetOrders(new FoodType[1] { FoodType.Starter }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
-            List<Order> mains = orderService.GetOrders(new FoodType[1] { FoodType.MainCourse }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
-            List<Order> desserts = orderService.GetOrders(new FoodType[1] { FoodType.Dessert }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+            List<Order> starters = orderService.GetOrdersByTypeAndStatus(new FoodType[1] { FoodType.Starter }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+            List<Order> mains = orderService.GetOrdersByTypeAndStatus(new FoodType[1] { FoodType.MainCourse }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
+            List<Order> desserts = orderService.GetOrdersByTypeAndStatus(new FoodType[1] { FoodType.Dessert }, new OrderedItemStatus[2] { OrderedItemStatus.Sent, OrderedItemStatus.Preparing });
 
             listViewOrders.Items.Clear();
 
             List<ListViewGroup> headers = CreateHeadersForKitchen(); // creates groups and headers for kitchen view: "starters" , "main courses" and "desserts"
+           
+            DisplayDishesByType(starters, headers[0]);
+            DisplayDishesByType(mains, headers[1]);
+            DisplayDishesByType(desserts, headers[2]);
+        }
 
-            foreach (Order order in starters) // firstly displays all the starters
+        private void DisplayDishesByType(List<Order> dishes, ListViewGroup header)
+        {
+            foreach (Order order in dishes)
             {
                 foreach (OrderItem orderItem in order.OrderedItems)
                 {
                     ListViewItem item = DisplayUnpreparedItem(order, orderItem);
-                    item.Group = headers[0]; // assigns the item to the first group (starters)
-                }
-            }
-
-            foreach (Order order in mains) // main courses
-            {
-                foreach (OrderItem orderItem in order.OrderedItems)
-                {
-                    ListViewItem item = DisplayUnpreparedItem(order, orderItem);
-                    item.Group = headers[1]; // assigns the item to the group main courses
-                }
-            }
-
-            foreach (Order order in desserts)
-            {
-                foreach (OrderItem orderItem in order.OrderedItems)
-                {
-                    ListViewItem item = DisplayUnpreparedItem(order, orderItem);
-                    item.Group = headers[2]; // assigns the item to the group desserts
+                    item.Group = header;
                 }
             }
         }
@@ -275,7 +265,7 @@ namespace ChapeauUI
 
         private void DisplayOrdersHistory(FoodType[] foodType, OrderedItemStatus[] status)
         {
-            List<Order> orders = orderService.GetOrders(foodType, status);
+            List<Order> orders = orderService.GetOrdersByTypeAndStatus(foodType, status);
             listViewHistory.Items.Clear();
 
             foreach (Order order in orders)
@@ -368,7 +358,7 @@ namespace ChapeauUI
             {
                 try
                 {
-                    DisplayUnpreparedFood();
+                    DisplayUnpreparedOrders();
                 }
                 catch (Exception ex)
                 {

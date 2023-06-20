@@ -18,15 +18,15 @@ namespace ChapeauDAL
         }
 
         #region Mariia
-        public List<Order> GetOrders(FoodType[] foodType, OrderedItemStatus[] status) // gets orders depending on the type and status
+        public List<Order> GetOrdersByTypeAndStatus(FoodType[] foodType, OrderedItemStatus[] status) // gets orders depending on the type and status
         {
             try
             {
                 string query = @"SELECT o.orderId, o.tableId, o.time, o.isPayed, o.employeeId, oI.consistsOfId, oI.preparedAt
                             FROM [Order] AS o
                             INNER JOIN ConsistsOf AS oI ON o.orderId = oI.orderId
-                            INNER JOIN MenuItem AS mI ON oI.menuItemId = mI.menuItemId 
-                            WHERE CONVERT(date, o.time) = CONVERT(date, DATEADD(hour, 2, GETUTCDATE()))";  //shows today's orders only             
+                            INNER JOIN MenuItem AS mI ON oI.menuItemId = mI.menuItemId ";
+                           
 
                 List<SqlParameter> sqlParameters = new List<SqlParameter>();
                 if (foodType.Length == 1) // used for drinks/starters/mains/desserts (for bar and kitchen view and for bar history view)
